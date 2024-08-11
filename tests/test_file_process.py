@@ -3,6 +3,7 @@ from scripts.problem_fetcher import *
 from scripts.utils import *
 from fastapi import HTTPException
 import os
+from scripts.logging_config import logger
 
 def test_url_maker():
     url = url_maker("roman to-integer/")
