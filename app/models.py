@@ -7,7 +7,7 @@ class Users(Base):
 
     id = Column(Integer,nullable=False,primary_key=True)
     user_name = Column(String(255),nullable=False)
-    email = Column(String(255),nullable=False,unique=True)
+    email = Column(String(255),nullable=True,unique=True)
     password = Column(String(255),nullable=False)
     github_id = Column(BigInteger,nullable=False)
     access_token = Column(Text,nullable=True)
