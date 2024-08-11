@@ -26,3 +26,15 @@ def read_me_creater(problem_detail:dict)->None:
     save_file(folder_name=folder_name,file_name=file_name,content=content )
     logger.info("README.md file created successfully")
 
+def solution_file_creater(solution:dict,code_extension:str)->None:
+    """
+    Reads the raw solution and creates a solution file for the problem
+    """
+    # Read the raw solution
+    logger.info("Creating solution file")
+    folder_name=f"OUTPUT/{solution['question_id']:04}-{solution['title_slug']}"
+    file_name=f"Solution{code_extension}"
+    content=solution['code']
+    save_file(folder_name=folder_name,file_name=file_name,content=content )
+    logger.info("Solution file created successfully")
+
