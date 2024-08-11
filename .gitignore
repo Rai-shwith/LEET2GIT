@@ -1,2 +1,3 @@
 .venv/
 JUNK/
+.pytest_cache/
