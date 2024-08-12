@@ -1,0 +1,2 @@
+def question_Read_me_construter(question_link,question_id,question_title,question_difficulty,question_body):
+    return f"""<h2><a href="{question_link}">{question_id}. {question_title}</a></h2><h3>{question_difficulty}</h3><hr>{question_body}"""
