@@ -1,6 +1,7 @@
 import html
 from scripts.logging_config import logger
 from app.models import ProblemDetails,Solution
+from .README_templates.question_README import question_Read_me_construter
 
 
 def output_content_creater(problem_detail:ProblemDetails,solution:Solution)->tuple[str,str,str,str]:
@@ -25,7 +26,7 @@ def output_content_creater(problem_detail:ProblemDetails,solution:Solution)->tup
     logger.info("Creating solution file")
     solution_content=solution.code
     logger.info("Solution file created successfully")
-    read_me=f"""<h2><a href="{question_link}">{question_id}. {question_title}</a></h2><h3>{question_difficulty}</h3><hr>{question_body}"""    
+    read_me = question_Read_me_construter(question_link,question_id,question_title,question_difficulty,question_body)
     folder_name=f"{question_id:04}-{title_slug}"
     solution_file_name=f"{folder_name}.{solution.code_extension}"
     read_me_content=read_me
