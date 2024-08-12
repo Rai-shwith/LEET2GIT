@@ -4,7 +4,7 @@ import os
 from fastapi import HTTPException
 from scripts.problem_fetcher import *
 from scripts.utils import *
-from scripts.create_problem_files import solution_file_creater
+from scripts.output_content_creater import solution_file_creater
 
 # @pytest.fixture
 # def mock_save_file():
