@@ -1,6 +1,7 @@
 from scripts.logging_config import logger
+from github import Github,Repository
 
-def upload_file(repo, file_name:str,content:str, commit_message:str):
+def upload_file(repo:Repository.Repository, file_name:str,content:str, commit_message:str):
     """
     Uploads a file to the repository
     """

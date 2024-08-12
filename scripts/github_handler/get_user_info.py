@@ -1,7 +1,7 @@
-from github import Github
+from github import Github,AuthenticatedUser
 from scripts.logging_config import logger
 
-def get_user_info(access_token):
+def get_user_info(access_token)->AuthenticatedUser:
     """
     Get the user information
     """
