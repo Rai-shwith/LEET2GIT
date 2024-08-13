@@ -19,6 +19,7 @@ class Users(BaseModel):
     email : str
     password : str
     github_id : str
+    avatar_url : str
     access_token : str
     folder_name : str
     created_at : datetime
