@@ -18,3 +18,7 @@ def verity_github_token(token: str = Depends(auth_schema))-> dict:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token",headers={"WWW-Authenticate": "Bearer"})
     logger.info("Token verified")
     return response.json()
+
+def get_current_user(token: str = Depends(auth_schema))-> dict:
+    user = verity_github_token(token)
+    return user
