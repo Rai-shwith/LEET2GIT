@@ -23,3 +23,7 @@ class Users(BaseModel):
     folder_name : str
     created_at : datetime
     updated_at : datetime
+
+class GitHubAccessTokenResponse(BaseModel):
+    access_token: str
+    token_type: str
