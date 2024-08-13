@@ -1,15 +1,14 @@
-from fastapi.security import OAuth2PasswordBearer
-from fastapi import Depends, HTTPException,status
+from fastapi import Depends, HTTPException,status,Request
 import requests
 from .logging_config import logger  # Import the logger
 
 
-auth_schema = OAuth2PasswordBearer(tokenUrl="token")
 
 GITHUB_API_URL = "https://api.github.com/user"
 
-def verity_github_token(token: str = Depends(auth_schema))-> dict:
+def get_current_user(request:Request)-> dict:
     logger.info("Verifying token")
+    token = request.cookies.get("access_token")
     headers = {"Authorization": f"token {token}"}
     response = requests.get(GITHUB_API_URL, headers=headers)
     logger.info(f"Response: {response}")
@@ -19,6 +18,3 @@ def verity_github_token(token: str = Depends(auth_schema))-> dict:
     logger.info("Token verified")
     return response.json()
 
-def get_current_user(token: str = Depends(auth_schema))-> dict:
-    user = verity_github_token(token)
-    return user
