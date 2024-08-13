@@ -10,6 +10,10 @@ class Settings(BaseSettings):
     database_port : str
     database_name : str
     database_connection_parameter : str
+    github_client_id : str
+    github_client_secret : str
+    github_token_url :str
+    github_redirect_url : str
     # secret_key : str
     # algorithm : str
     # acess_token_expire_time : int
