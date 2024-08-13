@@ -10,7 +10,6 @@ GITHUB_API_URL = "https://api.github.com/user"
 
 def verity_github_token(token: str = Depends(auth_schema))-> dict:
     logger.info("Verifying token")
-    logger.info(f"Token: {token}")
     headers = {"Authorization": f"token {token}"}
     response = requests.get(GITHUB_API_URL, headers=headers)
     logger.info(f"Response: {response}")
