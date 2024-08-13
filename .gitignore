@@ -4,3 +4,4 @@ JUNK/
 __pycache__/
 *.pyc
 .env
+*.log
