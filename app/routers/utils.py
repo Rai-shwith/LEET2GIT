@@ -16,20 +16,26 @@ def get_github_access_token(code: str) -> GitHubAccessTokenResponse:
     """
     Exchange the authorization code for an access token.
     """
-    response = requests.post(
-        GITHUB_TOKEN_URL,
-        data={
+    logger.info("Exchanging authorization code for access token")
+    data = {
             "client_id": GITHUB_CLIENT_ID,
             "client_secret": GITHUB_CLIENT_SECRET,
             "code": code,
             "redirect_uri": GITHUB_REDIRECT_URI,
-        },
+        }
+    logger.info(f"Data: {data}")
+    response = requests.post(
+        GITHUB_TOKEN_URL,
+        data= data,
         headers={"Accept": "application/json"}
     )
+    logger.info(f"Response: {response.json()}")
     if response.status_code != 200:
         logger.error(f"Failed to get access token: {response.json()}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Failed to retrieve access token"
         )
+    logger.info("Access token retrieved")
+    logger.info(f"Access token: {response.json()}")
     return GitHubAccessTokenResponse(**response.json())
