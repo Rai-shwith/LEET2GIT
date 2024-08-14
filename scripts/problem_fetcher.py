@@ -2,9 +2,8 @@ import requests
 from fastapi import HTTPException
 import validators 
 from .logging_config import logger
-from .utils import save_file
-
-def get_problem_details(url_or_question:str)->dict:
+from app import schemas
+def get_problem_details(url_or_question:str)->schemas.ProblemDetails:
     """
     This function will fectch the information about mentioned problem from the api and returns the information in dictionary format
     """
@@ -24,6 +23,7 @@ def get_problem_details(url_or_question:str)->dict:
             logger.critical("Invalid URL")
             raise HTTPException(status_code = 404,detail="Invalid URL")
         logger.info("Data fetched successfully")
+        data = schemas.ProblemDetails(**data)
         return data
     else:
         logger.error("Failed to retrieve page")
