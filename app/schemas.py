@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
 from datetime import datetime
 from typing import Union
 
@@ -17,7 +17,7 @@ class Solution(BaseModel):
 class Users(BaseModel):
     id : int
     user_name : str
-    email : Union[str,None]
+    email : Union[EmailStr,None]
     github_id : int
     avatar_url : str
     folder_name : str
@@ -30,7 +30,7 @@ class Users(BaseModel):
 class GithubUser(BaseModel):
     id: int  # GitHub user ID
     login: str # GitHub username
-    email: str
+    email: Union[EmailStr, None]
     avatar_url: str
 
 class GitHubAccessTokenResponse(BaseModel):
