@@ -26,7 +26,7 @@ class Users(BaseModel):
 
 class GithubUser(BaseModel):
     id: int  # GitHub user ID
-    user_name: str
+    login: str # GitHub username
     email: str
     avatar_url: str
 
