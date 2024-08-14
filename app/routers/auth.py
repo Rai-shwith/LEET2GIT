@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status,Request
 from fastapi.responses import RedirectResponse
 from ..database import get_db
 from .logging_config import logger  
-from .utils import get_github_access_token
+from ..utils import get_github_access_token
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
