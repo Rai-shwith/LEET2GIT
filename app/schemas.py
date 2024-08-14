@@ -36,3 +36,15 @@ class GithubUser(BaseModel):
 class GitHubAccessTokenResponse(BaseModel):
     access_token: str
     token_type: str
+    
+class ProblemDetails(BaseModel):
+    questionTitle: str
+    question: str
+    link: str
+    difficulty: str
+    questionId: str
+    titleSlug: str
+    
+class Solution(BaseModel):
+    code_extension: str
+    code: str
