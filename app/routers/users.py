@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status,Request
 from ..database import get_db
 from .oauth2 import get_current_user
 from sqlalchemy.orm import Session
@@ -19,5 +19,5 @@ def create_user(folder_name:str="LeetCode",db:Session = Depends(get_db),user: di
 
 
 @router.get("/profile")
-def get_profile():
-    return {"message":"User profile"}
+def get_profile(request:Request,user: schemas.Users = Depends(get_current_user)):
+    return user
