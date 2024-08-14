@@ -3,6 +3,7 @@ from ..config import settings
 from fastapi import HTTPException, status
 import requests
 from .logging_config import logger
+from pydantic import ValidationError
 
 # Configuration variables (ideally from environment variables or a config file)
 GITHUB_CLIENT_ID = settings.github_client_id
@@ -38,4 +39,12 @@ def get_github_access_token(code: str) -> GitHubAccessTokenResponse:
         )
     logger.info("Access token retrieved")
     logger.info(f"Access token: {response.json()}")
-    return GitHubAccessTokenResponse(**response.json())
+    try:
+        access_token_response = GitHubAccessTokenResponse(**response.json()) 
+    except ValidationError as e:
+        logger.error(f"Validation error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Failed to retrieve access token"
+        )
+    return access_token_response
