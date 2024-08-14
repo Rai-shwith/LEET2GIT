@@ -24,6 +24,12 @@ class Users(BaseModel):
     created_at : datetime
     updated_at : datetime
 
+class GithubUser(BaseModel):
+    id: int  # GitHub user ID
+    user_name: str
+    email: str
+    avatar_url: str
+
 class GitHubAccessTokenResponse(BaseModel):
     access_token: str
     token_type: str
