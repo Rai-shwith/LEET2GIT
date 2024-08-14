@@ -49,3 +49,7 @@ class ProblemDetails(BaseModel):
 class Solution(BaseModel):
     code_extension: str
     code: str
+    
+class Upload(BaseModel):
+    question: ProblemDetails
+    solution: Solution
