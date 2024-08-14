@@ -24,7 +24,6 @@ class Users(BaseModel):
     created_at : datetime
     updated_at : datetime
     class Config:
-        orm_mode = True
         from_attributes = True  # Enable validation from ORM attributes
 
 class GithubUser(BaseModel):
