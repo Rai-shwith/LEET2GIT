@@ -44,6 +44,7 @@ class ProblemDetails(BaseModel):
     difficulty: str
     questionId: str
     titleSlug: str
+    topicTags: list[dict]
     
 class Solution(BaseModel):
     code_extension: str
