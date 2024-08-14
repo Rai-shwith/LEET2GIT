@@ -1,10 +1,10 @@
 import html
 from scripts.logging_config import logger
-from app.models import ProblemDetails,Solution
+from app import schemas
 from .README_templates.question_README import question_Read_me_construter
 
 
-def output_content_creater(problem_detail:ProblemDetails,solution:Solution)->tuple[str,str,str,str]:
+def output_content_creater(problem_detail:schemas.ProblemDetails,solution:schemas.Solution)->tuple[str,str,str,str]:
     """
     Reads the problem detail and returns README.md file contents ,solution file contents  and folder name  for the problem
     """
