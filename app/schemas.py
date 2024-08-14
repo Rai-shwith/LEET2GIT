@@ -23,6 +23,9 @@ class Users(BaseModel):
     folder_name : str
     created_at : datetime
     updated_at : datetime
+    class Config:
+        orm_mode = True
+        from_attributes = True  # Enable validation from ORM attributes
 
 class GithubUser(BaseModel):
     id: int  # GitHub user ID
