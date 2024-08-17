@@ -20,7 +20,7 @@ async def get_github_callback(request:Request):
     token_response = get_github_access_token(code)
     
     # Set the access token in an HTTP-only cookie
-    response = RedirectResponse(url="/users/profile")
+    response = RedirectResponse(url="/profile")
     response.set_cookie(
         key="access_token",
         value=token_response.access_token,

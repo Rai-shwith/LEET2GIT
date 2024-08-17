@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-
+from fastapi.templating import Jinja2Templates
 
 class Settings(BaseSettings):
     sslrootcert : str
@@ -23,3 +23,6 @@ class Settings(BaseSettings):
         
 
 settings = Settings()
+
+# Configure Jinja2 templates
+templates = Jinja2Templates(directory="app/templates")
