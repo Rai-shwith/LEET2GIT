@@ -41,3 +41,6 @@ class Solution(BaseModel):
 class Upload(BaseModel):
     question: ProblemDetails
     solution: Solution
+    
+class Uploads(BaseModel):
+    uploads: list[Upload]
