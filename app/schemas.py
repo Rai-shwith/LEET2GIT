@@ -2,17 +2,6 @@ from pydantic import BaseModel,EmailStr
 from datetime import datetime
 from typing import Union
 
-class ProblemDetails(BaseModel):
-    questionTitle: str
-    question: str
-    link: str
-    difficulty: str
-    questionId: str
-    titleSlug: str
-    
-class Solution(BaseModel):
-    code_extension: str
-    code: str
     
 class Users(BaseModel):
     id : int
@@ -20,7 +9,7 @@ class Users(BaseModel):
     email : Union[EmailStr,None]
     github_id : int
     avatar_url : str
-    folder_name : str
+    repo_name : str
     created_at : datetime
     updated_at : datetime
     class Config:
