@@ -1,4 +1,4 @@
-from github import Github,AuthenticatedUser
+from github import Github,AuthenticatedUser,Auth
 from scripts.logging_config import logger
 
 def get_user_info(access_token)->AuthenticatedUser:
@@ -8,7 +8,11 @@ def get_user_info(access_token)->AuthenticatedUser:
     logger.info("Getting user information")
     logger.info(f"Access token: {access_token}")
     try:
-        g = Github(access_token)
+        auth = Auth.Token(access_token)
+        logger.info(f"Auth object: {auth}")
+        g = Github(auth=auth)
+        logger.info("Github object created")
+        logger.info(f"Github object: {g}")
         user = g.get_user()
         logger.info(f"User information: {user}")
         return user
