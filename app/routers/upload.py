@@ -5,7 +5,7 @@ from scripts.github_handler.get_repo import get_repo
 from scripts.github_handler.create_repo import create_repo
 from scripts.github_handler.upload_file import upload_file
 from ..database import get_db
-from .oauth2 import get_current_user
+from .oauth import get_current_user
 from sqlalchemy.orm import Session
 from .. import models,schemas
 from .logging_config import logger
