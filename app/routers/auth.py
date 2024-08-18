@@ -18,15 +18,21 @@ async def get_github_callback(request:Request):
     logger.info(f"Code: {code}")
     # Exchange the authorization code for an access token
     token_response = get_github_access_token(code)
-    
     # Set the access token in an HTTP-only cookie
     response = RedirectResponse(url="/profile")
     response.set_cookie(
         key="access_token",
         value=token_response.access_token,
-        httponly=True,  # Prevent JavaScript access
-        secure=True,    # Ensure cookie is sent only over HTTPS
-        max_age=3600,   # Adjust as needed
+        httponly=True,  
+        secure=True,    
+        max_age=86400,   # for 1 day
+    )
+    response.set_cookie(
+        key="registered",
+        value=False,
+        httponly=True,  
+        secure=True,    
+        max_age=86400,   # for 1 day
     )
     
     logger.info("User authenticated and token set in cookie")
