@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% block stylesheetsrc %}{% endblock %}">
 </head>
 <body>
-    <header>
-        <h1>My Website</h1>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    
     <main>
-        {% block content %}{% endblock %}
+        {% block content %} {% endblock %}
     </main>
-    
     <footer>
-        &copy; {{ current_year }} My Website. All rights reserved.
+        <p>&copy; 2024 LEET2GIT</p>
     </footer>
-    
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{% block scriptsrc %}{% endblock %}"></script>
 </body>
 </html>
+
+

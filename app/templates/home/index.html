@@ -1,29 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEET2GIT</title>
-    <link rel="icon" type="image/svg+xml" href="static/images/logo.svg">
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="home">Home</a></li>
-                <li><a href="about">About</a></li>
-                <li><a href="contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
         <h1>Welcome to LEET2GIT</h1>
         <p>LEET2GIT is a platform that allows you to convert your LeetCode solutions to GitHub repositories.</p>
         <p>Get started by clicking the button below.</p>
         <a href="https://github.com/login/oauth/authorize?client_id=Ov23liRqduq4OPOGI2vg&redirect_uri=https://fluffy-bassoon-979p6q6ww9p5c7g7j-8000.app.github.dev/auth/github/callback&scope=repo" class="button">Get Started</a>
-    </main>
-    <footer>
-        <p>&copy; 2024 LEET2GIT</p>
-    </footer>
-</body>
-</html>
+{% endblock %}
