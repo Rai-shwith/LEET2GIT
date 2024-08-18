@@ -32,4 +32,5 @@ def get_problem_details(title_slug:str)->schemas.ProblemDetails:
         return question_details
     else:
         logger.error("Failed to retrieve page")
+        raise HTTPException(status_code = 404,detail="Failed to retrieve question details")
 
