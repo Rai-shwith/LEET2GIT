@@ -1,0 +1,12 @@
+    {% extends "base.html" %}
+    {% block title %}LEET2GIT{% endblock %}
+    {% block content %}
+        <h1>Thank you for registring</h1>
+        <h1>Welcome, {{ user.login }}!</h1>
+        <img src="{{ user.avatar_url}}" alt="" srcset="">
+        <p>Here is some information about you:</p>
+        <ul>
+            <li>id: {{ user.id }}</li>
+            <li>Email: {{ user.email }}</li>
+            <li>repo_name: {{ user.repo_name }}</li>
+        </ul>    {% endblock %}

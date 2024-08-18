@@ -6,12 +6,12 @@
     <title>Profile</title>
 </head>
 <body>
-    <h1>Welcome to your profile, {{ user.user_name }}!</h1>
+    <h1>Welcome to your profile, {{ user.login }}!</h1>
     <p>Here is some information about you:</p>
     <ul>
         <li>id: {{ user.id }}</li>
         <li>Email: {{ user.email }}</li>
-        <li>repo: {{ user.repo_name }}</li>
+        <li>avatar_url: {{ user.avatar_url}}</li>
     </ul>
 </body>
 </html>
