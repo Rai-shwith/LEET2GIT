@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from .database import engine
 from .routers import users,auth,post,upload
 from .config import templates
+from .routers.oauth import get_github_user,get_current_user
+from .routers.logging_config import logger
 
 # Add Jinja2 environment to FastAPI app
 app = FastAPI()
@@ -22,7 +24,21 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 @app.get("/",response_class=HTMLResponse)
 def read_root(request: Request):
-    return templates.TemplateResponse("home/index.html", {"request": request})
+    logger.info("Root path")
+    logger.info(f"Request: {request}")
+    if not request.cookies.get("access_token"):
+        logger.info("User not logged in")
+        return templates.TemplateResponse("home/getStarted/index.html", {"request": request})
+    logger.info("User logged in")
+    github_user = get_github_user(request)
+    logger.info(f"Github user: {github_user}")
+    if not request.cookies.get("registered"):
+        logger.info("User not registered")
+        return templates.TemplateResponse("home/logged/index.html", {"request": request,"user":github_user})
+    logger.info("User registered")
+    user = get_current_user(github_id=github_user.id)
+    logger.info(f"User: {user}")
+    return templates.TemplateResponse("home/registered/index.html", {"request": request,"user":user})
 
 app.include_router(users.router)
 app.include_router(auth.router)
