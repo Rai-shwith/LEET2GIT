@@ -1,21 +1,15 @@
 import requests
 from fastapi import HTTPException
-import validators 
 from .logging_config import logger
 from app import schemas
-def get_problem_details(url_or_question:str)->schemas.ProblemDetails:
-    """
-    This function will fectch the information about mentioned problem from the api and returns the information in dictionary format
-    """
-    logger.info("Fetching problem details")
-    if not validators.url(url_or_question): #Checks wheather the url is valid or not
-        logger.info("Converting question name to url")
-        url = url_maker(url_or_question)
-    else:
-        logger.info("Fetching data from the given url")
-        url = url_or_question
+from .utils import query_generator
 
-    response = requests.get(url)
+
+def get_problem_details(title_slug:str)->schemas.ProblemDetails:
+    logger.info("Fetching problem details")
+    url = "https://leetcode.com/graphql/"
+    query = query_generator(title_slug)
+    response = requests.post(url, json={'query': query})
     response.raise_for_status()
     if response.status_code == 200:
         data = response.json()
@@ -23,19 +17,19 @@ def get_problem_details(url_or_question:str)->schemas.ProblemDetails:
             logger.critical("Invalid URL")
             raise HTTPException(status_code = 404,detail="Invalid URL")
         logger.info("Data fetched successfully")
-        data = schemas.ProblemDetails(**data)
-        return data
+        problem = data['data']['question']
+        question_details = {
+        "questionId": problem["questionId"],
+        "questionFrontendId": problem["questionFrontendId"],
+        "questionTitle": problem["title"],
+        "question": problem["content"],
+        "link": f"https://leetcode.com/problems/{problem['titleSlug']}",
+        "difficulty": problem["difficulty"],
+        "topicTags": problem["topicTags"],
+        "titleSlug": problem["titleSlug"]
+    }
+        question_details = schemas.ProblemDetails(**question_details)
+        return question_details
     else:
         logger.error("Failed to retrieve page")
 
-def url_maker(question_name:str):
-    """
-        This fuction will convert name of the problem to proper url to fetch data
-    """
-    logger.info("Converting question name to url")
-    url_template = "https://alfa-leetcode-api.onrender.com/select?titleSlug="
-    question_name = question_name.strip()
-    title_slug = question_name.replace(" ","-").replace("/","")#The string should be free of space and "/"
-    url = url_template + title_slug
-    logger.info(f"URL: {url}")
-    return url
