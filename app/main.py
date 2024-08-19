@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request,Depends
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,6 +7,8 @@ from .routers import users,auth,post,upload
 from .config import templates
 from .routers.oauth import get_github_user,get_current_user
 from .routers.logging_config import logger
+from sqlalchemy.ext.asyncio import AsyncSession
+from .database import get_db
 
 # Add Jinja2 environment to FastAPI app
 app = FastAPI()
@@ -22,21 +24,21 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
-@app.get("/",response_class=HTMLResponse)
-def read_root(request: Request):
+@app.get("/",response_model=None)
+async def read_root(request: Request, db: AsyncSession = Depends(get_db)):
     logger.info("Root path")
     logger.info(f"Request: {request}")
     if not request.cookies.get("access_token"):
         logger.info("User not logged in")
         return templates.TemplateResponse("home/getStarted/index.html", {"request": request})
     logger.info("User logged in")
-    github_user = get_github_user(request)
+    github_user = await get_github_user(request)
     logger.info(f"Github user: {github_user}")
     if not request.cookies.get("registered"):
         logger.info("User not registered")
         return templates.TemplateResponse("home/logged/index.html", {"request": request,"user":github_user})
     logger.info("User registered")
-    user = get_current_user(github_id=github_user.id)
+    user = await get_current_user(github_id=github_user.id,db=db)
     logger.info(f"User: {user}")
     return templates.TemplateResponse("home/registered/index.html", {"request": request,"user":user})
 

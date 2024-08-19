@@ -1,7 +1,7 @@
 from .schemas import GitHubAccessTokenResponse
 from .config import settings
 from fastapi import HTTPException, status
-import requests
+import httpx
 from .routers.logging_config import logger
 from pydantic import ValidationError
 
@@ -13,7 +13,7 @@ GITHUB_REDIRECT_URI = settings.github_redirect_url
 
 
 
-def get_github_access_token(code: str) -> GitHubAccessTokenResponse:
+async def get_github_access_token(code: str) -> GitHubAccessTokenResponse:
     """
     Exchange the authorization code for an access token.
     """
@@ -24,7 +24,8 @@ def get_github_access_token(code: str) -> GitHubAccessTokenResponse:
             "code": code,
             "redirect_uri": GITHUB_REDIRECT_URI,
         }
-    response = requests.post(
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
         GITHUB_TOKEN_URL,
         data= data,
         headers={"Accept": "application/json"}

@@ -1,15 +1,16 @@
-import requests
+import httpx
 from fastapi import HTTPException
 from .logging_config import logger
 from app import schemas
 from .utils import query_generator
 
 
-def get_problem_details(title_slug:str)->schemas.ProblemDetails:
+async def get_problem_details(title_slug:str)->schemas.ProblemDetails:
     logger.info("Fetching problem details")
     url = "https://leetcode.com/graphql/"
     query = query_generator(title_slug)
-    response = requests.post(url, json={'query': query})
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json={"query": query})
     response.raise_for_status()
     if response.status_code == 200:
         data = response.json()
