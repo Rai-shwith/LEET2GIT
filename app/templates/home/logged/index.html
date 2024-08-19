@@ -9,6 +9,10 @@
             <li>id: {{ user.id }}</li>
             <li>Email: {{ user.email }}</li>
         </ul>
+        <label for="private">Is new</label>
+        <input type="checkbox" name="" id="new" checked >
+        <label for="private">Is private</label>
+        <input type="checkbox" name="" id="private" checked >
             <label for="repo">Enter repo name</label>
             <input type="text" placeholder="LeetCode" id="repo" value="LeetCode">
             <button id="btn">Register</button>
@@ -18,11 +22,19 @@
 <script>
     let btn = document.querySelector('#btn');
     btn.addEventListener('click', (e) => {
+        const isNew = document.querySelector('#new').checked;
+        const isPrivate = document.querySelector('#private').checked;
         let repo = document.querySelector('#repo').value;
-        fetch(`/register/api?repo_name=${repo}`, {
+        fetch(`/register/api?repo_name=${repo}&new=${isNew}&private=${isPrivate}`, {
             method: 'GET'
         }).then(response => { // response is the result of the fetch
-            if (response.redirected) { 
+            if (response.status == 422){
+                alert('Repo already exists');
+            }
+            else if (response.status == 404){
+                alert('Repo not found');
+            }
+            else if (response.redirected) { 
                 window.location.href = response.url; // redirect to the url
             }
         });
