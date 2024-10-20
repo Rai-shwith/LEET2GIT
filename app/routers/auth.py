@@ -32,7 +32,7 @@ async def get_github_callback(request:Request,db:AsyncSession = Depends(get_db))
     logger.info(f"Github user: {github_user}")
     user = await get_current_user(github_id=github_user.id,db=db)
     logger.info(f"User: {user}")
-    if user:
+    if user:        
         response.set_cookie(
             key="registered",
             value="true",

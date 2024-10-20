@@ -1,4 +1,3 @@
-import os
 from scripts.logging_config import logger
 
 def query_generator(title_slug):
@@ -23,4 +22,5 @@ def query_generator(title_slug):
     """
     logger.info("Query generated")
     return query
+    
     

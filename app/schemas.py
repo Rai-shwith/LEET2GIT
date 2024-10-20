@@ -44,3 +44,7 @@ class Upload(BaseModel):
     
 class Uploads(BaseModel):
     uploads: list[Upload]
+    
+class LeetcodeCredentials(BaseModel):
+    leetcode_access_token: str
+    csrftoken : str

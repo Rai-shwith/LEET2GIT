@@ -4,13 +4,13 @@ from .logging_config import logger
 from app import schemas
 from .utils import query_generator
 
+URL = "https://leetcode.com/graphql/"
 
 async def get_problem_details(title_slug:str)->schemas.ProblemDetails:
     logger.info("Fetching problem details")
-    url = "https://leetcode.com/graphql/"
     query = query_generator(title_slug)
     async with httpx.AsyncClient() as client:
-        response = await client.post(url, json={"query": query})
+        response = await client.post(URL, json={"query": query})
     response.raise_for_status()
     if response.status_code == 200:
         data = response.json()

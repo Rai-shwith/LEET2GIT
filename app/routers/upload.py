@@ -1,8 +1,11 @@
 from fastapi import APIRouter, Depends, status,Request
 from scripts.github_handler.get_user_info import get_user_info
 from scripts.output_content_creater import output_content_creater
+from scripts.leetcode_solutions_fetcher import leetcode_solution_fetcher
 from scripts.github_handler.get_repo import get_repo
 from scripts.github_handler.upload_file import upload_file
+from scripts.organize_leetcode_solutions import organize_leetcode_solutions
+from ..database import get_db
 from .oauth import get_current_user
 from .. import schemas
 from .logging_config import logger
@@ -14,12 +17,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 router  = APIRouter(prefix="/upload", tags=["upload"])
 
-@router.post("/api/",status_code=status.HTTP_201_CREATED,response_model=None)
-async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSession = Depends(get_db)):
+# @router.post("/api/",status_code=status.HTTP_201_CREATED,response_model=None)
+async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSession):
+# def create_uploads(request: Request,uploads: schemas.Uploads,current_user : schemas.Users):
     """
-    This endpoint will create a new directory about the question and solution in the user's github repository
+    This endpoint will create a new directory in github about the question and solution in the user's github repository
+    This endpoint can be used to upload multiple problems together
     """
-    github_user: AuthenticatedUser = await get_user_info(request.cookies.get("access_token"))
+    github_user: AuthenticatedUser = await get_user_info(request=request)
     github_id = github_user.id
     current_user: schemas.Users = get_current_user(github_id=github_id,db=db)
     logger.info(f"Creating the upload for the user: {current_user}")
@@ -33,4 +38,22 @@ async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSessi
         upload_file(repo,folder_name+"/README.md",read_me_content,"Added README.md"),
         upload_file(repo,folder_name+"/"+solution_file_name,solution_content,"Added solution file")
         )
-    # return {read_me_content,solution_content,folder_name,solution_file_name}
+    logger.info("Uploading Finished")
+    
+
+@router.post("/mannual/",status_code=status.HTTP_201_CREATED)
+async def mannual_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSession = Depends(get_db)):
+    """
+    This endpoint is for mannual uploading """
+    logger.info("Mannual uploading ...")
+    await create_uploads(request=request,uploads=uploads,db=db)
+    
+
+@router.post("/automatic/",status_code=status.HTTP_201_CREATED)  
+async def automatic_uploads(request:Request,leetcode_credentials: schemas.LeetcodeCredentials,db: AsyncSession = Depends(get_db)):
+    """
+    This endpoint is for automatic uploading """
+    logger.info("Automatic uploading ...")
+    raw_submissions = leetcode_solution_fetcher(leetcode_credentials.leetcode_access_token,leetcode_credentials.csrftoken)
+    uploads: schemas.Uploads = organize_leetcode_solutions(raw_solutions=raw_submissions)
+    await create_uploads(request=request,uploads=uploads,db=db)
