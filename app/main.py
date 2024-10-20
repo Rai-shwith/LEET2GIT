@@ -44,4 +44,4 @@ def read_root(request: Request):
 app.include_router(users.router) # register the users in the database (sign up)
 app.include_router(auth.router)  # authenticate the user (login)
 app.include_router(post.router) # get the problem details
-app.include_router(upload.router)
+app.include_router(upload.router) # upload the problem details

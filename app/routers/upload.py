@@ -15,13 +15,15 @@ from github import AuthenticatedUser
 router  = APIRouter(prefix="/upload", tags=["upload"])
 
 @router.post("/api/",status_code=status.HTTP_201_CREATED)
-def create_uploads(request:Request,uploads: schemas.Uploads, current_user: schemas.Users = Depends(get_current_user)):
+# def create_uploads(request:Request,github_id : int ,uploads: schemas.Uploads):
+def create_uploads(request:Request,uploads: schemas.Uploads,current_user: schemas.Users = Depends(get_current_user)):
     """
     This endpoint will create a new directory in github about the question and solution in the user's github repository
+    This endpoint can be used to upload multiple problems together
     """
     logger.info(f"Creating the upload for the user: {current_user}")
     repo_name = current_user.repo_name
-    github_user: AuthenticatedUser = get_user_info(request.cookies.get("access_token"))
+    github_user: AuthenticatedUser = get_user_info(request=request)
     repo = get_repo(github_user,repo_name=repo_name)
     logger.info(f"Github user: {github_user}")
     for upload in uploads.uploads:

@@ -33,6 +33,15 @@ async def get_github_callback(request:Request):
     github_user = get_github_user(request,token=token_response.access_token)
     user = get_current_user(github_id=github_user.id)
     if user:
+        # Set the user's GitHub ID in a non-HTTP-only
+        response.set_cookie(
+            key="github_id",
+            value=github_user.id,
+            httponly=False,
+            secure=True,
+            max_age=3600,
+        )
+        
         response.set_cookie(
             key="registered",
             value="true",
