@@ -17,7 +17,7 @@ router  = APIRouter(prefix="/upload", tags=["upload"])
 @router.post("/api/",status_code=status.HTTP_201_CREATED)
 def create_uploads(request:Request,uploads: schemas.Uploads, current_user: schemas.Users = Depends(get_current_user)):
     """
-    This endpoint will create a new directory about the question and solution in the user's github repository
+    This endpoint will create a new directory in github about the question and solution in the user's github repository
     """
     logger.info(f"Creating the upload for the user: {current_user}")
     repo_name = current_user.repo_name

@@ -10,6 +10,9 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.get("/github/callback")
 async def get_github_callback(request:Request):
+    """
+    This function will handle the callback from Github
+    """
     logger.info("Github callback")
     code = request.query_params.get("code")
     if not code:

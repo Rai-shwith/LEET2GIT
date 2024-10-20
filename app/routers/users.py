@@ -24,18 +24,18 @@ def register_user(request:Request,repo_name:str = "LeetCode",private:bool=True,n
     github_user = get_github_user(request=request) # github user of pydantic type
     pygithub_user: AuthenticatedUser= get_user_info(request) # github user of pygithub type
     logger.info(f"Github user: {github_user}")
-    if new:
-        repo = create_repo(user=pygithub_user,repo_name=repo_name,private=private)
-        logger.info(f"Repo {repo_name} already exists")
-        if repo is None:
+    if new: # if new is true, create a new repo
+        repo = create_repo(user=pygithub_user,repo_name=repo_name,private=private) # create a new repo with the given name
+        # logger.info(f"Repo {repo_name} already exists")
+        if repo is None: # if repo is None, then the repo already exists
             logger.info(f"Repo {repo_name} already exists")
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,detail="Repository already exists")
-    else:
+    else: # if new is false, get the repo
         repo = get_repo(user=pygithub_user,repo_name=repo_name)
-        if repo is None:
+        if repo is None: # if repo is None, then the repo does not exist
             logger.info(f"Repo {repo_name} not found")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Repository not found")
-    user = create_user(github_user=github_user,repo_name=repo_name,db=db)
+    user = create_user(github_user=github_user,repo_name=repo_name,db=db) # create a new user in the database
     logger.info(f"User: {user}")
     response = RedirectResponse(url="/",status_code=status.HTTP_303_SEE_OTHER)
     response.set_cookie(
