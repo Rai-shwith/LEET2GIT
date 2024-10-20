@@ -34,6 +34,12 @@
     <textarea name="code" id="code" cols="30" rows="10"></textarea>
     <button id="upload-btn" style="display: none;">upload to GITHUB</button>
 </section>
+
+<section id="automatic">
+    <input type="text" id="leetcode-token" placeholder="Enter acces token">
+    <input type="text" id="leetcode-cfrse" placeholder="Enter crfsce something token">
+    <button id="auto-btn">Initiate automaticity</button>
+</section>
 {% endblock %}
 
 {% block javascripts %}
@@ -80,18 +86,45 @@
         console.log(questionAnswer)
         // get the query param github id
         const github_id = getCookie('github_id');
-        fetch(`/upload/api?github_id=${github_id}`, {
+        fetch(`/upload/mannual?github_id=${github_id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                uploads:questionAnswer})
+                uploads: questionAnswer
+            })
         }).then(response => {
-            if (response.status == 200) {
+            if (response.status == 201) {
                 alert('Code uploaded successfully');
             }
         });
     });
+
+    const autoBtn = document.getElementById("auto-btn")
+    autoBtn.addEventListener('click', (e) => {
+        const leetcodeAccess = document.getElementById('leetcode-token').value;
+        const leetcodeCFSE = document.getElementById('leetcode-cfrse').value;
+        console.log("automatic ")
+        // get the query param github id
+        const github_id = getCookie('github_id');
+        let data = {
+                leetcode_access_token : leetcodeAccess,
+                csrftoken : leetcodeCFSE
+            }
+            console.log(data)
+        fetch(`/upload/automatic?github_id=${github_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.status == 201) {
+                alert('Code uploaded successfully');
+            }
+        });
+    });
+
 </script>
 {% endblock %}

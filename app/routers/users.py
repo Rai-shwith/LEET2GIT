@@ -45,5 +45,12 @@ def register_user(request:Request,repo_name:str = "LeetCode",private:bool=True,n
         secure=True,
         max_age=3600,
     )
+    response.set_cookie(
+            key="github_id",
+            value=github_user.id,
+            httponly=False,
+            secure=True,
+            max_age=3600,
+        )
     logger.info("User registered")
     return response
