@@ -4,7 +4,7 @@ from scripts.output_content_creater import output_content_creater
 from scripts.leetcode_solutions_fetcher import leetcode_solution_fetcher
 from scripts.github_handler.get_repo import get_repo
 from scripts.github_handler.create_repo import create_repo
-from scripts.github_handler.upload_file import upload_file
+from scripts.github_handler.upload_file import upload_file,update_repo_readme
 from scripts.organize_leetcode_solutions import organize_leetcode_solutions
 from ..database import get_db
 from .oauth import get_current_user
@@ -29,8 +29,13 @@ def create_uploads(request: Request,uploads: schemas.Uploads,current_user : sche
     for upload in uploads.uploads:
         (read_me_content,solution_content,folder_name,solution_file_name) = output_content_creater(problem_detail=upload.question,solution=upload.solution)
         logger.info(f"obtained the content for the files")
+        # Upload Readme file 
         upload_file(repo,folder_name+"/README.md",read_me_content,"Added README.md")
+        # Upload solution file
         upload_file(repo,folder_name+"/"+solution_file_name,solution_content,"Added solution file")
+        # Update the README file by adding the folder name (new problem)
+        update_repo_readme(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,folder_name=folder_name,topic_tags=upload.question.topicTags)
+
     logger.info("Uploading Finished")
     
 
