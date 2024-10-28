@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Get Started{% endblock %}
+{% block content %}
+        <h1>Get Started</h1>
+        <p>LEET2GIT is a platform that allows you to convert your LeetCode solutions to GitHub repositories.</p>
+        <p>Get started by clicking the button below.</p>
+        <a href="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo" class="button">Get Started</a>
+{% endblock %}

@@ -1,14 +1,17 @@
+from fastapi import Request
 from github import Github,AuthenticatedUser,Auth
 from scripts.logging_config import logger
 
-def get_user_info(access_token)->AuthenticatedUser:
+def get_user_info(request:Request,token:str = None)->AuthenticatedUser:
     """
     Get the user information
     """
+    if not token:
+        token = request.cookies.get("access_token")
     logger.info("Getting user information")
-    logger.info(f"Access token: {access_token}")
+    logger.info(f"Access token: {token}")
     try:
-        auth = Auth.Token(access_token)
+        auth = Auth.Token(token)
         logger.info(f"Auth object: {auth}")
         g = Github(auth=auth)
         logger.info("Github object created")

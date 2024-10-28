@@ -24,7 +24,6 @@ def get_github_access_token(code: str) -> GitHubAccessTokenResponse:
             "code": code,
             "redirect_uri": GITHUB_REDIRECT_URI,
         }
-    logger.info(f"Data: {data}")
     response = requests.post(
         GITHUB_TOKEN_URL,
         data= data,

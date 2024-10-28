@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}LEET2GIT{% endblock %}
+{% block content %}
+<h1>Thank you for registring</h1>
+<h1>Welcome, {{ user.login }}!</h1>
+<img src="{{ user.avatar_url}}" alt="" srcset="">
+<p>Here is some information about you:</p>
+<ul>
+    <li>id: {{ user.id }}</li>
+    <li>Email: {{ user.email }}</li>
+    <li>repo_name: {{ user.repo_name }}</li>
+</ul>
+<section>
+    <h2>Enter the Question name</h2>
+    <input id="Question" type="text">
+    <button id="question-btn">search for Question</button>
+    <div id="question-detail"></div>
+</section>
+<section class="upload">
+    <h2>Please select the language the Enter the code</h2>
+    <select name="language" id="language">
+        <option value="py">Python</option>
+        <option value="cpp">C++</option>
+        <option value="java">Java</option>
+        <option value="js">JavaScript</option>
+        <option value="rb">Ruby</option>
+        <option value="go">Go</option>
+        <option value="cs">C#</option>
+        <option value="ts">TypeScript</option>
+        <option value="swift">Swift</option>
+        <option value="kt">Kotlin</option>
+    </select>
+    <br>
+    <textarea name="code" id="code" cols="30" rows="10"></textarea>
+    <button id="upload-btn" style="display: none;">upload to GITHUB</button>
+</section>
+
+<section id="automatic">
+    <input type="text" id="leetcode-token" placeholder="Enter acces token">
+    <input type="text" id="leetcode-cfrse" placeholder="Enter crfsce something token">
+    <button id="auto-btn">Initiate automaticity</button>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+    `
+    My approach is to get the question from the user and then get the question details from the leetcode api from my backend
+     and then get the code from the user and then upload the code to the github.
+    `
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    let questionBtn = document.getElementById('question-btn');
+    let uploadBtn = document.getElementById('upload-btn');
+    const questionAnswer = [];
+    let questionDetail;
+    questionBtn.addEventListener('click', (e) => {
+        const question = document.getElementById('Question').value;
+        fetch(`/post/api/${question}`, {
+            method: 'GET'
+        }).then(response => {
+            response.json().then(data => {
+                document.getElementById('question-detail').innerHTML = JSON.stringify(data, null, 2);
+                questionDetail = data;
+                uploadBtn.style.display = 'block';
+            });
+        })
+    });
+    uploadBtn.addEventListener('click', (e) => {
+        const code_extension = document.getElementById('language').value;
+        const code = document.getElementById('code').value;
+        const question = questionDetail;
+        const solution = {
+            code,
+            code_extension
+        };
+        questionAnswer.push({
+            question,
+            solution
+        });
+        console.log(questionAnswer)
+        // get the query param github id
+        const github_id = getCookie('github_id');
+        fetch(`/upload/mannual?github_id=${github_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                uploads: questionAnswer
+            })
+        }).then(response => {
+            if (response.status == 201) {
+                alert('Code uploaded successfully');
+            }
+        });
+    });
+
+    const autoBtn = document.getElementById("auto-btn")
+    autoBtn.addEventListener('click', (e) => {
+        const leetcodeAccess = document.getElementById('leetcode-token').value;
+        const leetcodeCFSE = document.getElementById('leetcode-cfrse').value;
+        console.log("automatic ")
+        // get the query param github id
+        const github_id = getCookie('github_id');
+        let data = {
+                leetcode_access_token : leetcodeAccess,
+                csrftoken : leetcodeCFSE
+            }
+            console.log(data)
+        fetch(`/upload/automatic?github_id=${github_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.status == 201) {
+                alert('Code uploaded successfully');
+            }
+        });
+    });
+
+</script>
+{% endblock %}
