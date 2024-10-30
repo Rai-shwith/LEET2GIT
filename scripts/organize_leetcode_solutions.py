@@ -3,7 +3,7 @@ from app import schemas
 from .problem_fetcher import get_problem_details
 
 
-def organize_leetcode_solutions(raw_solutions: dict)->schemas.Uploads:
+async def organize_leetcode_solutions(raw_solutions: dict)->schemas.Uploads:
     logger.info("Organizing Leetcode solutions ...")
     extension_map = {
     "Python3": "py",
@@ -46,7 +46,7 @@ def organize_leetcode_solutions(raw_solutions: dict)->schemas.Uploads:
     for submission in submissions_dump:
         if submission["status_display"] == "Accepted":
             title_slug = submission["title_slug"]
-            problemDetails : schemas.ProblemDetails = get_problem_details(title_slug=title_slug)
+            problemDetails : schemas.ProblemDetails = await get_problem_details(title_slug=title_slug)
             code_extension : str = extension_map[submission["lang_name"]]
             code : str = submission["code"]
             solution : schemas.Solution = schemas.Solution(code=code,code_extension=code_extension)

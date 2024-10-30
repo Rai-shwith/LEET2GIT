@@ -55,5 +55,5 @@ async def automatic_uploads(request:Request,leetcode_credentials: schemas.Leetco
     This endpoint is for automatic uploading """
     logger.info("Automatic uploading ...")
     raw_submissions = leetcode_solution_fetcher(leetcode_credentials.leetcode_access_token,leetcode_credentials.csrftoken)
-    uploads: schemas.Uploads = organize_leetcode_solutions(raw_solutions=raw_submissions)
+    uploads: schemas.Uploads = await organize_leetcode_solutions(raw_solutions=raw_submissions)
     await create_uploads(request=request,uploads=uploads,db=db)

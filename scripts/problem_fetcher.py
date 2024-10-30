@@ -9,7 +9,7 @@ URL = "https://leetcode.com/graphql/"
 async def get_problem_details(title_slug:str)->schemas.ProblemDetails:
     logger.info("Fetching problem details")
     query = query_generator(title_slug)
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=10.0) as client:
         response = await client.post(URL, json={"query": query})
     response.raise_for_status()
     if response.status_code == 200:
