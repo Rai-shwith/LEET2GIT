@@ -12,4 +12,4 @@ def get_repo_readme(readme_content : str,user_name: str,repo_name : str,folder_n
         elif (readme_content.find(entry) == -1): # If the entry is not present in the tag
             position = index + len(f"## {tag.get('name')}") + 18
             readme_content = readme_content[:position] + entry + readme_content[position:]
-        return readme_content 
+    return readme_content 
