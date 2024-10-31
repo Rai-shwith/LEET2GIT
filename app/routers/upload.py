@@ -3,7 +3,7 @@ from scripts.github_handler.get_user_info import get_user_info
 from scripts.output_content_creater import output_content_creater
 from scripts.leetcode_solutions_fetcher import leetcode_solution_fetcher
 from scripts.github_handler.get_repo import get_repo
-from scripts.github_handler.upload_file import upload_file
+from scripts.github_handler.upload_file import upload_file,update_repo_readme
 from scripts.organize_leetcode_solutions import organize_leetcode_solutions
 from ..database import get_db
 from .oauth import get_current_user
@@ -36,7 +36,8 @@ async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSessi
         logger.info(f"obtained the content for the files")
         await asyncio.gather(
         upload_file(repo,folder_name+"/README.md",read_me_content,"Added README.md"),
-        upload_file(repo,folder_name+"/"+solution_file_name,solution_content,"Added solution file")
+        upload_file(repo,folder_name+"/"+solution_file_name,solution_content,"Added solution file"),
+        update_repo_readme(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,folder_name=folder_name,topic_tags=upload.question.topicTags)
         )
     logger.info("Uploading Finished")
     
