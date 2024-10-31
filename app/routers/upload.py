@@ -26,7 +26,7 @@ async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSessi
     """
     github_user: AuthenticatedUser = await get_user_info(request=request)
     github_id = github_user.id
-    current_user: schemas.Users = get_current_user(github_id=github_id,db=db)
+    current_user: schemas.Users = await get_current_user(github_id=github_id,db=db)
     logger.info(f"Creating the upload for the user: {current_user}")
     repo_name = current_user.repo_name
     repo = await get_repo(github_user,repo_name=repo_name)
@@ -34,11 +34,9 @@ async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSessi
     for upload in uploads.uploads:
         (read_me_content,solution_content,folder_name,solution_file_name) = output_content_creater(problem_detail=upload.question,solution=upload.solution)
         logger.info(f"obtained the content for the files")
-        await asyncio.gather(
-        upload_file(repo,folder_name+"/README.md",read_me_content,"Added README.md"),
-        upload_file(repo,folder_name+"/"+solution_file_name,solution_content,"Added solution file"),
-        update_repo_readme(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,folder_name=folder_name,topic_tags=upload.question.topicTags)
-        )
+        await upload_file(repo,folder_name+"/README.md",read_me_content,"Added README.md")
+        await upload_file(repo,folder_name+"/"+solution_file_name,solution_content,"Added solution file")
+        await update_repo_readme(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,folder_name=folder_name,topic_tags=upload.question.topicTags)
     logger.info("Uploading Finished")
     
 

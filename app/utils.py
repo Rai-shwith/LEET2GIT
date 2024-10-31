@@ -24,11 +24,11 @@ async def get_github_access_token(code: str) -> GitHubAccessTokenResponse:
             "code": code,
             "redirect_uri": GITHUB_REDIRECT_URI,
         }
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=10) as client:
         response = await client.post(
         GITHUB_TOKEN_URL,
         data= data,
-        headers={"Accept": "application/json"}
+        headers={"Accept": "application/json"},
     )
     logger.info(f"Response: {response.json()}")
     if response.status_code != 200:

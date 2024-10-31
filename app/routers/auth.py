@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-@router.get("/github/callback",response_model=None)
+@router.get("/github/callback")
 async def get_github_callback(request:Request,db:AsyncSession = Depends(get_db)):
     logger.info("Github callback")
     code = request.query_params.get("code")

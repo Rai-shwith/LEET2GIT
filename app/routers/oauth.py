@@ -29,7 +29,7 @@ async def get_github_user(request:Request,token:str = None) -> schemas.GithubUse
     if not token:
         token = request.cookies.get("access_token")
     headers = {"Authorization": f"bearer {token}"}
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=10) as client:
         response = await client.get(GITHUB_API_URL, headers=headers)
     logger.info(f"Response: {response}")
     if response.status_code != 200:
@@ -44,7 +44,7 @@ async def get_github_user(request:Request,token:str = None) -> schemas.GithubUse
     return github_user
 
 
-async def get_current_user(github_id:int,db:AsyncSession)-> Union[schemas.Users,schemas.GithubUser]:
+async def get_current_user(github_id:int,db:AsyncSession)-> schemas.Users | None:
     """
     This function will return the current user from the database.
     If the user is not present in the database then it will return None
@@ -53,6 +53,7 @@ async def get_current_user(github_id:int,db:AsyncSession)-> Union[schemas.Users,
     # db:AsyncSession=next(get_db())
     result = await db.execute(select(models.Users).filter(models.Users.github_id == github_id))
     user = result.scalars().first()
+    logger.info(f"User: {user}")
     return user
     # if not user:
     #     user = create_user(github_user,db=db)
@@ -69,7 +70,7 @@ async def create_user(github_user: schemas.GithubUser,repo_name:str,db:AsyncSess
     logger.info("Creating a new user")
     try:
         new_user = models.Users(user_name=github_user.login,email=github_user.email,github_id=github_user.id,avatar_url=github_user.avatar_url,repo_name=repo_name)
-        await db.add(new_user)
+        db.add(new_user)
         await db.commit()
         logger.info(f"New user created: {new_user}")
     except (IntegrityError,UniqueViolation) as e:

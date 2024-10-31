@@ -13,7 +13,9 @@ async def upload_file(repo:Repository.Repository, file_name_with_path:str,conten
         logger.info(f"{file_name_with_path} already exists. Updating the file")
         await run_in_threadpool(repo.update_file,contents_info.path, commit_message, content, contents_info.sha)
         logger.info(f"{file_name_with_path} updated successfully")
-    except:
+    except Exception as e:
+        logger.info(f"Erorr: {str(e)}")
+        logger.error(e)
         logger.info(f"{file_name_with_path}  Creating a new file")
         await run_in_threadpool(repo.create_file,file_name_with_path, commit_message, content)
         logger.info(f"{file_name_with_path} created successfully")
