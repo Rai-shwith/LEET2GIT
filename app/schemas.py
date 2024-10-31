@@ -32,7 +32,7 @@ class ProblemDetails(BaseModel):
     difficulty: str
     questionId: str
     titleSlug: str
-    topicTags: list[dict]
+    topicTags: list[dict | None]
     
 class Solution(BaseModel):
     code_extension: str

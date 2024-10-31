@@ -1,4 +1,4 @@
-def get_repo_readme(readme_content : str,user_name: str,repo_name : str,folder_name : str,topic_tags:list[dict]):
+def get_repo_readme(readme_content : str,user_name: str,repo_name : str,folder_name : str,topic_tags:list[dict | None]) -> str:
     """
     This function will return a readme file with the given topic tags
     """
