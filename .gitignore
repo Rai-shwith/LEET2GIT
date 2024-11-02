@@ -1,8 +1,11 @@
 .venv/
 JUNK/
 .pytest_cache/
-__pycache__/
+**/__pycache__/
 *.pyc
 .env
 *.log
 .replit
+replit.nix
+.vscode/
+node_modules/
