@@ -8,3 +8,4 @@ __pycache__/
 .replit
 replit.nix
 .vscode/
+node_modules/
