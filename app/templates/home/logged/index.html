@@ -40,7 +40,7 @@
             </div>
     
         </section>
-        <main class="flex flex-col">
+        <main class="flex-grow flex flex-col">
             <img src="https://avatars.githubusercontent.com/u/147788165?v=4" alt="Github User Image" class="absolute top-3 right-3 w-16 h-16 object-cover rounded-full">
             <span>
                 <p class="text-s text-textSecondary md:text-2xl ml-5 inline font-semibold">Welcome, </p>
@@ -117,15 +117,5 @@
 {% endblock %}
 {% block javascripts %}
 <script src="/js/logged/script.js"></script>
+<script src="/js/utils/script.js"></script>
     {% endblock %}
-
-
-<!-- 
-11px → text-xs (or text-[11px] for exact sizing)
-20px → text-lg (or text-[20px] for exact sizing)
-24px → text-xl (or text-[24px] for exact sizing)
-32px → text-2xl (or use text-[32px] for exact sizing)
-36px → text-3xl (or text-[36px] for exact sizing) 
-40px → text-4xl (or text-[40px] for exact sizing)
-64px → text-6xl (or text-[64px] for exact sizing)
--->

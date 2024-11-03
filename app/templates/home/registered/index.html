@@ -1,4 +1,235 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Populate Your Repository with Solutions</title>
+    <link rel="stylesheet" href="/app/static/css/output.css">
+    <link rel="stylesheet" href="/app/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% block stylesheetsrc %}{% endblock %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex flex-col min-h-screen bg-backgroundMain">
+    <header class="flex justify-start gap-3 p-4">
+        <svg width="40" height="40" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="14" fill="black" />
+            <path
+                d="M15.7397 4.00045C15.5883 4.00546 15.4394 4.04029 15.3015 4.10293C15.1637 4.16557 15.0396 4.25479 14.9365 4.36544L10.4184 9.18872L7.19732 12.627C6.7282 13.1251 6.3822 13.7254 6.18688 14.3803C6.14502 14.521 6.11015 14.6637 6.08241 14.8078C5.95718 15.46 5.97485 16.1314 6.13422 16.7761C6.20506 17.067 6.3027 17.3507 6.42591 17.6236C6.68141 18.1907 7.04178 18.7046 7.48817 19.1386L11.0627 22.6327L11.0953 22.6644C12.9741 24.4685 15.9862 24.4419 17.8341 22.6027L19.8366 20.6094L22.6628 16.6454C22.7699 16.5384 22.8548 16.4115 22.9127 16.2717C22.9705 16.132 23.0002 15.9823 23 15.8311C23.0002 15.68 22.9705 15.5303 22.9127 15.3906C22.8548 15.2508 22.7699 15.1239 22.6628 15.0169C22.5557 14.9099 22.4284 14.8251 22.2884 14.7672C22.1484 14.7093 21.9982 14.6795 21.8466 14.6795H13.3444C13.1928 14.6795 13.0427 14.7093 12.9026 14.7672C12.7626 14.8251 12.6354 14.9099 12.5282 15.0169C12.4211 15.1239 12.3362 15.2508 12.2783 15.3906C12.2205 15.5303 12.1908 15.68 12.191 15.8311C12.1908 15.9823 12.2205 16.132 12.2783 16.2717C12.3362 16.4115 12.4211 16.5384 12.5282 16.6454C12.6354 16.7523 12.7626 16.8372 12.9026 16.8951C13.0427 16.953 13.1928 16.9828 13.3444 16.9828H19.8366L18.2085 18.9778L16.206 20.9711C15.7392 21.4305 15.1112 21.6908 14.4553 21.6967C13.7993 21.7026 13.1668 21.4537 12.6917 21.0028L12.6749 20.9869L9.1012 17.4928C8.55628 16.9595 8.28883 16.2686 8.30889 15.607C8.31287 15.4602 8.33134 15.3143 8.36405 15.1712C8.44805 14.8081 8.62649 14.4736 8.88139 14.2012L12.1016 10.762C12.9858 9.81705 14.7794 9.70372 15.804 10.5304L18.7301 12.8895C19.2257 13.2895 19.9511 13.212 20.3515 12.717C20.5434 12.4792 20.6329 12.1753 20.6005 11.8718C20.568 11.5683 20.4163 11.29 20.1784 11.0979L17.2533 8.73873C16.5847 8.19957 15.7773 7.8679 14.9348 7.73707L16.6189 5.93876C16.7742 5.77233 16.8766 5.56388 16.9134 5.33958C16.9502 5.11528 16.9198 4.88513 16.8258 4.67805C16.7319 4.47096 16.5787 4.29617 16.3854 4.17561C16.1922 4.05506 15.9676 3.99412 15.7397 4.00045Z"
+                fill="white" />
+        </svg>
+        <h1 class="text-2xl md:text-4xl font-bold">LEET2GIT</h1>
+    </header>
+
+    <main class="flex-grow flex flex-col text-textSecondary">
+        <img src="https://avatars.githubusercontent.com/u/147788165?v=4" alt="Github User Image"
+            class="absolute top-3 right-3 w-16 h-16 object-cover rounded-full">
+        <section id="wayChooser" class="hidden">
+            <h2 class="text-6xl font-semibold text-center my-5">Upload Your Solutions</h2>
+            <section class="flex-grow flex items-stretch md:items-center flex-col md:flex-row justify-evenly">
+                <div
+                    class="bg-backgroundContainer text-center hover:scale-110 text-4xl md:text-8xl m-5 rounded-xl border cursor-pointer transition-all ease-in border-slate-200 p-6">
+                    Manual
+                </div>
+                <div
+                    class="bg-backgroundContainer text-center hover:scale-110 text-4xl md:text-8xl m-5 rounded-xl border cursor-pointer transition-all ease-in border-slate-200 p-6">
+                    Automatic
+                </div>
+            </section>
+        </section>
+        <section id="mannual" class="flex flex-col items-center">
+            <div class="relative ">
+                <h1 class="text-4xl md:text-6xl font-bold">Mannual</h1>
+                <div class="h-fit px-3 absolute right-0 top-0 translate-x-full translate-y-1/2  ">
+                    <div
+                        class="bg-backgroundContainer px-2 rounded-md text-black active:bg-slate-200 border border-slate-300 cursor-pointer hover:scale-110 transition-transform ease-in">
+                        Automatic</div>
+                </div>
+            </div>
+            <div class="relative w-full max-w-sm mx-auto my-5">
+                <input type="text" placeholder="Search..."
+                    class="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                <span class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5 hover:text-black active:scale-125 transition-all ease-out" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+            </div>
+            <!-- card Section  -->
+            <section id="cardContainer" class="scrollbar-hide w-screen flex overflow-x-auto snap-x snap-mandatory">
+                <!-- Card -->
+                <div class="card snap-center flex-none w-full flex justify-center items-center">
+                    <div class=" bg-white w-5/6 p-5 m-5 rounded-3xl">
+                        <!-- Two Main Containers -->
+                        <div class="space-y-6 md:space-y-0 md:flex md:space-x-6">
+
+                            <!-- User Question Info -->
+                            <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow">
+                                <h3 class="text-xl font-semibold text-gray-700 mb-3">Question Information</h3>
+                                <p><span class="font-bold text-gray-600">ID:</span> 12345</p>
+                                <p><span class="font-bold text-gray-600">Name:</span> Two Sum</p>
+                                <p><span class="font-bold text-gray-600">Difficulty:</span> <span
+                                        class="text-yellow-600 font-medium">Medium</span></p>
+                            </div>
+
+                            <!-- Solution Area -->
+                            <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow">
+                                <div class="flex justify-between">
+                                    <h3 class="text-xl font-semibold text-gray-700 mb-3">Your Solution</h3>
+                                    <!-- Language Selection Dropdown -->
+                                    <div class="text-xs">
+                                        <label for="language" class="block text-gray-600 font-medium ">Choose
+                                            Language</label>
+                                        <select id="language"
+                                            class=" border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                            <option value="" disabled selected></option>
+                                            <option value="py">Python </option>
+                                            <option value="java">Java </option>
+                                            <option value="c">C </option>
+                                            <option value="cpp">C++ </option>
+                                            <option value="cs">C# </option>
+                                            <option value="js">JavaScript </option>
+                                            <option value="ts">TypeScript </option>
+                                            <option value="rb">Ruby </option>
+                                            <option value="swift">Swift </option>
+                                            <option value="go">Go </option>
+                                            <option value="kt">Kotlin </option>
+                                            <option value="scala">Scala </option>
+                                            <option value="rs">Rust </option>
+                                            <option value="php">PHP </option>
+                                            <option value="sql">MySQL </option>
+                                            <option value="sh">Bash </option>
+                                            <option value="pl">Perl </option>
+                                            <option value="hs">Haskell </option>
+                                            <option value="dart">Dart </option>
+                                            <option value="rkt">Racket </option>
+                                            <option value="ex">Elixir </option>
+                                            <option value="erl">Erlang </option>
+                                            <option value="m">Objective-C </option>
+                                            <option value="m">MATLAB </option>
+                                            <option value="fs">F# </option>
+                                            <option value="lua">Lua </option>
+                                            <option value="groovy">Groovy </option>
+                                            <option value="vb">VB.NET </option>
+                                            <option value="f90">Fortran </option>
+                                            <option value="pas">Pascal </option>
+                                            <option value="jl">Julia </option>
+                                            <option value="pl">Prolog </option>
+                                            <option value="scm">Scheme </option>
+                                            <option value="cbl">COBOL </option>
+                                            <option value="sol">Solidity </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <textarea placeholder="Write your solution here..."
+                                    class="w-full h-40 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                            </div>
+                        </div>
+                        <div class="flex justify-center items-center p-4 mt-4 border-t border-gray-200">
+                            
+                            <!-- Add and Remove Buttons -->
+                            <div class="flex w-full justify-between text-sm space-x-3">
+                                <!-- Remove Button -->
+                                <button onclick="removeCard(event)"
+                                    class="flex justify-center items-center px-6 py-3 rounded-lg bg-red-100 hover:bg-red-600 text-black hover:text-white font-semibold transition-all duration-200 ease-in-out">
+                                    <!-- SVG Icon for Remove -->
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M20 12H4"></path>
+                                    </svg>
+                                    <div class="">
+                                    Remove Question
+                                    </div>
+                                </button>
+                            
+                                <!-- Add Button -->
+                                <button onclick="addCard()"
+                                    class="flex justify-center items-center px-6 py-3 rounded-lg bg-blue-100 hover:bg-blue-600 text-black hover:text-white font-semibold transition-all duration-200 ease-in-out">
+                                    <!-- SVG Icon for Add -->
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                    <div class="">
+                                    Add Question
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> 
+             
+            </section>
+        </section>
+    </main>
+
+    <div class="flex justify-center mt-6">
+        <button
+            class="flex items-center justify-center px-8 py-3 mb-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
+            <!-- GitHub SVG Icon -->
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387 0.6 0.11 0.82-0.26 0.82-0.577 0-0.285-0.011-1.04-0.016-2.04-3.338 0.725-4.042-1.616-4.042-1.616-0.546-1.387-1.333-1.756-1.333-1.756-1.089-0.745 0.084-0.73 0.084-0.73 1.205 0.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.494 0.998 0.107-0.774 0.418-1.305 0.762-1.605-2.665-0.304-5.466-1.332-5.466-5.93 0-1.31 0.469-2.381 1.235-3.221-0.123-0.303-0.536-1.521 0.118-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.983-0.399 3.004-0.404 1.021 0.005 2.047 0.138 3.005 0.404 2.291-1.553 3.298-1.23 3.298-1.23 0.655 1.655 0.243 2.873 0.119 3.176 0.77 0.84 1.235 1.911 1.235 3.221 0 4.61-2.804 5.625-5.475 5.922 0.43 0.37 0.823 1.102 0.823 2.222 0 1.606-0.014 2.902-0.014 3.293 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.2-6.085 8.2-11.383 0-6.627-5.373-12-12-12z" />
+            </svg>
+            Sync with GitHub
+        </button>
+    </div>
+
+
+    <footer class="bg-gray-900 text-white relative bottom-0 px-4 w-full text-center">
+        <div class="text-sm text-gray-400">
+            <p class="mb-2">&copy; <span id="year"></span> Leet2Git. Released under the MIT License.</p>
+            <p>🚀 Transforming LeetCode grind into GitHub glory! Contributions welcome.</p>
+        </div>
+
+        <div class="flex justify-center space-x-4 ">
+            <a href="https://github.com/rai-shwith" class="text-gray-400 hover:text-white" target="_blank"
+                rel="noopener noreferrer">GitHub</a>
+            <a href="https://ashwithrai.me" class="text-gray-400 hover:text-white" target="_blank"
+                rel="noopener noreferrer">Portfolio</a>
+            <a href="mailto:ashwithrai96.96@gmail.com" class="text-gray-400 hover:text-white">Contact</a>
+        </div>
+    </footer>
+
+ <script src="/app/static/js/utils/script.js"></script>
+ <script src="/app/static/js/registered/script.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+11px → text-xs (or text-[11px] for exact sizing)
+20px → text-lg (or text-[20px] for exact sizing)
+24px → text-xl (or text-[24px] for exact sizing)
+32px → text-2xl (or use text-[32px] for exact sizing)
+36px → text-3xl (or text-[36px] for exact sizing) 
+40px → text-4xl (or text-[40px] for exact sizing)
+64px → text-6xl (or text-[64px] for exact sizing)
+-->
+<!-- {% extends "base.html" %}
 {% block title %}Populate Your Repository with Solutions{% endblock %}
 {% block content %}
 <h1>Thank you for registring</h1>
@@ -128,3 +359,4 @@
 
 </script>
 {% endblock %}
+ -->
