@@ -1,3 +1,33 @@
+var wayChooser = document.getElementById('wayChooser');
+var manual = document.getElementById('manual');
+var automatic = document.getElementById('automatic');
+
+wayChooser.querySelector('.manual').addEventListener('click', () => {
+    wayChooser.classList.add('hidden');
+    manual.classList.remove('hidden');
+    manual.classList.add('flex');
+});
+
+wayChooser.querySelector('.automatic').addEventListener('click', () => {
+    wayChooser.classList.add('hidden');
+    automatic.classList.remove('hidden');
+    automatic.classList.add('flex');
+});
+
+manual.querySelector('.automatic').addEventListener('click', () => {
+    manual.classList.remove('flex');
+    manual.classList.add('hidden');
+    automatic.classList.remove('hidden');
+    automatic.classList.add('flex');
+});
+
+automatic.querySelector('.manual').addEventListener('click', () => {
+    automatic.classList.remove('flex');
+    automatic.classList.add('hidden');
+    manual.classList.remove('hidden');
+    manual.classList.add('flex');
+});
+
 const input = document.getElementById('search-question');
 const searchBtn = document.getElementById('searchBtn');
 

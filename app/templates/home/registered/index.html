@@ -65,27 +65,33 @@
     </section>
 
     <main class="flex-grow flex flex-col text-textSecondary">
+
+        <!-- Github User Image -->
         <img src="https://avatars.githubusercontent.com/u/147788165?v=4" alt="Github User Image"
             class="absolute top-3 right-3 w-16 h-16 object-cover rounded-full">
-        <section id="wayChooser" class="hidden">
+
+        <!-- Section to choose Mannual or Automatic -->
+        <section id="wayChooser" class="">
             <h2 class="text-6xl font-semibold text-center my-5">Upload Your Solutions</h2>
             <section class="flex-grow flex items-stretch md:items-center flex-col md:flex-row justify-evenly">
                 <div
-                    class="bg-backgroundContainer text-center hover:scale-110 text-4xl md:text-8xl m-5 rounded-xl border cursor-pointer transition-all ease-in border-slate-200 p-6">
+                    class="manual bg-backgroundContainer text-center hover:scale-110 text-4xl md:text-8xl m-5 rounded-xl border cursor-pointer transition-all ease-in border-slate-200 p-6">
                     Manual
                 </div>
                 <div
-                    class="bg-backgroundContainer text-center hover:scale-110 text-4xl md:text-8xl m-5 rounded-xl border cursor-pointer transition-all ease-in border-slate-200 p-6">
+                    class="automatic bg-backgroundContainer text-center hover:scale-110 text-4xl md:text-8xl m-5 rounded-xl border cursor-pointer transition-all ease-in border-slate-200 p-6">
                     Automatic
                 </div>
             </section>
         </section>
-        <section id="mannual" class="flex flex-col items-center">
+
+        <!-- Mannual Section  -->
+        <section id="manual" class="hidden flex-col items-center">
             <div class="relative ">
                 <h1 class="text-4xl md:text-6xl font-bold">Mannual</h1>
                 <div class="h-fit px-3 absolute right-0 top-0 translate-x-full translate-y-1/2  ">
                     <div
-                        class="bg-backgroundContainer px-2 rounded-md text-black active:bg-slate-200 border border-slate-300 cursor-pointer hover:scale-110 transition-transform ease-in">
+                        class="automatic bg-backgroundContainer px-2 rounded-md text-black active:bg-slate-200 border border-slate-300 cursor-pointer hover:scale-110 transition-transform ease-in">
                         Automatic</div>
                 </div>
             </div>
@@ -106,129 +112,207 @@
             </section>
 
             <!-- card Section  -->
-            <section id="cardContainer" class="scrollbar-hide w-screen flex overflow-x-auto snap-x snap-mandatory">
-                <!-- Card -->
-                <div class="card snap-center flex-none w-full flex justify-center items-center">
-                    <div class=" bg-white w-5/6 p-5 m-5 rounded-3xl">
-                        <!-- Two Main Containers -->
-                        <div class="space-y-6 md:space-y-0 md:flex md:space-x-6">
+            <!-- Card -->
+            <div class="card snap-center flex-none w-full flex justify-center items-center">
+                <div class=" bg-white w-5/6 p-5 m-5 rounded-3xl">
+                    <!-- Two Main Containers -->
+                    <div class="space-y-6 md:space-y-0 md:flex md:space-x-6">
 
-                            <!-- User Question Info -->
-                            <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow">
-                                <h3 class="text-xl font-semibold text-gray-700 mb-3">Question Information</h3>
-                                <p><span class="font-bold text-gray-600">ID:</span> <span id="questionId">...</span></p>
-                                <p><span class="font-bold text-gray-600">Name:</span> <span
-                                        id="questionTitle">...</span></p>
-                                <p><span class="font-bold text-gray-600">Difficulty:</span> <span
-                                        id="difficulty">...</span></p>
-                            </div>
+                        <!-- User Question Info -->
+                        <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow">
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">Question Information</h3>
+                            <p><span class="font-bold text-gray-600">ID:</span> <span id="questionId">...</span></p>
+                            <p><span class="font-bold text-gray-600">Name:</span> <span id="questionTitle">...</span>
+                            </p>
+                            <p><span class="font-bold text-gray-600">Difficulty:</span> <span id="difficulty">...</span>
+                            </p>
+                        </div>
 
-                            <!-- Solution Area -->
-                            <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow">
-                                <div class="flex justify-between">
-                                    <h3 class="text-xl font-semibold text-gray-700 mb-3">Your Solution</h3>
-                                    <!-- Language Selection Dropdown -->
-                                    <div class="text-xs">
-                                        <label for="language" class="block text-gray-600 font-medium ">Choose
-                                            Language</label>
-                                        <select id="language" disabled
-                                            class=" border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="" disabled selected></option>
-                                            <option value="py">Python </option>
-                                            <option value="java">Java </option>
-                                            <option value="c">C </option>
-                                            <option value="cpp">C++ </option>
-                                            <option value="cs">C# </option>
-                                            <option value="js">JavaScript </option>
-                                            <option value="ts">TypeScript </option>
-                                            <option value="rb">Ruby </option>
-                                            <option value="swift">Swift </option>
-                                            <option value="go">Go </option>
-                                            <option value="kt">Kotlin </option>
-                                            <option value="scala">Scala </option>
-                                            <option value="rs">Rust </option>
-                                            <option value="php">PHP </option>
-                                            <option value="sql">MySQL </option>
-                                            <option value="sh">Bash </option>
-                                            <option value="pl">Perl </option>
-                                            <option value="hs">Haskell </option>
-                                            <option value="dart">Dart </option>
-                                            <option value="rkt">Racket </option>
-                                            <option value="ex">Elixir </option>
-                                            <option value="erl">Erlang </option>
-                                            <option value="m">Objective-C </option>
-                                            <option value="m">MATLAB </option>
-                                            <option value="fs">F# </option>
-                                            <option value="lua">Lua </option>
-                                            <option value="groovy">Groovy </option>
-                                            <option value="vb">VB.NET </option>
-                                            <option value="f90">Fortran </option>
-                                            <option value="pas">Pascal </option>
-                                            <option value="jl">Julia </option>
-                                            <option value="pl">Prolog </option>
-                                            <option value="scm">Scheme </option>
-                                            <option value="cbl">COBOL </option>
-                                            <option value="sol">Solidity </option>
-                                        </select>
-                                    </div>
+                        <!-- Solution Area -->
+                        <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow">
+                            <div class="flex justify-between">
+                                <h3 class="text-xl font-semibold text-gray-700 mb-3">Your Solution</h3>
+                                <!-- Language Selection Dropdown -->
+                                <div class="text-xs">
+                                    <label for="language" class="block text-gray-600 font-medium ">Choose
+                                        Language</label>
+                                    <select id="language" disabled
+                                        class=" border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="" disabled selected></option>
+                                        <option value="py">Python </option>
+                                        <option value="java">Java </option>
+                                        <option value="c">C </option>
+                                        <option value="cpp">C++ </option>
+                                        <option value="cs">C# </option>
+                                        <option value="js">JavaScript </option>
+                                        <option value="ts">TypeScript </option>
+                                        <option value="rb">Ruby </option>
+                                        <option value="swift">Swift </option>
+                                        <option value="go">Go </option>
+                                        <option value="kt">Kotlin </option>
+                                        <option value="scala">Scala </option>
+                                        <option value="rs">Rust </option>
+                                        <option value="php">PHP </option>
+                                        <option value="sql">MySQL </option>
+                                        <option value="sh">Bash </option>
+                                        <option value="pl">Perl </option>
+                                        <option value="hs">Haskell </option>
+                                        <option value="dart">Dart </option>
+                                        <option value="rkt">Racket </option>
+                                        <option value="ex">Elixir </option>
+                                        <option value="erl">Erlang </option>
+                                        <option value="m">Objective-C </option>
+                                        <option value="m">MATLAB </option>
+                                        <option value="fs">F# </option>
+                                        <option value="lua">Lua </option>
+                                        <option value="groovy">Groovy </option>
+                                        <option value="vb">VB.NET </option>
+                                        <option value="f90">Fortran </option>
+                                        <option value="pas">Pascal </option>
+                                        <option value="jl">Julia </option>
+                                        <option value="pl">Prolog </option>
+                                        <option value="scm">Scheme </option>
+                                        <option value="cbl">COBOL </option>
+                                        <option value="sol">Solidity </option>
+                                    </select>
                                 </div>
-                                <textarea id="solutionArea" placeholder="Search for a question to get started..."
-                                    disabled
-                                    class="w-full h-40 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
                             </div>
+                            <textarea id="solutionArea" placeholder="Search for a question to get started..." disabled
+                                class="w-full h-40 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
                         </div>
-                        <div class="flex justify-center items-center p-4 mt-4 border-t border-gray-200">
-
-                            <!-- Add and Remove Buttons -->
-                            <div class="flex w-full justify-evenly text-sm space-x-3">
-                                <!-- Remove Button -->
-                                <button onclick="removeCard(event)"
-                                    class="remove flex justify-center space-x-2 items-center px-6 py-3 rounded-lg bg-red-100 hover:bg-red-600 text-black hover:text-white font-semibold transition-all duration-200 ease-in-out">
-                                    <!-- SVG Icon for Remove -->
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M20 12H4"></path>
-                                    </svg>
-                                    <div class="">
-                                        Remove Question
-                                    </div>
-                                </button>
-
-                                <!-- Add Button -->
-                                <button onclick="addCard(event)"
-                                    class="add flex justify-center space-x-2 items-center px-6 py-3 rounded-lg bg-blue-100 hover:bg-blue-600 text-black hover:text-white font-semibold transition-all duration-200 ease-in-out">
-                                    <!-- SVG Icon for Add -->
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4"></path>
-                                    </svg>
-                                    <div class="">
-                                        Add Question
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
-                </div>
+                    <div class="flex justify-center items-center p-4 mt-4 border-t border-gray-200">
 
-            </section>
+                        <!-- Add and Remove Buttons -->
+                        <div class="flex w-full justify-evenly text-sm space-x-3">
+                            <!-- Remove Button -->
+                            <button onclick="removeCard(event)"
+                                class="remove flex justify-center space-x-2 items-center px-6 py-3 rounded-lg bg-red-100 hover:bg-red-600 text-black hover:text-white font-semibold transition-all duration-200 ease-in-out">
+                                <!-- SVG Icon for Remove -->
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4">
+                                    </path>
+                                </svg>
+                                <div class="">
+                                    Remove Question
+                                </div>
+                            </button>
+
+                            <!-- Add Button -->
+                            <button onclick="addCard(event)"
+                                class="add flex justify-center space-x-2 items-center px-6 py-3 rounded-lg bg-blue-100 hover:bg-blue-600 text-black hover:text-white font-semibold transition-all duration-200 ease-in-out">
+                                <!-- SVG Icon for Add -->
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                <div class="">
+                                    Add Question
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-6">
+                <button
+                    class="flex items-center justify-center px-8 py-3 mb-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                    <!-- GitHub SVG Icon -->
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387 0.6 0.11 0.82-0.26 0.82-0.577 0-0.285-0.011-1.04-0.016-2.04-3.338 0.725-4.042-1.616-4.042-1.616-0.546-1.387-1.333-1.756-1.333-1.756-1.089-0.745 0.084-0.73 0.084-0.73 1.205 0.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.494 0.998 0.107-0.774 0.418-1.305 0.762-1.605-2.665-0.304-5.466-1.332-5.466-5.93 0-1.31 0.469-2.381 1.235-3.221-0.123-0.303-0.536-1.521 0.118-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.983-0.399 3.004-0.404 1.021 0.005 2.047 0.138 3.005 0.404 2.291-1.553 3.298-1.23 3.298-1.23 0.655 1.655 0.243 2.873 0.119 3.176 0.77 0.84 1.235 1.911 1.235 3.221 0 4.61-2.804 5.625-5.475 5.922 0.43 0.37 0.823 1.102 0.823 2.222 0 1.606-0.014 2.902-0.014 3.293 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.2-6.085 8.2-11.383 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    Sync with GitHub
+                </button>
+            </div>
         </section>
+
+        <!-- Automatic Section  -->
+        <section id="automatic" class="hidden flex-col items-center">
+            <div class="relative ">
+                <h1 class="text-4xl md:text-6xl font-bold">Automatic</h1>
+                <div class="h-fit px-3 absolute right-0 top-0 translate-x-full translate-y-1/2  ">
+                    <div
+                        class="manual bg-backgroundContainer px-2 rounded-md text-black active:bg-slate-200 border border-slate-300 cursor-pointer hover:scale-110 transition-transform ease-in">
+                        Mannual</div>
+                </div>
+            </div>
+
+            <section class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6 w-screen">
+                <!-- Main Container -->
+                <div class="bg-white rounded-lg shadow-md md:w-4/5 w-full                              p-8 space-y-6">
+
+                    <!-- Instructions Container -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">How to Retrieve Your Tokens</h2>
+                        <p class="text-gray-600 leading-relaxed">
+                            To get your <strong>LEETCODE_SESSION</strong> and <strong>csrftoken</strong>:
+                        </p>
+                        <ul class="list-decimal list-inside text-gray-600 mt-3 space-y-2">
+                            <li>Log in to your LeetCode account in a browser.</li>
+                            <li>Right-click the page and select <strong>Inspect</strong> or press <strong>F12</strong>.
+                            </li>
+                            <li>Go to the <strong>Application</strong> tab and find <strong>Cookies</strong> under
+                                <strong>Storage</strong>.</li>
+                            <li>Locate <strong>LEETCODE_SESSION</strong> and <strong>csrftoken</strong>, and copy their
+                                values.</li>
+                        </ul>
+                        <p class="text-gray-500 mt-4 italic">
+                            Note: Handle these tokens carefully, as they are tied to your account's security.
+                        </p>
+                    </div>
+
+                    <!-- Token Input Container -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Enter Your Tokens</h2>
+                        <form class="space-y-4">
+                            <!-- LEETCODE_SESSION Field -->
+                            <div>
+                                <label for="leetcode_session"
+                                    class="block text-gray-700 font-medium mb-2">LEETCODE_SESSION</label>
+                                <input type="text" id="leetcode_session" placeholder="Enter LEETCODE_SESSION token"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <!-- csrftoken Field -->
+                            <div>
+                                <label for="csrftoken" class="block text-gray-700 font-medium mb-2">csrftoken</label>
+                                <input type="text" id="csrftoken" placeholder="Enter csrftoken"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit"
+                                class="w-full py-2 mt-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                Submit Tokens
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </section>
+
+            <div class="flex justify-center mt-6">
+                <button
+                    class="flex items-center justify-center px-8 py-3 mb-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                    <!-- GitHub SVG Icon -->
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387 0.6 0.11 0.82-0.26 0.82-0.577 0-0.285-0.011-1.04-0.016-2.04-3.338 0.725-4.042-1.616-4.042-1.616-0.546-1.387-1.333-1.756-1.333-1.756-1.089-0.745 0.084-0.73 0.084-0.73 1.205 0.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.494 0.998 0.107-0.774 0.418-1.305 0.762-1.605-2.665-0.304-5.466-1.332-5.466-5.93 0-1.31 0.469-2.381 1.235-3.221-0.123-0.303-0.536-1.521 0.118-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.983-0.399 3.004-0.404 1.021 0.005 2.047 0.138 3.005 0.404 2.291-1.553 3.298-1.23 3.298-1.23 0.655 1.655 0.243 2.873 0.119 3.176 0.77 0.84 1.235 1.911 1.235 3.221 0 4.61-2.804 5.625-5.475 5.922 0.43 0.37 0.823 1.102 0.823 2.222 0 1.606-0.014 2.902-0.014 3.293 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.2-6.085 8.2-11.383 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    Sync with GitHub
+                </button>
+            </div>
+        </section>
+
+
     </main>
 
-    <div class="flex justify-center mt-6">
-        <button
-            class="flex items-center justify-center px-8 py-3 mb-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
-            <!-- GitHub SVG Icon -->
-            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387 0.6 0.11 0.82-0.26 0.82-0.577 0-0.285-0.011-1.04-0.016-2.04-3.338 0.725-4.042-1.616-4.042-1.616-0.546-1.387-1.333-1.756-1.333-1.756-1.089-0.745 0.084-0.73 0.084-0.73 1.205 0.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.494 0.998 0.107-0.774 0.418-1.305 0.762-1.605-2.665-0.304-5.466-1.332-5.466-5.93 0-1.31 0.469-2.381 1.235-3.221-0.123-0.303-0.536-1.521 0.118-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.983-0.399 3.004-0.404 1.021 0.005 2.047 0.138 3.005 0.404 2.291-1.553 3.298-1.23 3.298-1.23 0.655 1.655 0.243 2.873 0.119 3.176 0.77 0.84 1.235 1.911 1.235 3.221 0 4.61-2.804 5.625-5.475 5.922 0.43 0.37 0.823 1.102 0.823 2.222 0 1.606-0.014 2.902-0.014 3.293 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.2-6.085 8.2-11.383 0-6.627-5.373-12-12-12z" />
-            </svg>
-            Sync with GitHub
-        </button>
-    </div>
 
 
     <footer class="bg-gray-900 text-white relative bottom-0 px-4 w-full text-center">
