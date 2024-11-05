@@ -112,7 +112,7 @@
             </section>
 
             <!-- card Section  -->
-            <section id="cardContainer" class="">
+            <section id="cardContainer" class="scrollbar-hide w-screen flex overflow-x-auto snap-x snap-mandatory">
                 <!-- Card -->
                 <div class="card snap-center flex-none w-full flex justify-center items-center">
                     <div class=" bg-white w-5/6 p-5 m-5 rounded-3xl">
@@ -227,7 +227,7 @@
             <!-- Upload to Github Button -->
             <section class="flex justify-center mt-6">
                 <button id="manualUploadBtn"
-                    class="flex items-center justify-center px-8 py-3 mb-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                    class="flex items-center justify-center px-8 py-3 mb-3 hover:scale-110 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
                     <!-- GitHub SVG Icon -->
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -301,7 +301,7 @@
             <!-- Upload to Github button -->
             <div class="flex justify-center mt-6">
                 <button id="automaticUploadBtn"
-                    class="flex items-center justify-center px-8 py-3 mb-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                    class="flex items-center justify-center px-8 py-3 mb-3 bg-green-600 hover:bg-green-700 hover:scale-110 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
                     <!-- GitHub SVG Icon -->
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -403,7 +403,6 @@
     <button id="auto-btn">Initiate automaticity</button>
 </section>
 {% endblock %}
--->
 {% block javascripts %}
 <script>
     `
