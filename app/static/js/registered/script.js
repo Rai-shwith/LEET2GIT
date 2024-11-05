@@ -5,9 +5,10 @@ const manualUploadBtn = document.getElementById('manualUploadBtn');
 const automaticUploadBtn = document.getElementById('automaticUploadBtn');
 const github_id = getCookie('github_id');
 
-
+loading();
 
 automaticUploadBtn.addEventListener('click', () => {
+    loading();
     const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
     const csrftoken = document.getElementById('csrftoken').value.trim();
     if (leetcodeAccess == "" || csrftoken == "") {
@@ -25,6 +26,7 @@ automaticUploadBtn.addEventListener('click', () => {
         },
         body: JSON.stringify(data)
     }).then(response => {
+        loading(false);
         if (response.status == 201) {
             showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
         } else {
@@ -32,31 +34,33 @@ automaticUploadBtn.addEventListener('click', () => {
         }
     });
 });
+
 manualUploadBtn.addEventListener('click', () => {
+    loading();
     const cardContainer = document.getElementById('cardContainer');
     const cards = cardContainer.querySelectorAll('.card');
     const uploadData = { uploads: [] };
 
     for (let index = 0; index < cards.length; index++) {
         const card = cards[index];
-        
+
         const info = card.querySelector('.info');
         if (info == null && index == 0) {
             showMessage('error', 'Please search for a question first!');
         }
         const code = card.querySelector('textarea').value;
         const code_extension = card.querySelector('select').value;
-        if ((code == "" || code_extension == "") && index == 0){
+        if ((code == "" || code_extension == "") && index == 0) {
             showMessage('error', 'Please fill the solution and language first!');
             return
         }
         const question = JSON.parse(info.textContent);
-        if (code == "" || code_extension == ""){
+        if (code == "" || code_extension == "") {
             continue;
         }
-        upload = {question, solution:{code_extension, code}};
+        upload = { question, solution: { code_extension, code } };
         uploadData.uploads.push(upload);
-    
+        loading(false);
     }
 
     fetch(`/upload/mannual?github_id=${github_id}`, {

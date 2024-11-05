@@ -8,6 +8,17 @@ const scrollCard = (next = true) => {
     }
 }
 
+const loading = (show = true) => {
+    const loadingElement = document.getElementById('loading');
+    if (show) {
+        loadingElement.classList.remove('hidden');
+        loadingElement.classList.add('flex');
+    } else {
+        loadingElement.classList.remove('flex');
+        loadingElement.classList.add('hidden');
+    }
+}
+
 const getParent = (element, className) => {
     while (element.parentElement) {
         if (element.classList.contains(className)) {
