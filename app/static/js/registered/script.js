@@ -1,6 +1,67 @@
-var wayChooser = document.getElementById('wayChooser');
-var manual = document.getElementById('manual');
-var automatic = document.getElementById('automatic');
+const wayChooser = document.getElementById('wayChooser');
+const manual = document.getElementById('manual');
+const automatic = document.getElementById('automatic');
+const manualUploadBtn = document.getElementById('manualUploadBtn');
+const automaticUploadBtn = document.getElementById('automaticUploadBtn');
+const github_id = getCookie('github_id');
+
+
+
+automaticUploadBtn.addEventListener('click', () => {
+    const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
+    const csrftoken = document.getElementById('csrftoken').value.trim();
+    if (leetcodeAccess == "" || csrftoken == "") {
+        showMessage('error', 'Please fill the LeetCode session and CSRF token first!');
+        return
+    }
+    let data = {
+        leetcode_access_token: leetcodeAccess,
+        csrftoken: csrftoken
+    }
+    fetch(`/upload/automatic?github_id=${github_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
+        if (response.status == 201) {
+            showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
+        } else {
+            showMessage('error', 'Something went wrong! Please try again');
+        }
+    });
+});
+manualUploadBtn.addEventListener('click', () => {
+    const cardContainer = document.getElementById('cardContainer');
+    const cards = cardContainer.querySelectorAll('.card');
+    const uploadData = { uploads: [] };
+    for (const card of cards){
+        const question = JSON.parse(card.querySelector('.info').textContent);
+        const code_extension = card.querySelector('select').value;
+        const code = card.querySelector('textarea').value;
+        if (code == "" || code_extension == ""){
+            continue;
+        }
+        uploads = {question, solution:{code_extension, code}};
+        uploadData.uploads.push(uploads);
+    }
+
+    fetch(`/upload/mannual?github_id=${github_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(uploadData)
+    }).then(response => {
+        if (response.status == 201) {
+            showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
+        } else {
+            showMessage('error', 'Something went wrong! Please try again');
+        }
+    });
+});
+
 
 wayChooser.querySelector('.manual').addEventListener('click', () => {
     wayChooser.classList.add('hidden');
@@ -67,6 +128,9 @@ const fillQuestion = (data) => {
     const questionTitle = data.questionTitle;
     const difficulty = data.difficulty;
     card = document.getElementById('cardContainer').lastElementChild;
+    infoDiv = document.createElement('div');
+    infoDiv.classList.add('hidden', 'info');
+    infoDiv.textContent = JSON.stringify(data);
     card.querySelector('span#questionId').textContent = questionId;
     card.querySelector('span#questionTitle').textContent = questionTitle;
     card.querySelector('span#difficulty').textContent = difficulty;
