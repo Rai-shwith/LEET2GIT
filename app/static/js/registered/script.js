@@ -5,7 +5,6 @@ const manualUploadBtn = document.getElementById('manualUploadBtn');
 const automaticUploadBtn = document.getElementById('automaticUploadBtn');
 const github_id = getCookie('github_id');
 
-
 automaticUploadBtn.addEventListener('click', () => {
     loading();
     const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
@@ -47,7 +46,7 @@ manualUploadBtn.addEventListener('click', () => {
 
     for (let index = 0; index < cards.length; index++) {
         const card = cards[index];
-        
+
         const info = card.querySelector('.info');
         if (info == null && index == 0) {
             showMessage('error', 'Please search for a question first!');
@@ -61,46 +60,35 @@ manualUploadBtn.addEventListener('click', () => {
             loading(false);
             return
         }
-        if (code == "" || code_extension == "") {
+        if (code == "" || code_extension == "") { // To handle the card if it is empty usually the last one
             continue;
         }
         const question = JSON.parse(info.textContent);
         upload = { question, solution: { code_extension, code } };
         uploadData.uploads.push(upload);
     }
-    
+
     fetch(`/upload/mannual?github_id=${github_id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(uploadData) // Ensure uploadData is properly structured as an object
+        body: JSON.stringify(uploadData)
     })
-    .then(response => {
-        if (!response.ok) {
-            // If the response status is not OK (e.g., 4xx, 5xx)
-            return response.json().then(data => {
-                // Handle specific error message if available in response body
-                showMessage('error', data.message || 'Something went wrong! Please try again');
-                throw new Error(data.message || 'Something went wrong!');
-            });
-        }
-        return response.json();  // Parse JSON only if response is OK (status 2xx)
-    })
-    .then(data => {
-        // Handle the success response (e.g., show success message)
-        if (data && data.success) {
-            showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
-        } else {
+        .then(async response => {
+            if (response.ok) {
+                showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
+            } else {
+                showMessage('error', 'Something went wrong! Please try again');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
             showMessage('error', 'Something went wrong! Please try again');
-        }
-    })
-    .catch(error => {
-        // This will catch network or unexpected errors
-        console.error('Error:', error);
-        showMessage('error', 'Network error. Please try again');
-    });    
-    loading(false);
+        })
+        .finally(() => {
+            loading(false);  
+        });
+
 });
 
 
@@ -164,13 +152,13 @@ const handleSearch = (question) => {
         console.log(data);
         fillQuestion(data);
         showMessage('success', 'Question found!');
-}).catch(error => {
-    console.log(error);
-    if (error.message == 'Question not found') {
-        return
-    }
-    showMessage('error', 'Something went wrong! Please try again');
-});
+    }).catch(error => {
+        console.log(error);
+        if (error.message == 'Question not found') {
+            return
+        }
+        showMessage('error', 'Something went wrong! Please try again');
+    });
 }
 
 const fillQuestion = (data) => {
