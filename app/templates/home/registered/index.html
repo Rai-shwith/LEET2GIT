@@ -9,10 +9,11 @@
 
 {% block content %}
 <section>
-    <div id="loading" class="hidden flex-col gap-4 w-full items-center justify-center fixed">
-        <div class="w-28 h-28 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full relative z-50">
+    <div id="loading" class="hidden fixed inset-0 flex-col gap-4 items-center justify-center bg-opacity-50 bg-slate-950 z-50">
+        <div class="w-28 h-28 border-8 border-gray-300 border-t-blue-400 rounded-full animate-spin flex items-center justify-center">
         </div>
-      </div>
+    </div>
+    
     <!-- From Uiverse.io by kennyotsu 
     <div class="card fixed inset-0 flex z-10 justify-center items-center">
         <div class="loader bg-backgroundMain ">
