@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Prepare Your Repository for LeetCode Solutions{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="static/css/output.css">
+<link rel="stylesheet" href="static/css/style.css">
+{% endblock %}
 {% block content %}
 <section>
     <!-- From Uiverse.io by kennyotsu 
@@ -24,7 +28,7 @@
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-10.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                 clip-rule="evenodd" />
         </svg>
-        <span>Repo created successfully!</span>
+        <span></span>
     </div>
 </div>
 <div id="errorMessage"
@@ -35,13 +39,13 @@
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11a1 1 0 012 0v4a1 1 0 01-2 0V7zm1 8a1 1 0 110-2 1 1 0 010 2z"
                 clip-rule="evenodd" />
         </svg>
-        <span id="errorText">Repo not found.</span>
+        <span id="errorText"></span>
     </div>
 </div>
 
 </section>
         <main class="flex-grow flex flex-col">
-            <img src="https://avatars.githubusercontent.com/u/147788165?v=4" alt="Github User Image" class="absolute top-3 right-3 w-16 h-16 object-cover rounded-full">
+            <img src="{{user.avatar_url}}" alt="Github User Image" class="absolute top-3 right-3 w-16 h-16 object-cover rounded-full">
             <span>
                 <p class="text-s text-textSecondary md:text-2xl ml-5 inline font-semibold">Welcome, </p>
                 <h2 class="text-center inline text-2xl md:text-6xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">Rai-shwith !</h2>
@@ -116,6 +120,6 @@
         </main>
 {% endblock %}
 {% block javascripts %}
-<script src="/js/logged/script.js"></script>
-<script src="/js/utils/script.js"></script>
+<script src="static/js/logged/script.js"></script>
+<script src="static/js/utils/script.js"></script>
     {% endblock %}
