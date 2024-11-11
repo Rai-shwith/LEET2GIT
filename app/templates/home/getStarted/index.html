@@ -1,8 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Get Started{% endblock %}
-{% block content %}
-        <h1>Get Started</h1>
-        <p>LEET2GIT is a platform that allows you to convert your LeetCode solutions to GitHub repositories.</p>
-        <p>Get started by clicking the button below.</p>
-        <a href="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo" class="button">Get Started</a>
+{% block title %}Welcome to Leet2Git: Transform Your Skills{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="static/css/output.css">
 {% endblock %}
+{% block content %}
+        <main class="flex-grow flex flex-col">
+                <h2 class="flex flex-col text-2xl md:text-6xl font-semibold m-2 md:m-4">Transform LeetCode Skills into
+                        GitHub Projects, Seamlessly.</h2>
+                <p class="text-lg md:text-4xl m-2 md:m-4">Tired of solving problems on LeetCode with no way to showcase
+                        them? With leet2git, every coding milestone you achieve becomes a project on your
+                        GitHub—automatically! Start building your public portfolio as you code, and let your skills
+                        shine to the world. No more copying and pasting, just pure automation</p>
+                <button
+                        class="bg-accentPrimary text-lg md:text-3xl hover:bg-accentPrimaryHover self-start m-4 p-2 absolute bottom-1/4 md:static rounded-r-full transition-all hover:scale-110 ease-in"><a
+                                href="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo"
+                                class="button">Get Started</a></button>
+        </main>
+{% endblock %}
+{% block javascripts %}
+<script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+{% endblock %} 
