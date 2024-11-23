@@ -3,7 +3,7 @@ const manual = document.getElementById('manual');
 const automatic = document.getElementById('automatic');
 const manualUploadBtn = document.getElementById('manualUploadBtn');
 const automaticUploadBtn = document.getElementById('automaticUploadBtn');
-
+const requestedQuestions = new Object() // To keep track of questions requested so that to stop the unneccessary requests
 
 automaticUploadBtn.addEventListener('click', () => {
     loading();
@@ -148,6 +148,11 @@ const handleSearch = (question) => {
         showMessage('error', 'Please enter a question!');
         return
     }
+    if (question.toLowerCase().replace(' ','').replace('-','') in requestedQuestions) {
+        showMessage('error', 'Question already requested!');
+        return
+    }
+    console.log(question);
     showMessage('success', 'Searching for question...');
     // Fetch the question from the API
     fetch(`/post/api/${question}`, {
@@ -163,13 +168,14 @@ const handleSearch = (question) => {
         console.log(data);
         fillQuestion(data);
         showMessage('success', 'Question found!');
-}).catch(error => {
-    console.log(error);
-    if (error.message == 'Question not found') {
-        return
-    }
-    showMessage('error', 'Something went wrong! Please try again');
-});
+        requestedQuestions[question.toLowerCase().replace(' ','').replace('-','')] = data.questionId; // Add the question to the set of requested questions by removing spaces and hyphens
+    }).catch(error => {
+        console.log(error);
+        if (error.message == 'Question not found') {
+            return
+        }
+        showMessage('error', 'Something went wrong! Please try again');
+    });
 }
 
 const fillQuestion = (data) => {
