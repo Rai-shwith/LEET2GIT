@@ -213,5 +213,13 @@ const removeCard = (e) => {
     makeValueNull(input);
     scrollCard();
     card.remove();
+    // Remove the requestedQuestions from the set of requested questions
+    const questionId = card.querySelector('span#questionId').textContent;
+    for (let question in requestedQuestions) {
+        if (requestedQuestions[question] == questionId) {
+            delete requestedQuestions[question];
+            break;
+        }
+    }
     cardContainer.lastElementChild.querySelector('button.add').classList.remove('hidden');
 };
