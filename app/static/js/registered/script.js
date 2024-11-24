@@ -6,6 +6,10 @@ const automaticUploadBtn = document.getElementById('automaticUploadBtn');
 const github_id = getCookie('github_id');
 const requestedQuestions = new Object() // To keep track of questions requested so that to stop the unneccessary requests
 
+// Start cycling placeholders
+cyclePlaceholders("search-question");
+
+
 automaticUploadBtn.addEventListener('click', () => {
     loading();
     const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
@@ -145,7 +149,8 @@ const handleSearch = (question) => {
     console.log(question);
     showMessage('success', 'Searching for question...');
     // Fetch the question from the API
-    fetch(`/post/api/${question}`, {
+    const encoded_url = encodeURIComponent(question);
+    fetch(`/post/api?question=${encoded_url}`, {
         method: 'GET'
     }).then(response => {
         console.log(response.status);
