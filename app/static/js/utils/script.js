@@ -60,7 +60,7 @@ const showMessage = (type, message) => {
         } else {
             errorMessage.classList.remove('translate-y-0', 'opacity-100');
             errorMessage.classList.add('hidden', 'opacity-0', 'translate-y-[-100%]');
-            }
+        }
     }, 3000);
 }
 
@@ -218,3 +218,24 @@ const removeCard = (e) => {
     }
     cardContainer.lastElementChild.querySelector('button.add').classList.remove('hidden');
 };
+
+// Function to alternate between placeholders
+function cyclePlaceholders(elementId) {
+    const inputElement = document.getElementById(elementId);
+    // Define the placeholders and delay (in milliseconds)
+    const placeholders = [
+        "Search for a LeetCode question...",
+        "Paste a LeetCode URL",
+        "https://leetcode.com/problems/example/description/"
+    ];
+    const delay = 4000; // 4 seconds
+    let index = 0;
+
+    if (!inputElement) return; // Exit if the element is not found
+
+    setInterval(() => {
+        inputElement.placeholder = placeholders[index];
+        index = (index + 1) % placeholders.length; // Cycle through the array
+    }, delay);
+}
+
