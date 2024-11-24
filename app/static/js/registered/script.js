@@ -189,6 +189,19 @@ const fillQuestion = (data) => {
     card.appendChild(infoDiv)
     card.querySelector('span#questionId').textContent = questionId;
     card.querySelector('span#questionTitle').textContent = questionTitle;
+    const difficulty_span = card.querySelector('span#difficulty');
+    difficulty_span.textContent = difficulty;
+    console.log(difficulty);
+    if (difficulty == 'Easy'){
+        difficulty_span.classList.remove(...difficulty_span.classList); // Remove all classes
+        difficulty_span.classList.add('bg-green-200', 'px-2', 'text-green-600','rounded-full');
+    }else if(difficulty == 'Medium'){
+        difficulty_span.classList.remove(...difficulty_span.classList); // Remove all classes
+        difficulty_span.classList.add('bg-amber-200', 'px-2', 'text-amber-600','rounded-full');
+    }else if(difficulty == 'Hard'){
+        difficulty_span.classList.remove(...difficulty_span.classList); // Remove all classes
+        difficulty_span.classList.add('bg-red-200', 'px-2', 'text-red-600','rounded-full');
+    }
     card.querySelector('span#difficulty').textContent = difficulty;
     const textarea = card.querySelector('textarea');
     const select = card.querySelector('select');

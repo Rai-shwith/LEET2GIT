@@ -91,7 +91,7 @@ const addCard = (event) => {
                         <div class="space-y-6 md:space-y-0 md:flex md:space-x-6">
 
                             <!-- User Question Info -->
-                            <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow">
+                            <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow-xl backdrop-blur-xl">
                                 <h3 class="text-xl font-semibold text-gray-700 mb-3">Question Information</h3>
                                 <p><span class="font-bold text-gray-600">ID:</span> <span id="questionId">...</span></p>
                                 <p><span class="font-bold text-gray-600">Name:</span> <span
@@ -101,7 +101,7 @@ const addCard = (event) => {
                             </div>
 
                             <!-- Solution Area -->
-                            <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow">
+                            <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow-xl backdrop-blur-xl">
                                 <div class="flex justify-between">
                                     <h3 class="text-xl font-semibold text-gray-700 mb-3">Your Solution</h3>
                                     <!-- Language Selection Dropdown -->
