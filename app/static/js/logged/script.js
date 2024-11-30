@@ -6,6 +6,7 @@ finishBtn.addEventListener('click', () => {
         scrollCard(false);
         return
     }
+    loading();
     const isOld = document.getElementById('newOrOld').checked;
     const isPrivate = document.getElementById('visibility').checked;
     console.log("isNew", !isOld, "\nisPrivate", isPrivate, "\nrepo", repo)
@@ -20,8 +21,11 @@ finishBtn.addEventListener('click', () => {
         }
         else if (response.redirected) {
             showMessage('sucess', 'Repo created successfully!');
-            window.location.href = response.url; // redirect to the url
+            setTimeout(() => {
+                window.location.href = response.url; // redirect to the url
+            }, 2000);
         }
+        loading(false);
     });
 })
 //   let btn = document.querySelector('#btn');
