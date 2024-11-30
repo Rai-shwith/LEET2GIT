@@ -27,7 +27,7 @@ async def register_user(request:Request,repo_name:str = "LeetCode",private:bool=
         get_user_info(request)  # github user of pygithub type
     )
     logger.info(f"Github user: {github_user}")
-    """
+    
     if new:
         repo = await create_repo(user=pygithub_user,repo_name=repo_name,private=private)
         if repo is None:
@@ -38,7 +38,7 @@ async def register_user(request:Request,repo_name:str = "LeetCode",private:bool=
         if repo is None:
             logger.info(f"Repo {repo_name} not found")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Repository not found")
-        """
+        
     user = await create_user(github_user=github_user,repo_name=repo_name,db=db)
     logger.info(f"User: {user}")
     response = RedirectResponse(url="/",status_code=status.HTTP_303_SEE_OTHER)
