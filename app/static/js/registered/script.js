@@ -79,7 +79,7 @@ manualUploadBtn.addEventListener('click', () => {
         },
         body: JSON.stringify(uploadData) // Ensure uploadData is properly structured as an object
     })
-    .then(response => {
+    .then(async (response) => {
         if (!response.ok) {
             // If the response status is not OK (e.g., 4xx, 5xx)
             return response.json().then(data => {
@@ -88,22 +88,17 @@ manualUploadBtn.addEventListener('click', () => {
                 throw new Error(data.message || 'Something went wrong!');
             });
         }
-        return response.json();  // Parse JSON only if response is OK (status 2xx)
-    })
-    .then(data => {
-        // Handle the success response (e.g., show success message)
-        if (data && data.success) {
-            showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
-        } else {
-            showMessage('error', 'Something went wrong! Please try again');
-        }
+        showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
+        loading(false);
     })
     .catch(error => {
         // This will catch network or unexpected errors
         console.error('Error:', error);
         showMessage('error', 'Network error. Please try again');
-    });    
-    loading(false);
+    })
+    .finally(() => {
+        loading(false);
+    });
 });
 
 
