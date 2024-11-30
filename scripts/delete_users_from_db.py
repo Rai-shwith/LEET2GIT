@@ -1,23 +1,21 @@
-"WARNING: This script will delete all records in the users table."
+from sqlalchemy import text
+from sqlalchemy.future import select
+from app.models import Users  # Replace with your actual User model
+from app.database import get_db  # Import the async get_db function
 
-from sqlalchemy.orm import Session
-from app.models import Users
-from app.database import get_db  # Import the get_db function from your database module
+async def delete_all_users():
+    async for db in get_db():  # Use the async generator to get a session
+        try:
+            # Execute the delete operation
+            await db.execute(text("DELETE FROM users"))  # Use raw SQL query
+            await db.commit()  # Commit the changes
+            print("All users have been deleted.")
+        except Exception as e:
+            await db.rollback()  # Rollback in case of an error
+            print(f"An error occurred: {e}")
+        finally:
+            await db.close()  # Ensure the session is properly closed
 
-def delete_all_users():
-    # Use get_db to obtain a database session
-    db: Session = next(get_db())  # Extract the session generator
-    try:
-        # Delete all records in the users table
-        db.query(Users).delete()
-        db.commit()
-        print("All users have been deleted.")
-    except Exception as e:
-        # Rollback in case of an error
-        db.rollback()
-        print(f"An error occurred: {e}")
-    finally:
-        db.close()  # Close the session manually, as we used `next()`
-
-# Call the function
-delete_all_users()
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(delete_all_users())
