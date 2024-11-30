@@ -11,9 +11,11 @@ const scrollCard = (next = true) => {
 const loading = (show = true) => {
     const loadingElement = document.getElementById('loading');
     if (show) {
+        console.log("Loading ON");
         loadingElement.classList.remove('hidden');
         loadingElement.classList.add('flex');
     } else {
+        console.log("Loading OFF");
         loadingElement.classList.remove('flex');
         loadingElement.classList.add('hidden');
     }
