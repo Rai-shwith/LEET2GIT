@@ -72,7 +72,7 @@ manualUploadBtn.addEventListener('click', () => {
         uploadData.uploads.push(upload);
     }
     
-    fetch(`/upload/mannual`, {
+    fetch(`/upload/manual`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

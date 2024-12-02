@@ -40,11 +40,11 @@ async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSessi
     logger.info("Uploading Finished")
     
 
-@router.post("/mannual/",status_code=status.HTTP_201_CREATED)
-async def mannual_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSession = Depends(get_db)):
+@router.post("/manual/",status_code=status.HTTP_201_CREATED)
+async def manual_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSession = Depends(get_db)):
     """
-    This endpoint is for mannual uploading """
-    logger.info("Mannual uploading ...")
+    This endpoint is for manual uploading """
+    logger.info("Manual uploading ...")
     await create_uploads(request=request,uploads=uploads,db=db)
     
 
