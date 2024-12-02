@@ -39,11 +39,11 @@ def create_uploads(request: Request,uploads: schemas.Uploads,current_user : sche
     logger.info("Uploading Finished")
     
 
-@router.post("/mannual/",status_code=status.HTTP_201_CREATED)
-def mannual_uploads(request:Request,uploads: schemas.Uploads,current_user: schemas.Users = Depends(get_current_user)):
+@router.post("/manual/",status_code=status.HTTP_201_CREATED)
+def manual_uploads(request:Request,uploads: schemas.Uploads,current_user: schemas.Users = Depends(get_current_user)):
     """
-    This endpoint is for mannual uploading """
-    logger.info("Mannual uploading ...")
+    This endpoint is for manual uploading """
+    logger.info("Manual uploading ...")
     create_uploads(request=request,uploads=uploads,current_user=current_user)
     
 

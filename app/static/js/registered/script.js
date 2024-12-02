@@ -73,7 +73,7 @@ manualUploadBtn.addEventListener('click', () => {
         uploadData.uploads.push(upload);
     }
 
-    fetch(`/upload/mannual?github_id=${github_id}`, {
+    fetch(`/upload/manual?github_id=${github_id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
