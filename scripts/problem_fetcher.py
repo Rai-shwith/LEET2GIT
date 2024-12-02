@@ -13,7 +13,7 @@ async def get_problem_details(title_slug:str)->schemas.ProblemDetails:
         title_slug = create_title_slug_from_url(title_slug)
         print(title_slug)
     query = query_generator(title_slug)
-    async with httpx.AsyncClient(timeout=10.0) as client:
+    async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.post(URL, json={"query": query})
     response.raise_for_status()
     if response.status_code == 200:

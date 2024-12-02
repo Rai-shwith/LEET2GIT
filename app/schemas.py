@@ -39,7 +39,7 @@ class Solution(BaseModel):
     code: str
     
 class Upload(BaseModel):
-    question: ProblemDetails
+    question: Union[ProblemDetails,None]
     solution: Solution
     
 class Uploads(BaseModel):
