@@ -7,7 +7,7 @@ def leetcode_solution_fetcher(leetcode_access_token: str,csrftoken : str):
     # Leetcode provides the solution in small chunks of 20, So this function uses while loop
     cookies = {
     'LEETCODE_SESSION': leetcode_access_token,
-    'csrftoken': 'ozzJoQrSgQWUzJLMsmfhV2gGXv1H6rAgTC9PyrGAyL8olNx114p4u7vyYJvCECzK'
+    'csrftoken': csrftoken
     }
     last_key = "" # This is the key that will be used to fetch the next 20 solutions
     while True:
