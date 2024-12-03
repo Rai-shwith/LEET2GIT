@@ -34,4 +34,21 @@ def output_content_creater(problem_detail:schemas.ProblemDetails,solution:schema
     return (read_me_content,solution_content,folder_name,solution_file_name)
 
   
+  
+def output_content_creator_for_batch_upload(uploads: schemas.Uploads)->dict:
+    """
+    Description: This function generates proper structure for batch upload to github repository.
 
+    Args:
+        uploads (schemas.Uploads): The uploads object containing the list of uploads.
+
+    Returns:
+       file_structure: A dictionary representing files and their content. 
+                        Example: {"path/to/file1.txt": "Content of file1", "path/to/file2.txt": "Content of file2"}
+    """
+    file_structure = {}
+    for upload in uploads.uploads:
+        (read_me_content,solution_content,folder_name,solution_file_name) = output_content_creater(problem_detail=upload.question,solution=upload.solution)
+        file_structure[folder_name+"/README.md"] = read_me_content
+        file_structure[folder_name+"/"+solution_file_name] = solution_content
+    return file_structure

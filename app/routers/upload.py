@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, status,Request
 from scripts.github_handler.get_user_info import get_user_info
-from scripts.output_content_creater import output_content_creater
+from scripts.output_content_creater import output_content_creater,output_content_creator_for_batch_upload
 from scripts.leetcode_solutions_fetcher import leetcode_solution_fetcher
 from scripts.github_handler.get_repo import get_repo
+from scripts.github_handler.batch_upload import batch_upload_files
 from scripts.github_handler.upload_file import upload_file,update_repo_readme
 from scripts.organize_leetcode_solutions import organize_leetcode_solutions
 from ..database import get_db
@@ -55,4 +56,14 @@ async def automatic_uploads(request:Request,leetcode_credentials: schemas.Leetco
     logger.info("Automatic uploading ...")
     raw_submissions = leetcode_solution_fetcher(leetcode_credentials.leetcode_access_token,leetcode_credentials.csrftoken)
     uploads: schemas.Uploads = await organize_leetcode_solutions(raw_solutions=raw_submissions)
-    await create_uploads(request=request,uploads=uploads,db=db)
+    # await create_uploads(request=request,uploads=uploads,db=db)
+    file_structure = output_content_creator_for_batch_upload(uploads=uploads)
+    github_user: AuthenticatedUser = await get_user_info(request=request)
+    github_id = github_user.id
+    current_user: schemas.Users = await get_current_user(github_id=github_id,db=db)
+    logger.info(f"Creating the upload for the user: {current_user}")
+    repo_name = current_user.repo_name
+    repo = await get_repo(github_user,repo_name=repo_name)
+    logger.info(f"Github user: {github_user}")
+    await batch_upload_files(repo=repo,file_structure=file_structure)
+    
