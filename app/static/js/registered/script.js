@@ -36,7 +36,7 @@ automaticUploadBtn.addEventListener('click', () => {
         if (response.status === 201) {
             showMessage('success', 'Code uploaded successfully! Check your GitHub repository.');
         } else if (response.status === 401) {
-            showMessage('error', 'Unauthorized access! Please check your LEETCODE_SESSION token.');
+            showMessage('error', 'Invalid credentials! Please check LEETCODE_SESSION token.');
         } else {
             showMessage('error', 'Something went wrong! Please try again.');
         }
