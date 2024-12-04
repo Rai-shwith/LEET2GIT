@@ -4,12 +4,11 @@ from scripts.logging_config import logger
 
 BASE_URL = 'https://leetcode.com/api/submissions/'
 
-def leetcode_solution_fetcher(leetcode_access_token: str,csrftoken : str):
+def leetcode_solution_fetcher(leetcode_access_token: str):
     submissions = {"submissions_dump": []}
     # Leetcode provides the solution in small chunks of 20, So this function uses while loop
     cookies = {
-    'LEETCODE_SESSION': leetcode_access_token,
-    'csrftoken': csrftoken
+    'LEETCODE_SESSION': leetcode_access_token
     }
     last_key = "" # This is the key that will be used to fetch the next 20 solutions
     while True:

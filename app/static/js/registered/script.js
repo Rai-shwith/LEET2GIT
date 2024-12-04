@@ -12,17 +12,15 @@ cyclePlaceholders("search-question");
 automaticUploadBtn.addEventListener('click', () => {
     loading(true); // Start the loading spinner
     const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
-    const csrftoken = document.getElementById('csrftoken').value.trim();
 
-    if (!leetcodeAccess || !csrftoken) {
-        showMessage('error', 'Please fill the LeetCode session and CSRF token first!');
+    if (!leetcodeAccess ) {
+        showMessage('error', 'Please fill the LEETCODE_SESSION ');
         loading(false);
         return;
     }
 
     const data = {
         leetcode_access_token: leetcodeAccess,
-        csrftoken: csrftoken
     };
 
     fetch(`/upload/automatic`, {
