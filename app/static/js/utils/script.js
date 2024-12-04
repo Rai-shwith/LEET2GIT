@@ -34,8 +34,9 @@ const getParent = (element, className) => {
 const makeValueNull = (element) => {
     element.value = '';
 }
-
+const messageContainer = document.getElementById('messageContainer');
 const showMessage = (type, message) => {
+    messageContainer.classList.remove('hidden');
     // Select the appropriate message element
     const successMessage = document.getElementById('successMessage');
     const errorMessage = document.getElementById('errorMessage');
@@ -52,20 +53,17 @@ const showMessage = (type, message) => {
         errorMessage.querySelector('span').textContent = message || 'Repo not found.';
         errorMessage.classList.remove('hidden', 'opacity-0', 'translate-y-[-100%]');
         errorMessage.classList.add('translate-y-0', 'opacity-100');
+    } else {
+        console.error("Invalid message type, Choose between 'success' and 'error'");
     }
-
-    // Hide the message after 3 seconds
-    setTimeout(() => {
-        if (type === 'success') {
-            successMessage.classList.remove('translate-y-0', 'opacity-100');
-            successMessage.classList.add('hidden', 'opacity-0', 'translate-y-[-100%]');
-        } else {
-            errorMessage.classList.remove('translate-y-0', 'opacity-100');
-            errorMessage.classList.add('hidden', 'opacity-0', 'translate-y-[-100%]');
-        }
-    }, 3000);
 }
 
+// Function to remove the success or error message when user clicks on webpage except the message container
+document.addEventListener('click', (event) => {
+    if (!messageContainer.contains(event.target)) {
+        messageContainer.classList.add('hidden');
+    }
+});
 
 // When ever user clicks on the add button, a new card is added to the card container.
 // The add button of clicked card is hidden when he clicks on add Card . This is because we don't want to add cards in between the cards.
@@ -108,8 +106,8 @@ const addCard = (event) => {
                                     <h3 class="text-xl font-semibold text-gray-700 mb-3">Your Solution</h3>
                                     <!-- Language Selection Dropdown -->
                                     <div class="text-xs">
-                                        <label for="language" class="block text-gray-600 font-medium ">Choose
-                                            Language</label>
+                                        <div class="block text-gray-600 font-medium ">Choose
+                                            Language</div>
                                         <select id="language" disabled
                                             class=" border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="" disabled selected></option>
