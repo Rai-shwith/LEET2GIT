@@ -35,7 +35,7 @@ const makeValueNull = (element) => {
     element.value = '';
 }
 const messageContainer = document.getElementById('messageContainer');
-const showMessage = (type, message) => {
+const showMessage = (type, message, autoHide = true) => {
     messageContainer.classList.remove('hidden');
     // Select the appropriate message element
     const successMessage = document.getElementById('successMessage');
@@ -55,6 +55,11 @@ const showMessage = (type, message) => {
         errorMessage.classList.add('translate-y-0', 'opacity-100');
     } else {
         console.error("Invalid message type, Choose between 'success' and 'error'");
+    }
+    if (autoHide) {
+        setTimeout(() => {
+            messageContainer.classList.add('hidden');
+        }, 3000);
     }
 }
 

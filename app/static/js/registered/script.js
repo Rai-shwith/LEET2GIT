@@ -14,7 +14,7 @@ automaticUploadBtn.addEventListener('click', () => {
     const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
 
     if (!leetcodeAccess ) {
-        showMessage('error', 'Please fill the LEETCODE_SESSION ');
+        showMessage('error', 'Please fill the LEETCODE_SESSION ',false);
         loading(false);
         return;
     }
@@ -34,11 +34,11 @@ automaticUploadBtn.addEventListener('click', () => {
         loading(false);
 
         if (response.status === 201) {
-            showMessage('success', 'Code uploaded successfully! Check your GitHub repository.');
+            showMessage('success', 'Code uploaded successfully! Check your GitHub repository.',false);
         } else if (response.status === 401) {
             showMessage('error', 'Invalid credentials! Please check LEETCODE_SESSION token.');
         } else {
-            showMessage('error', 'Something went wrong! Please try again.');
+            showMessage('error', 'Something went wrong! Please try again.',false);
         }
 
         return response.json(); // Parse the response if needed
@@ -49,7 +49,7 @@ automaticUploadBtn.addEventListener('click', () => {
     .catch(error => {
         loading(false);
         console.error('Error:', error);
-        showMessage('error', 'A network error occurred. Please try again later.');
+        showMessage('error', 'A network error occurred. Please try again later.',false);
     });
 });
 
@@ -96,17 +96,17 @@ manualUploadBtn.addEventListener('click', () => {
             // If the response status is not OK (e.g., 4xx, 5xx)
             return response.json().then(data => {
                 // Handle specific error message if available in response body
-                showMessage('error', data.message || 'Something went wrong! Please try again');
+                showMessage('error', data.message || 'Something went wrong! Please try again',alse);
                 throw new Error(data.message || 'Something went wrong!');
             });
         }
-        showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
+        showMessage('success', 'Code uploaded successfully! Check your GitHub repository',false);
         loading(false);
     })
     .catch(error => {
         // This will catch network or unexpected errors
         console.error('Error:', error);
-        showMessage('error', 'Network error. Please try again');
+        showMessage('error', 'Network error. Please try again',false);
     })
     .finally(() => {
         loading(false);
@@ -160,6 +160,7 @@ const handleSearch = (question) => {
         return
     }
     if (question.toLowerCase().replace(' ','').replace('-','') in requestedQuestions) {
+        console.log('Question already requested!');
         showMessage('error', 'Question already requested!');
         return
     }
