@@ -25,6 +25,7 @@ async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSessi
     This endpoint will create a new directory in github about the question and solution in the user's github repository
     This endpoint can be used to upload multiple problems together
     """
+    file_structure = output_content_creator_for_batch_upload(uploads=uploads)
     github_user: AuthenticatedUser = await get_user_info(request=request)
     github_id = github_user.id
     current_user: schemas.Users = await get_current_user(github_id=github_id,db=db)
@@ -32,13 +33,10 @@ async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSessi
     repo_name = current_user.repo_name
     repo = await get_repo(github_user,repo_name=repo_name)
     logger.info(f"Github user: {github_user}")
-    for upload in uploads.uploads:
-        (read_me_content,solution_content,folder_name,solution_file_name) = output_content_creater(problem_detail=upload.question,solution=upload.solution)
-        logger.info(f"obtained the content for the files")
-        await upload_file(repo,folder_name+"/README.md",read_me_content,"Added README.md")
-        await upload_file(repo,folder_name+"/"+solution_file_name,solution_content,"Added solution file")
-        await update_repo_readme(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,folder_name=folder_name,topic_tags=upload.question.topicTags)
-    logger.info("Uploading Finished")
+    # repo_readme_content = await  get_repo_readme_bulk(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,uploads=uploads)
+    # file_structure["README.md"]=repo_readme_content
+    await batch_upload_files(repo=repo,file_structure=file_structure)
+    logger.info("Upload Finished !!")
     
 
 @router.post("/manual/",status_code=status.HTTP_201_CREATED)
@@ -68,4 +66,6 @@ async def automatic_uploads(request:Request,leetcode_credentials: schemas.Leetco
     repo_readme_content = await  get_repo_readme_bulk(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,uploads=uploads)
     file_structure["README.md"]=repo_readme_content
     await batch_upload_files(repo=repo,file_structure=file_structure)
+    logger.info("Upload Finished !!")
+    
     
