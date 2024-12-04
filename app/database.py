@@ -13,7 +13,7 @@ SQL_ALCHEMY_DATABASE_URL = (
 
 ssl_context = ssl.create_default_context(cafile=settings.sslrootcert)
 
-#create asychronous engine
+#create asynchronous engine
 engine = create_async_engine(
     SQL_ALCHEMY_DATABASE_URL,
     connect_args={"ssl":ssl_context}

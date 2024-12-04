@@ -26,7 +26,7 @@ async def get_github_callback(request:Request,db:AsyncSession = Depends(get_db))
         value=token_response.access_token,
         httponly=True,  
         secure=True,    
-        max_age=3600,   # for 1 hourdf
+        max_age=3600,   # for 1 hour
     )
     github_user = await get_github_user(request,token=token_response.access_token)
     logger.info(f"Github user: {github_user}")

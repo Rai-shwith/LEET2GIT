@@ -2,7 +2,7 @@ const finishBtn = document.getElementById('finish');
 finishBtn.addEventListener('click', () => {
     const repo = document.getElementById("repoName").value.trim();
     if (repo == "") {
-        showMessage('error', 'Repo Canot be Empty');
+        showMessage('error', 'Repo can\'t be Empty');
         scrollCard(false);
         return
     }
@@ -20,7 +20,7 @@ finishBtn.addEventListener('click', () => {
             showMessage('error', 'Repo not found!');
         }
         else if (response.redirected) {
-            showMessage('sucess', 'Repo created successfully!');
+            showMessage('success', 'Repo created successfully!');
             setTimeout(() => {
                 window.location.href = response.url; // redirect to the url
             }, 2000);

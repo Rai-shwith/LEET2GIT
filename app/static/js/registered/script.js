@@ -3,7 +3,7 @@ const manual = document.getElementById('manual');
 const automatic = document.getElementById('automatic');
 const manualUploadBtn = document.getElementById('manualUploadBtn');
 const automaticUploadBtn = document.getElementById('automaticUploadBtn');
-const requestedQuestions = new Object() // To keep track of questions requested so that to stop the unneccessary requests
+const requestedQuestions = new Object() // To keep track of questions requested so that to stop the unnecessary requests
 
 // Start cycling placeholders
 cyclePlaceholders("search-question");
@@ -96,7 +96,7 @@ manualUploadBtn.addEventListener('click', () => {
             // If the response status is not OK (e.g., 4xx, 5xx)
             return response.json().then(data => {
                 // Handle specific error message if available in response body
-                showMessage('error', data.message || 'Something went wrong! Please try again',alse);
+                showMessage('error', data.message || 'Something went wrong! Please try again',false);
                 throw new Error(data.message || 'Something went wrong!');
             });
         }

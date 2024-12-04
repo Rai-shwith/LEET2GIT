@@ -1,10 +1,10 @@
 import html
 from scripts.logging_config import logger
 from app import schemas
-from .README_templates.question_README import question_Read_me_construter
+from .README_templates.question_README import question_Read_me_constructor
 
 
-def output_content_creater(problem_detail:schemas.ProblemDetails,solution:schemas.Solution)->tuple[str,str,str,str]:
+def output_content_creator(problem_detail:schemas.ProblemDetails,solution:schemas.Solution)->tuple[str,str,str,str]:
     """
     Reads the problem detail and returns README.md file contents ,solution file contents  and folder name  for the problem
     """
@@ -48,7 +48,7 @@ def output_content_creator_for_batch_upload(uploads: schemas.Uploads)->dict:
     """
     file_structure = {}
     for upload in uploads.uploads:
-        (read_me_content,solution_content,folder_name,solution_file_name) = output_content_creater(problem_detail=upload.question,solution=upload.solution)
+        (read_me_content,solution_content,folder_name,solution_file_name) = output_content_creator(problem_detail=upload.question,solution=upload.solution)
         file_structure[folder_name+"/README.md"] = read_me_content
         file_structure[folder_name+"/"+solution_file_name] = solution_content
     return file_structure

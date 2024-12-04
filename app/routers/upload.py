@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status,Request
 from scripts.github_handler.get_user_info import get_user_info
-from scripts.output_content_creater import output_content_creater,output_content_creator_for_batch_upload
+from scripts.output_content_creator import output_content_creator,output_content_creator_for_batch_upload
 from scripts.leetcode_solutions_fetcher import leetcode_solution_fetcher
 from scripts.github_handler.get_repo import get_repo
 from scripts.github_handler.batch_upload import batch_upload_files

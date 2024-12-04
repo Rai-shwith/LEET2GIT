@@ -14,7 +14,7 @@ GITHUB_API_URL = "https://api.github.com/user"
 
 async def get_github_user(request:Request,token:str = None) -> schemas.GithubUser:
     """
-    This function will return the user from the githug API
+    This function will return the user from the github API
 
     Args:
         request (fastapi.Request): This is the request object from the FastAPI route

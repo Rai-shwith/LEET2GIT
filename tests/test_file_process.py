@@ -12,7 +12,7 @@ from scripts.github_handler.get_repo import get_repo
 from starlette.datastructures import Headers
 from app.routers.oauth import get_current_user
 from scripts.github_handler.get_repo import get_repo
-from scripts.output_content_creater import output_content_creater
+from scripts.output_content_creator import output_content_creator
 from app.routers.users import register_user
 import json
 
@@ -64,7 +64,7 @@ async def test_get_repo():
 
 @pytest.mark.skip()
 def test_output_content_creator():
-    (read_me_content,solution_content,folder_name,solution_file_name) = output_content_creater(problem_detail=upload.question,solution=upload.solution)
+    (read_me_content,solution_content,folder_name,solution_file_name) = output_content_creator(problem_detail=upload.question,solution=upload.solution)
     output = {
         "read_me_content": read_me_content,
         "solution_content": solution_content,

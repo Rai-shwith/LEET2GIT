@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     github_redirect_url : str
     # secret_key : str
     # algorithm : str
-    # acess_token_expire_time : int
+    # access_token_expire_time : int
 
     class Config:
         # env_file = ".env"
