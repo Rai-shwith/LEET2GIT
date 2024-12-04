@@ -10,37 +10,51 @@ cyclePlaceholders("search-question");
 
 
 automaticUploadBtn.addEventListener('click', () => {
-    loading();
+    loading(true); // Start the loading spinner
     const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
     const csrftoken = document.getElementById('csrftoken').value.trim();
-    if (leetcodeAccess == "" || csrftoken == "") {
+
+    if (!leetcodeAccess || !csrftoken) {
         showMessage('error', 'Please fill the LeetCode session and CSRF token first!');
         loading(false);
-        return
+        return;
     }
-    let data = {
+
+    const data = {
         leetcode_access_token: leetcodeAccess,
         csrftoken: csrftoken
-    }
-    fetch(`/upload/automatic?github_id`, {
+    };
+
+    fetch(`/upload/automatic`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    }).then(response => {
+    })
+    .then(response => {
         loading(false);
-        if (response.status == 201) {
-            showMessage('success', 'Code uploaded successfully! Check your GitHub repository');
+
+        if (response.status === 201) {
+            showMessage('success', 'Code uploaded successfully! Check your GitHub repository.');
+        } else if (response.status === 401) {
+            showMessage('error', 'Unauthorized access! Please check your LEETCODE_SESSION token.');
         } else {
-            showMessage('error', 'Something went wrong! Please try again');
+            showMessage('error', 'Something went wrong! Please try again.');
         }
-    }).catch(error => {
+
+        return response.json(); // Parse the response if needed
+    })
+    .then(data => {
+        console.log('Response data:', data); // Optional debugging
+    })
+    .catch(error => {
         loading(false);
         console.error('Error:', error);
-        showMessage('error', 'Something went wrong! Please try again');
+        showMessage('error', 'A network error occurred. Please try again later.');
     });
 });
+
 
 manualUploadBtn.addEventListener('click', () => {
     loading();
