@@ -4,6 +4,40 @@ const automatic = document.getElementById('automatic');
 const manualUploadBtn = document.getElementById('manualUploadBtn');
 const automaticUploadBtn = document.getElementById('automaticUploadBtn');
 const requestedQuestions = new Object() // To keep track of questions requested so that to stop the unnecessary requests
+const access_token = getCookie('access_token');
+
+
+// Establish WebSocket connection
+const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+const host = window.location.host; // Current host and port
+console.log(`${protocol}://${host}/ws/manual`);
+console.log(`${protocol}://${host}/ws/automatic`);
+const manualSocket = new WebSocket(`${protocol}://${host}/ws/manual`);
+const automaticSocket = new WebSocket(`${protocol}://${host}/ws/automatic`);
+
+manualSocket.onopen = () =>{
+    console.log("Manual Websocket Connection Established ")
+};
+
+automaticSocket.onopen = () =>{
+    console.log("Automatic Websocket Connection Established ")
+};
+
+const sendManualMessage = (uploads) => {
+    manualSocket.send(JSON.stringify({access_token,uploads}));
+};
+
+const sendAutomaticMessage = (leetcode_access_token) => {
+    automaticSocket.send(JSON.stringify({access_token,leetcode_credentials:{leetcode_access_token}}));
+};
+
+manualSocket.onmessage = (event) => {
+    console.log(event.data);
+};
+
+automaticSocket.onmessage = (event) => {
+    console.log(event.data);
+};
 
 // Start cycling placeholders
 cyclePlaceholders("search-question");
@@ -19,38 +53,36 @@ automaticUploadBtn.addEventListener('click', () => {
         return;
     }
 
-    const data = {
-        leetcode_access_token: leetcodeAccess,
-    };
 
-    fetch(`/upload/automatic`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        loading(false);
+    sendAutomaticMessage(leetcodeAccess);
+    // fetch(`/upload/automatic`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data)
+    // })
+    // .then(response => {
+    //     loading(false);
 
-        if (response.status === 201) {
-            showMessage('success', 'Code uploaded successfully! Check your GitHub repository.',false);
-        } else if (response.status === 401) {
-            showMessage('error', 'Invalid credentials! Please check LEETCODE_SESSION token.');
-        } else {
-            showMessage('error', 'Something went wrong! Please try again.',false);
-        }
+    //     if (response.status === 201) {
+    //         showMessage('success', 'Code uploaded successfully! Check your GitHub repository.',false);
+    //     } else if (response.status === 401) {
+    //         showMessage('error', 'Invalid credentials! Please check LEETCODE_SESSION token.');
+    //     } else {
+    //         showMessage('error', 'Something went wrong! Please try again.',false);
+    //     }
 
-        return response.json(); // Parse the response if needed
-    })
-    .then(data => {
-        console.log('Response data:', data); // Optional debugging
-    })
-    .catch(error => {
-        loading(false);
-        console.error('Error:', error);
-        showMessage('error', 'A network error occurred. Please try again later.',false);
-    });
+    //     return response.json(); // Parse the response if needed
+    // })
+    // .then(data => {
+    //     console.log('Response data:', data); // Optional debugging
+    // })
+    // .catch(error => {
+    //     loading(false);
+    //     console.error('Error:', error);
+    //     showMessage('error', 'A network error occurred. Please try again later.',false);
+    // });
 });
 
 

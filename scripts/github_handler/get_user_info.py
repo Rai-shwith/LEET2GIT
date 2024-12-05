@@ -1,14 +1,14 @@
-from fastapi import Request
+from fastapi import HTTPException
 from github import Github,AuthenticatedUser,Auth
 from scripts.logging_config import logger
 from fastapi.concurrency import run_in_threadpool # to run the function in a thread
 
-async def get_user_info(request:Request,token:str = None)->AuthenticatedUser.AuthenticatedUser:
+async def get_user_info(token:str)->AuthenticatedUser.AuthenticatedUser:
     """
     Get the user information
     """
     if not token:
-        token = request.cookies.get("access_token")
+        raise HTTPException(400,detail="Token is required")
     logger.info("Getting user information")
     logger.info(f"Access token: {token}")
     try:

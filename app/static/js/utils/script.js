@@ -244,3 +244,13 @@ function cyclePlaceholders(elementId) {
     }, delay);
 }
 
+const getCookie = (cookieName) => {
+    const cookies = document.cookie.split(';'); // Split all cookies into an array
+    for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('='); // Split the cookie into name and value
+        if (name === cookieName) {
+            return decodeURIComponent(value); // Return the decoded cookie value
+        }
+    }
+    return null; // Return null if the cookie isn't found
+}
