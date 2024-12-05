@@ -4,7 +4,7 @@ from scripts.output_content_creator import output_content_creator,output_content
 from scripts.leetcode_solutions_fetcher import leetcode_solution_fetcher
 from scripts.github_handler.get_repo import get_repo
 from scripts.github_handler.batch_upload import batch_upload_files
-from scripts.github_handler.upload_file import upload_file,update_repo_readme,get_repo_readme_bulk
+from scripts.github_handler.upload_file import upload_file,get_repo_readme_for_manual,get_repo_readme_bulk
 from scripts.organize_leetcode_solutions import organize_leetcode_solutions
 from ..database import get_db
 from .oauth import get_current_user
@@ -33,8 +33,8 @@ async def create_uploads(request:Request,uploads: schemas.Uploads,db: AsyncSessi
     repo_name = current_user.repo_name
     repo = await get_repo(github_user,repo_name=repo_name)
     logger.info(f"Github user: {github_user}")
-    # repo_readme_content = await  get_repo_readme_bulk(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,uploads=uploads)
-    # file_structure["README.md"]=repo_readme_content
+    repo_readme_content = await  get_repo_readme_for_manual(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,uploads=uploads)
+    file_structure["README.md"]=repo_readme_content
     await batch_upload_files(repo=repo,file_structure=file_structure)
     logger.info("Upload Finished !!")
     

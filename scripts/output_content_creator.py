@@ -26,7 +26,7 @@ def output_content_creator(problem_detail:schemas.ProblemDetails,solution:schema
     logger.info("Creating solution file")
     solution_content=solution.code
     logger.info("Solution file created successfully")
-    read_me = question_Read_me_construter(question_link,question_id,question_title,question_difficulty,question_body)
+    read_me = question_Read_me_constructor(question_link,question_id,question_title,question_difficulty,question_body)
     folder_name=f"{question_id:04}-{title_slug}"
     solution_file_name=f"{folder_name}.{solution.code_extension}"
     read_me_content=read_me
