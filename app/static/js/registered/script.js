@@ -5,56 +5,120 @@ const manualUploadBtn = document.getElementById('manualUploadBtn');
 const automaticUploadBtn = document.getElementById('automaticUploadBtn');
 const requestedQuestions = new Object() // To keep track of questions requested so that to stop the unnecessary requests
 const access_token = getCookie('access_token');
+const progressBar = document.getElementById('progress-bar');
 
 
 // Establish WebSocket connection
 const protocol = window.location.protocol === "https:" ? "wss" : "ws";
 const host = window.location.host; // Current host and port
-console.log(`${protocol}://${host}/ws/manual`);
-console.log(`${protocol}://${host}/ws/automatic`);
-const manualSocket = new WebSocket(`${protocol}://${host}/ws/manual`);
-const automaticSocket = new WebSocket(`${protocol}://${host}/ws/automatic`);
+console.log(`${protocol}://${host}/upload/ws/manual/`);
+console.log(`${protocol}://${host}/upload/ws/automatic/`);
 
-manualSocket.onopen = () =>{
+const manualSocket = new WebSocket(`${protocol}://${host}/upload/ws/manual/`);
+
+manualSocket.onopen = () => {
     console.log("Manual Websocket Connection Established ")
 };
 
-automaticSocket.onopen = () =>{
-    console.log("Automatic Websocket Connection Established ")
-};
 
-const sendManualMessage = (uploads) => {
-    manualSocket.send(JSON.stringify({access_token,uploads}));
-};
 
-const sendAutomaticMessage = (leetcode_access_token) => {
-    automaticSocket.send(JSON.stringify({access_token,leetcode_credentials:{leetcode_access_token}}));
-};
+// const sendManualMessage = (uploads) => {
+//     manualSocket.send(JSON.stringify({ access_token, uploads }));
+// };
+
+// Helper function to send a message when the WebSocket is ready
+function sendWebsocketMessage(socket, message) {
+    return new Promise((resolve, reject) => {
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(message));
+            resolve();
+        } else if (socket.readyState === WebSocket.CONNECTING) {
+            socket.addEventListener('open', () => {
+                socket.send(JSON.stringify(message));
+                resolve();
+            });
+        } else {
+            reject(new Error("WebSocket is not in a state to send messages."));
+        }
+    });
+}
+
+
 
 manualSocket.onmessage = (event) => {
     console.log(event.data);
 };
 
-automaticSocket.onmessage = (event) => {
-    console.log(event.data);
-};
+
 
 // Start cycling placeholders
 cyclePlaceholders("search-question");
 
 
-automaticUploadBtn.addEventListener('click', () => {
-    loading(true); // Start the loading spinner
+automaticUploadBtn.addEventListener('click', async () => {
+    automaticUploadBtn.disabled = true; // Disable the button to prevent multiple clicks
+    progressBar.classList.remove('hidden'); // Show the progress bar
+
+    // Loading Animations
+    const progressBarAnimation = progressBar.querySelector('.animate');
+    const progressBarMessage = progressBar.querySelector('.message');
+
+    progressBarAnimation.style.animation = 'step0 2s linear 1';
+
     const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
 
-    if (!leetcodeAccess ) {
-        showMessage('error', 'Please fill the LEETCODE_SESSION ',false);
-        loading(false);
+    if (!leetcodeAccess) {
+        showMessage('error', 'Please fill the LEETCODE_SESSION ', false);
+        progressBar.classList.add('hidden'); // Hide progress bar if input is invalid
+        automaticUploadBtn.disabled = false;
         return;
     }
+    const info = {
+        access_token,
+        leetcode_credentials: { leetcodeAccess }
+    }
+
+    // Binding with websocket
+    const automaticSocket = new WebSocket(`${protocol}://${host}/upload/ws/automatic/`);
+    automaticSocket.onopen = () => {
+        console.log("Automatic Websocket Connection Established ")
+    };
+
+    sendWebsocketMessage(automaticSocket, info)
+
+    automaticSocket.onmessage = (event) => {
+        console.log("Message from server:", event.data);
+        try {
+            const data = JSON.parse(event.data);
+            if (data.step == 5) {
+                automaticSocket.close(1000, "Upload complete");
+                automaticUploadBtn.disabled = false; // Re-enable the button when the connection closes
+                progressBar.classList.add('hidden'); // Hide the progress bar on error
+                showMessage('success', 'Code uploaded successfully! Check your GitHub repository.',false);
+                return
+            }
+            progressBarMessage.textContent = data.message;
+            const animation = `Autostep${data.step} ${data.duration}s linear 1`;
+            progressBarAnimation.style.animation = animation;
+        } catch (e) {
+            console.error("Error parsing server message:", e);
+            showMessage('error', 'An error occurred. Check the console for details.', false);
+        }
+    };
+
+    automaticSocket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        showMessage('error', 'WebSocket connection error. Please try again.', false);
+        progressBar.classList.add('hidden'); // Hide the progress bar on error
+        automaticSocket.close();
+    };
+
+    automaticSocket.onclose = (event) => {
+        console.log("WebSocket connection closed:", event.reason || "No reason provided.");
+        automaticUploadBtn.disabled = false; // Re-enable the button when the connection closes
+    };
 
 
-    sendAutomaticMessage(leetcodeAccess);
     // fetch(`/upload/automatic`, {
     //     method: 'POST',
     //     headers: {
@@ -94,7 +158,7 @@ manualUploadBtn.addEventListener('click', () => {
 
     for (let index = 0; index < cards.length; index++) {
         const card = cards[index];
-        
+
         const info = card.querySelector('.info');
         if (info == null && index == 0) {
             showMessage('error', 'Please search for a question first!');
@@ -115,7 +179,7 @@ manualUploadBtn.addEventListener('click', () => {
         upload = { question, solution: { code_extension, code } };
         uploadData.uploads.push(upload);
     }
-    
+
     fetch(`/upload/manual`, {
         method: 'POST',
         headers: {
@@ -123,28 +187,38 @@ manualUploadBtn.addEventListener('click', () => {
         },
         body: JSON.stringify(uploadData) // Ensure uploadData is properly structured as an object
     })
-    .then(async (response) => {
-        if (!response.ok) {
-            // If the response status is not OK (e.g., 4xx, 5xx)
-            return response.json().then(data => {
-                // Handle specific error message if available in response body
-                showMessage('error', data.message || 'Something went wrong! Please try again',false);
-                throw new Error(data.message || 'Something went wrong!');
-            });
-        }
-        showMessage('success', 'Code uploaded successfully! Check your GitHub repository',false);
-        loading(false);
-    })
-    .catch(error => {
-        // This will catch network or unexpected errors
-        console.error('Error:', error);
-        showMessage('error', 'Network error. Please try again',false);
-    })
-    .finally(() => {
-        loading(false);
-    });
+        .then(async (response) => {
+            if (!response.ok) {
+                // If the response status is not OK (e.g., 4xx, 5xx)
+                return response.json().then(data => {
+                    // Handle specific error message if available in response body
+                    showMessage('error', data.message || 'Something went wrong! Please try again', false);
+                    throw new Error(data.message || 'Something went wrong!');
+                });
+            }
+            showMessage('success', 'Code uploaded successfully! Check your GitHub repository', false);
+            loading(false);
+        })
+        .catch(error => {
+            // This will catch network or unexpected errors
+            console.error('Error:', error);
+            showMessage('error', 'Network error. Please try again', false);
+        })
+        .finally(() => {
+            loading(false);
+        });
 });
 
+
+// Gracefully handle cleanup when user navigates away or closes the tab
+window.addEventListener('beforeunload', () => {
+    if (automaticSocket.readyState === WebSocket.OPEN) {
+        automaticSocket.close();
+    }
+    if (manualSocket.readyState === WebSocket.OPEN) {
+        manualSocket.close();
+    }
+});
 
 wayChooser.querySelector('.manual').addEventListener('click', () => {
     wayChooser.classList.add('hidden');
@@ -191,7 +265,7 @@ const handleSearch = (question) => {
         showMessage('error', 'Please enter a question!');
         return
     }
-    if (question.toLowerCase().replace(' ','').replace('-','') in requestedQuestions) {
+    if (question.toLowerCase().replace(' ', '').replace('-', '') in requestedQuestions) {
         console.log('Question already requested!');
         showMessage('error', 'Question already requested!');
         return
@@ -213,7 +287,7 @@ const handleSearch = (question) => {
         console.log(data);
         fillQuestion(data);
         showMessage('success', 'Question found!');
-        requestedQuestions[question.toLowerCase().replace(' ','').replace('-','')] = data.questionId; // Add the question to the set of requested questions by removing spaces and hyphens
+        requestedQuestions[question.toLowerCase().replace(' ', '').replace('-', '')] = data.questionId; // Add the question to the set of requested questions by removing spaces and hyphens
     }).catch(error => {
         console.log(error);
         if (error.message == 'Question not found') {
@@ -237,15 +311,15 @@ const fillQuestion = (data) => {
     const difficulty_span = card.querySelector('span#difficulty');
     difficulty_span.textContent = difficulty;
     console.log(difficulty);
-    if (difficulty == 'Easy'){
+    if (difficulty == 'Easy') {
         difficulty_span.classList.remove(...difficulty_span.classList); // Remove all classes
-        difficulty_span.classList.add('bg-green-200', 'px-2', 'text-green-600','rounded-full');
-    }else if(difficulty == 'Medium'){
+        difficulty_span.classList.add('bg-green-200', 'px-2', 'text-green-600', 'rounded-full');
+    } else if (difficulty == 'Medium') {
         difficulty_span.classList.remove(...difficulty_span.classList); // Remove all classes
-        difficulty_span.classList.add('bg-amber-200', 'px-2', 'text-amber-600','rounded-full');
-    }else if(difficulty == 'Hard'){
+        difficulty_span.classList.add('bg-amber-200', 'px-2', 'text-amber-600', 'rounded-full');
+    } else if (difficulty == 'Hard') {
         difficulty_span.classList.remove(...difficulty_span.classList); // Remove all classes
-        difficulty_span.classList.add('bg-red-200', 'px-2', 'text-red-600','rounded-full');
+        difficulty_span.classList.add('bg-red-200', 'px-2', 'text-red-600', 'rounded-full');
     }
     card.querySelector('span#difficulty').textContent = difficulty;
     const textarea = card.querySelector('textarea');

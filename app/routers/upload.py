@@ -42,6 +42,30 @@ async def create_uploads(access_token:str,uploads: schemas.Uploads,db: AsyncSess
     logger.info("Upload Finished !!")
     
 
+"""
+For this Websocket i will send the data in the following format
+{
+  "step": 1, # step number
+  "message": "Fetching LeetCode submissions", # in percentage
+  "duration": 11 # in seconds
+}
+
+OK let's define the steps
+1. Fetching LeetCode submissions # Only applicable for automatic mode
+2. Organizing LeetCode submissions
+3. Preparing for Upload
+4. Uploading to github
+5. Upload Finished
+
+"""
+automatic_websocket_messages = [
+    {"step":1,"message":"Fetching LeetCode submissions","duration":11},
+    {"step":2,"message":"Organizing LeetCode Submissions","duration":22},
+    {"step":3,"message":"Preparing for Uploads","duration":12},
+    {"step":4,"message":"Uploading to github","duration":133},
+    {"step":5,"message":"Upload Finished","duration":0},
+]  
+    
 @router.websocket("/ws/manual/")
 async def manual_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_db)):
     """
@@ -61,7 +85,9 @@ async def manual_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_db)
     
 
 @router.websocket("/ws/automatic/")
-async def automatic_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_db)):
+# async def automatic_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_db)):
+async def automatic_uploads(websocket:WebSocket):
+    message_index = 0
     """
     This endpoint is for automatic uploading """
     logger.info("Automatic uploading ...")
@@ -69,29 +95,51 @@ async def automatic_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_
     try:
         while True:
             data = await websocket.receive_text()
-            logger.info(f"Data received from Manual")
+            logger.info(f"Data received from Automatic")
             data = json.loads(data)
             access_token = data["access_token"]
             leetcode_credentials = data["leetcode_credentials"]
-            await websocket.send_text("Fetching the leetcode submissions...")
-            raw_submissions = leetcode_solution_fetcher(leetcode_credentials.get("LEETCODE_SESSION"))
-            await websocket.send_text("Leetcode submissions fetched")
-            uploads: schemas.Uploads = await organize_leetcode_solutions(raw_solutions=raw_submissions)
-            await websocket.send_text("Leetcode solutions organized")
+            # await websocket.send_text("Fetching the leetcode submissions...")
+            await websocket.send_json(automatic_websocket_messages[0])
+            message_index+=1
+            
+            # raw_submissions = leetcode_solution_fetcher(leetcode_credentials.get("LEETCODE_SESSION"))
+            await asyncio.sleep(11)
+            
+            # await websocket.send_text("Organizing leetcode Submissions...")
+            await websocket.send_json(automatic_websocket_messages[1])
+            message_index+=1
+            
+            # uploads: schemas.Uploads = await organize_leetcode_solutions(raw_solutions=raw_submissions)
+            await asyncio.sleep(22)
+            
+            # await websocket.send_text("Preparing for Uploads...")
+            await websocket.send_json(automatic_websocket_messages[2])
+            message_index+=1
             # await create_uploads(request=request,uploads=uploads,db=db)
-            file_structure = output_content_creator_for_batch_upload(uploads=uploads)
-            github_user: AuthenticatedUser = await get_user_info(token=access_token)
-            github_id = github_user.id
-            await websocket.send_text("User information received from Github")
-            current_user: schemas.Users = await get_current_user(github_id=github_id,db=db)
-            logger.info(f"Creating the upload for the user: {current_user}")
-            repo_name = current_user.repo_name
-            repo = await get_repo(github_user,repo_name=repo_name)
-            logger.info(f"Github user: {github_user}")
-            repo_readme_content = await  get_repo_readme_bulk(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,uploads=uploads)
-            file_structure["README.md"]=repo_readme_content
-            await batch_upload_files(repo=repo,file_structure=file_structure)
-            await websocket.send_text("Upload Finished !!")
+            
+            # file_structure = output_content_creator_for_batch_upload(uploads=uploads)
+            await asyncio.sleep(12)            
+            # github_user: AuthenticatedUser = await get_user_info(token=access_token)
+            # github_id = github_user.id
+            
+            # await websocket.send_text("Uploading files to github")
+            await websocket.send_json(automatic_websocket_messages[3])
+            message_index+=1
+            
+            # current_user: schemas.Users = await get_current_user(github_id=github_id,db=db)
+            # logger.info(f"Creating the upload for the user: {current_user}")
+            # repo_name = current_user.repo_name
+            # repo = await get_repo(github_user,repo_name=repo_name)
+            # logger.info(f"Github user: {github_user}")
+            # repo_readme_content = await  get_repo_readme_bulk(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,uploads=uploads)
+            # file_structure["README.md"]=repo_readme_content
+            # await batch_upload_files(repo=repo,file_structure=file_structure)
+            await asyncio.sleep(133)
+            
+            # await websocket.send_text("Upload Finished !!")
+            await websocket.send_json(automatic_websocket_messages[4])
+
             logger.info("Upload Finished !!")
     except WebSocketDisconnect:
         logger.info("Websocket disconnected")
