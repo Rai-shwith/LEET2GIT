@@ -84,7 +84,6 @@ async def organize_leetcode_solutions(raw_solutions: dict)->schemas.Uploads:
             continue
         if title_slug in unique_recent_submissions and timestamp > unique_recent_submissions[title_slug]["timestamp"]:
             unique_recent_submissions[title_slug]["timestamp"] = timestamp
-            problemDetails : schemas.ProblemDetails = await get_problem_details(title_slug=title_slug)
             upload : schemas.Upload = schemas.Upload(question=None,solution=solution)
             uploads[unique_recent_submissions[title_slug]["index"]] = upload
 
