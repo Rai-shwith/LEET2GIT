@@ -102,7 +102,7 @@ automaticUploadBtn.addEventListener('click', async () => {
             progressBarAnimation.style.animation = animation;
         } catch (e) {
             console.error("Error parsing server message:", e);
-            showMessage('error', 'An error occurred. Check the console for details.', false);
+            showMessage('error', 'An error occurred.', false);
         }
     };
 
