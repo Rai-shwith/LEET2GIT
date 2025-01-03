@@ -97,12 +97,12 @@ async def automatic_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_
             data = await websocket.receive_text()
             logger.info(f"Data received from Automatic")
             data = json.loads(data)
-            access_token = data["access_token"]
+            access_token = data["access_token"] 
             leetcode_credentials = data["leetcode_credentials"]
             await websocket.send_json(automatic_websocket_messages[0])
             message_index+=1
             
-            raw_submissions = leetcode_solution_fetcher(leetcode_credentials.get("LEETCODE_SESSION"))
+            raw_submissions = leetcode_solution_fetcher(leetcode_credentials.get("leetcodeAccess"))
             # await asyncio.sleep(11)
             
             await websocket.send_json(automatic_websocket_messages[1])

@@ -24,7 +24,7 @@ async def get_github_callback(request:Request,db:AsyncSession = Depends(get_db))
     response.set_cookie(
         key="access_token",
         value=token_response.access_token,
-        httponly=True,  
+        httponly=False,  
         secure=True,    
         max_age=3600,   # for 1 hour
     )

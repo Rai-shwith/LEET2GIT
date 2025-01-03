@@ -245,6 +245,7 @@ function cyclePlaceholders(elementId) {
 }
 
 const getCookie = (cookieName) => {
+    console.log("Searching for Cookie "+ cookieName)
     const cookies = document.cookie.split(';'); // Split all cookies into an array
     for (let cookie of cookies) {
         const [name, value] = cookie.trim().split('='); // Split the cookie into name and value

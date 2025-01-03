@@ -5,6 +5,7 @@ const manualUploadBtn = document.getElementById('manualUploadBtn');
 const automaticUploadBtn = document.getElementById('automaticUploadBtn');
 const requestedQuestions = new Object() // To keep track of questions requested so that to stop the unnecessary requests
 const access_token = getCookie('access_token');
+console.log(access_token);
 const progressBar = document.getElementById('progress-bar');
 
 

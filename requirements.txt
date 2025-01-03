@@ -2,7 +2,7 @@ alembic==1.13.2
 annotated-types==0.7.0
 anyio==4.4.0
 async-timeout==4.0.3
-asyncpg==0.29.0
+asyncpg==0.30.0
 beautifulsoup4==4.12.3
 certifi==2024.7.4
 cffi==1.17.0
