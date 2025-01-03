@@ -24,6 +24,7 @@ class Settings(BaseSettings):
         
 
 settings = Settings()
+settings.sslrootcert = settings.sslrootcert.replace("/n","\n")
 
 # Configure Jinja2 templates
 templates = Jinja2Templates(directory="app/templates")
