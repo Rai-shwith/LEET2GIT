@@ -11,6 +11,7 @@ def leetcode_solution_fetcher(leetcode_access_token: str):
     'LEETCODE_SESSION': leetcode_access_token
     }
     last_key = "" # This is the key that will be used to fetch the next 20 solutions
+    print("\n\n\n\n\n\n\n\n\n\n"+leetcode_access_token)
     while True:
         # Make the GET request to the API endpoint with cookies
         response = requests.get(f'{BASE_URL}?lastkey={last_key}', cookies = cookies)

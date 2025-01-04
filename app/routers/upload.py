@@ -77,6 +77,7 @@ async def manual_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_db)
             data = await websocket.receive_text()
             logger.info(f"Data received from Manual")
             data = json.loads(data)
+            
             access_token = data["access_token"]
             uploads = schemas.Uploads(data["uploads"])
             await create_uploads(access_token=access_token,uploads=uploads,db=db,websocket=websocket)
@@ -92,12 +93,12 @@ async def automatic_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_
     This endpoint is for automatic uploading """
     logger.info("Automatic uploading ...")
     await websocket.accept()
+    access_token = websocket.cookies.get("access_token")
     try:
         while True:
             data = await websocket.receive_text()
             logger.info(f"Data received from Automatic")
             data = json.loads(data)
-            access_token = data["access_token"] 
             leetcode_credentials = data["leetcode_credentials"]
             await websocket.send_json(automatic_websocket_messages[0])
             message_index+=1
