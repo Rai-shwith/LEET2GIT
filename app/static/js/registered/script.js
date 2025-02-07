@@ -88,6 +88,8 @@ automaticUploadBtn.addEventListener('click', async () => {
     sendWebsocketMessage(automaticSocket, info)
 
     automaticSocket.onmessage = (event) => {
+        // TODO: Handle the invalid token error in frontend
+
         console.log("Message from server:", event.data);
         try {
             const data = JSON.parse(event.data);
@@ -110,12 +112,12 @@ automaticUploadBtn.addEventListener('click', async () => {
     automaticSocket.onerror = (error) => {
         console.error("WebSocket error:", error);
         showMessage('error', 'WebSocket connection error. Please try again.', false);
-        progressBar.classList.add('hidden'); // Hide the progress bar on error
-        automaticSocket.close();
+        automaticSocket.close(1000, "WebSocket error"); // Close the connection on error
     };
-
+    
     automaticSocket.onclose = (event) => {
         console.log("WebSocket connection closed:", event.reason || "No reason provided.");
+        progressBar.classList.add('hidden'); // Hide the progress bar on error
         automaticUploadBtn.disabled = false; // Re-enable the button when the connection closes
     };
 

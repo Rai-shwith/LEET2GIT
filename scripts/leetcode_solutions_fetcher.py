@@ -1,5 +1,5 @@
 import requests
-from fastapi import HTTPException
+from fastapi import HTTPException, WebSocket
 from scripts.logging_config import logger
 
 BASE_URL = 'https://leetcode.com/api/submissions/'
@@ -24,6 +24,7 @@ def leetcode_solution_fetcher(leetcode_access_token: str):
             if data["has_next"] == False:
                 break
         else:
-            logger.info("Failed to fetch the leetcode submissions")
-            raise HTTPException(status_code=401, detail="Failed to fetch the leetcode submissions. Incorrect credentials")
+            logger.error("Failed to fetch the leetcode submissions")
+            raise Exception("Failed to fetch the leetcode submissions. Incorrect credentials")
+            # raise (status_code=401, detail="Failed to fetch the leetcode submissions. Incorrect credentials")
     return submissions

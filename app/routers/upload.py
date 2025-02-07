@@ -101,8 +101,15 @@ async def automatic_uploads(websocket:WebSocket, db: AsyncSession = Depends(get_
             leetcode_credentials = data["leetcode_credentials"]
             await websocket.send_json(automatic_websocket_messages[0])
             message_index+=1
-            
-            raw_submissions = leetcode_solution_fetcher(leetcode_credentials.get("leetcodeAccess"))
+            try:
+                raw_submissions = leetcode_solution_fetcher(leetcode_credentials.get("leetcodeAccess"))
+            except Exception as e:
+                # TODO: Handle the invalid token error in frontend
+                logger.error(f"Error in fetching the leetcode submissions: {e}")
+                await websocket.send_json({
+                    "error":str(e)
+                })
+                return await websocket.close()
             # await asyncio.sleep(11)
             
             await websocket.send_json(automatic_websocket_messages[1])
