@@ -41,6 +41,7 @@ async def get_github_user(request:Request,token:str = None) -> schemas.GithubUse
     except ValidationError as e:
         logger.error(f"Validation error: {e}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Failed to retrieve user")
+    logger.info(f"Github user: {github_user.login}")
     return github_user
 
 

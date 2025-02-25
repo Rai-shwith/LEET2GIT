@@ -14,12 +14,12 @@ async def get_user_info(token:str)->AuthenticatedUser.AuthenticatedUser:
     try:
         auth = Auth.Token(token)
         logger.info(f"Auth object: {auth}")
-        g = await run_in_threadpool(Github,auth=auth) 
+        g = Github(auth=auth) 
         logger.info("Github object created")
         logger.info(f"Github object: {g}")
         user = await run_in_threadpool(g.get_user)
         logger.info(f"User information: {user}")
         return user
     except Exception as e:
-        logger.error(f"Failed to get user information: {str(e)}")
+        logger.error("Failed to get user information" + str(e))
         return None

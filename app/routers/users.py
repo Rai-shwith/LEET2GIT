@@ -24,7 +24,7 @@ async def register_user(request:Request,repo_name:str = "LeetCode",private:bool=
     # Await the asynchronous functions concurrently
     github_user, pygithub_user = await asyncio.gather(
         get_github_user(request=request),  # github user of pydantic type
-        get_user_info(request)  # github user of pygithub type
+        get_user_info(request.cookies.get("access_token"))  # github user of pygithub type
     )
     logger.info(f"Github user: {github_user}")
     

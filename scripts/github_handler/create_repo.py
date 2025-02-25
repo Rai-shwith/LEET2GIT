@@ -11,6 +11,7 @@ async def create_repo(user:AuthenticatedUser,repo_name:str,description:str="",pr
     if description=="":
         description="Repository created by LEET2GIT for storing LeetCode solutions."
     logger.info(f"Creating repository {repo_name}")
+    logger.info(f"user {user.login}")
     try:
         repo = await run_in_threadpool(user.create_repo,repo_name,description=description,private=private)
         logger.info(f"Repository {repo_name} created successfully")
