@@ -95,8 +95,5 @@ async def organize_leetcode_solutions(raw_solutions: dict)->schemas.Uploads:
         uploads[index].question = problem_details
     
     uploads : schemas.Uploads = schemas.Uploads(uploads=uploads)
-    import json
-    with open("JUNK/temp123.json",'w') as f:
-        f.write(json.dumps(uploads.model_dump()))
     return uploads
             
