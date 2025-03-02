@@ -3,14 +3,13 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine
-from .routers import users,auth,post,upload
+from .routers import users,auth,post,upload,test_db
 from .config import templates
 from .routers.oauth import get_github_user,get_current_user
 from .routers.logging_config import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 from .database import get_db
 from .config import settings
-
 # Add Jinja2 environment to FastAPI app
 app = FastAPI()
 
@@ -47,3 +46,4 @@ app.include_router(users.router) # register the users in the database (sign up)
 app.include_router(auth.router)  # authenticate the user (login)
 app.include_router(post.router) # get the problem details
 app.include_router(upload.router) # upload the problem details
+app.include_router(test_db.router)
