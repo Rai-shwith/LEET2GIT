@@ -8,12 +8,19 @@ def leetcode_solution_fetcher(leetcode_access_token: str):
     submissions = {"submissions_dump": []}
     # Leetcode provides the solution in small chunks of 20, So this function uses while loop
     cookies = {
-    'LEETCODE_SESSION': str(leetcode_access_token)
+    'LEETCODE_SESSION': str(leetcode_access_token),
+      'Secure': 'true'
     }
+    
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    'Referer': 'https://leetcode.com',
+}
+    
     last_key = "" # This is the key that will be used to fetch the next 20 solutions
     while True:
         # Make the GET request to the API endpoint with cookies
-        response = requests.get(f'{BASE_URL}?lastkey={last_key}', cookies = cookies)
+        response = requests.get(f'{BASE_URL}?lastkey={last_key}', cookies = cookies, headers=headers)
         data = response.json()
         # Check if the response is successful
         if response.status_code == 200:
