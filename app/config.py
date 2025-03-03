@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 from fastapi.templating import Jinja2Templates
 
 class Settings(BaseSettings):
-    sslrootcert : str
+    sslrootcert: str | None = None
     database_protocol : str
     database_username : str
     database_password : str
