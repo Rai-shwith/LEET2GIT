@@ -5,7 +5,6 @@ from scripts.logging_config import logger
 BASE_URL = 'https://leetcode.com/api/submissions/'
 
 def leetcode_solution_fetcher(leetcode_access_token: str):
-    logger.info(f"Leetcode Submission token {leetcode_access_token}")
     submissions = {"submissions_dump": []}
     # Leetcode provides the solution in small chunks of 20, So this function uses while loop
     cookies = {
@@ -25,6 +24,7 @@ def leetcode_solution_fetcher(leetcode_access_token: str):
             if data["has_next"] == False:
                 break
         else:
+            logger.error(response.json())
             logger.info("Failed to fetch the leetcode submissions")
             raise HTTPException(status_code=401, detail="Failed to fetch the leetcode submissions. Incorrect credentials")
     return submissions
