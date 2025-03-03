@@ -11,12 +11,12 @@ SQL_ALCHEMY_DATABASE_URL = (
     f"{settings.database_port}/{settings.database_host.split('.')[0]}.{settings.database_name}" #?sslmode={settings.database_connection_parameter}
 )
 
-# ssl_context = ssl.create_default_context(cafile=settings.sslrootcert)
+ssl_context = ssl.create_default_context(cafile=settings.sslrootcert)
 
 #create asynchronous engine
 engine = create_async_engine(
     SQL_ALCHEMY_DATABASE_URL
-    # connect_args={"ssl":ssl_context}
+    ,connect_args={"ssl":ssl_context}
     )
 
 #create async session maker
