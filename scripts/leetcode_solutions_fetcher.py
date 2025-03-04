@@ -5,8 +5,6 @@ from scripts.logging_config import logger
 BASE_URL = 'https://leetcode.com/api/submissions/'
 
 def leetcode_solution_fetcher(leetcode_access_token: str):
-    ip_response = requests.get("https://api.ipify.org?format=json")
-    logger.info(f"Server IP: {ip_response.json()['ip']}")
     submissions = {"submissions_dump": []}
     # Leetcode provides the solution in small chunks of 20, So this function uses while loop
     cookies = {
