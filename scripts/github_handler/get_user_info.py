@@ -3,7 +3,7 @@ from github import Github,AuthenticatedUser,Auth
 from scripts.logging_config import logger
 from fastapi.concurrency import run_in_threadpool # to run the function in a thread
 
-async def get_user_info(request:Request,token:str = None)->AuthenticatedUser.AuthenticatedUser:
+async def get_user_info(request:Request | None,token:str = None)->AuthenticatedUser.AuthenticatedUser:
     """
     Get the user information
     """

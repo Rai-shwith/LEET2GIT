@@ -164,3 +164,60 @@ async function fetchSubmissions() {
   };
 }
 fetchSubmissions();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function connectWebSocket() {
+    const socket = new WebSocket("ws://localhost:8000/upload/ws/automatic/");
+
+    socket.onopen = () => {
+        console.log("WebSocket connection established.");
+    };
+
+    socket.onmessage = (event) => {
+        try {
+            const message = JSON.parse(event.data);
+            console.log("Received message:", message.message);
+            console.log(message.code);
+        } catch (error) {
+            console.error("Error parsing message:", error);
+        }
+    };
+
+    socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+    };
+
+    socket.onclose = (event) => {
+        if (event.wasClean) {
+            console.log(`WebSocket closed cleanly, code=${event.code}, reason=${event.reason}`);
+        } else {
+            console.warn("WebSocket connection closed unexpectedly.");
+        }
+    };
+}
