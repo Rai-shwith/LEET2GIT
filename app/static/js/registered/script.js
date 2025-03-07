@@ -3,55 +3,125 @@ const manual = document.getElementById('manual');
 const automatic = document.getElementById('automatic');
 const manualUploadBtn = document.getElementById('manualUploadBtn');
 const automaticUploadBtn = document.getElementById('automaticUploadBtn');
+const copyBtn = document.getElementById('copyBtn');
+let dataExist = false;
 const requestedQuestions = new Object() // To keep track of questions requested so that to stop the unnecessary requests
 
 // Start cycling placeholders
 cyclePlaceholders("search-question");
 
+// To stack the message only for websocket automatic upload interaction
+    
+const stackMessageContainer = document.getElementById('stackMessageContainer');
+const StackMessage = (type, message, autoHide = true) => {
+    const messageId = `msg-${Date.now()}`;
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.id = messageId;
+    messageDiv.className = `min-w-xs w-full p-4 rounded-lg shadow-lg transform transition-transform translate-x-20 opacity-0 ${type === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'}`;
+    messageDiv.style.width = '18rem';
+    
+    messageDiv.innerHTML = `
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2 ${type === 'success' ? 'text-green-600' : 'text-red-600'}" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm${type === 'success' ? '3.707-10.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' : '-1-11a1 1 0 012 0v4a1 1 0 01-2 0V7zm1 8a1 1 0 110-2 1 1 0 010 2z'}" clip-rule="evenodd" />
+            </svg>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    stackMessageContainer.appendChild(messageDiv);
+    
+    setTimeout(() => {
+        messageDiv.classList.remove('translate-x-20', 'opacity-0');
+        messageDiv.classList.add('translate-x-0', 'opacity-100');
+    }, 100);
+
+    if (autoHide) {
+        setTimeout(() => {
+            messageDiv.classList.remove('translate-x-0', 'opacity-100');
+            messageDiv.classList.add('translate-x-20', 'opacity-0');
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 300);
+        }, 3000);
+    }
+};
+
+
+// Function to copy the code to the clipboard
+function copyCode() {
+    const codeBlock = document.getElementById('code-block').innerText;
+    navigator.clipboard.writeText(codeBlock).then(() => {
+        alert('Code copied to clipboard!');
+    }).catch(err => {
+        alert('Failed to copy: ' + err);
+    });
+}
+
+// Trigger the copy
+copyBtn.addEventListener('click',() => {
+    console.log("Copy button clicked");
+    if(dataExist) {
+        copyCode();
+    }
+});
+
 
 automaticUploadBtn.addEventListener('click', () => {
+    if (dataExist) return;
+    console.log("Automatic upload button clicked");
     loading(true); // Start the loading spinner
-    const leetcodeAccess = document.getElementById('leetcode_session').value.trim();
+    
+    const socket = new WebSocket("ws://localhost:8000/upload/ws/automatic/");
 
-    if (!leetcodeAccess ) {
-        showMessage('error', 'Please fill the LEETCODE_SESSION ',false);
-        loading(false);
-        return;
-    }
-
-    const data = {
-        leetcode_access_token: leetcodeAccess,
+    socket.onopen = () => {
+        console.log("WebSocket connection established");
     };
 
-    fetch(`/upload/automatic`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        loading(false);
+    socket.onmessage = (event) => {
+        console.log("WebSocket message from backend");
+        try {
+            const data = JSON.parse(event.data);
+            console.log(data);
 
-        if (response.status === 201) {
-            showMessage('success', 'Code uploaded successfully! Check your GitHub repository.',false);
-        } else if (response.status === 401) {
-            showMessage('error', 'Invalid credentials! Please check LEETCODE_SESSION token.',false);
-        } else {
-            showMessage('error', 'Something went wrong! Please try again.',false);
+            if (data.error) {
+                stackMessageContainer('error', data.message,false);
+            } else {
+                StackMessage('success', data.message,false);
+            }
+
+            if (data.code) {
+                loading(false)
+                automaticUploadBtn.classList.add('dim')
+                const codeBlock = document.getElementById('code-block');
+                if (codeBlock) {
+                    codeBlock.innerText = data.code;
+                    dataExist = true;
+                    copyBtn.classList.remove('dim');
+                    document.getElementById('code-cover').hidden = false;
+                } else {
+                    console.warn("Element with ID 'code-block' not found");
+                }
+            }
+        } catch (error) {
+            console.error("Error parsing WebSocket message:", error);
         }
+    };
 
-        return response.json(); // Parse the response if needed
-    })
-    .then(data => {
-        console.log('Response data:', data); // Optional debugging
-    })
-    .catch(error => {
-        loading(false);
-        console.error('Error:', error);
-        showMessage('error', 'A network error occurred. Please try again later.',false);
-    });
+    socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        StackMessage('error', 'WebSocket connection error',false);
+        loading(false); // Stop loading spinner on error
+    };
+
+    socket.onclose = (event) => {
+        console.log("WebSocket connection closed", event);
+        loading(false); // Stop the loading spinner when connection closes
+    };
 });
+
 
 
 manualUploadBtn.addEventListener('click', () => {
