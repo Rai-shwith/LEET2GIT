@@ -115,6 +115,7 @@ automaticUploadBtn.addEventListener("click", () => {
     console.log("WebSocket connection established");
     setInterval(() => {
       socket.send("ping")
+      console.log("ping form frontend")
     }, 1000*30);
   };
 
