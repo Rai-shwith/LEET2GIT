@@ -160,6 +160,9 @@ async def automatic_uploads(websocket:WebSocket,access_token:str, db: AsyncSessi
     except WebSocketDisconnect:
         logger.info("Websocket disconnected")
     finally:
+        previous_websocket.close(1000)
+        websocket.close(1000)
         webSocketConnections.pop(access_token,None)
+        
         
     
