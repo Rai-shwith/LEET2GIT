@@ -21,7 +21,7 @@ async def batch_upload_files(repo: Repository.Repository, file_structure: dict, 
     # Get the base tree object
     base_commit = repo.get_git_commit(latest_commit_sha)
     base_tree = base_commit.tree
-    logger.info("Base tree SHA: ", base_tree.sha)
+    logger.info(f"Base tree SHA: {base_tree.sha}")
 
     # Create tree items
     tree_items = []
@@ -38,7 +38,7 @@ async def batch_upload_files(repo: Repository.Repository, file_structure: dict, 
 
     # Create a new tree
     new_tree = repo.create_git_tree(tree=tree_items, base_tree=base_tree)
-    logger.info("New tree SHA: ", new_tree.sha)
+    logger.info(f"New tree SHA:  {new_tree.sha}")
 
     # Create a new commit
     parent_commit = repo.get_git_commit(latest_commit_sha)
