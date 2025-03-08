@@ -120,7 +120,10 @@ automaticUploadBtn.addEventListener("click", () => {
     try {
       const data = JSON.parse(event.data);
       console.log(data);
-
+      if (data.ping) {
+        socket.send(JSON.stringify({ pong: true })); // Send a pong response to the ping
+        return;
+      }
       if (data.error) {
         StackMessage("error", data.message, false);
       } else {
