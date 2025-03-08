@@ -7,7 +7,7 @@ const copyBtn = document.getElementById("copyBtn");
 const input = document.getElementById("search-question");
 const searchBtn = document.getElementById("searchBtn");
 
-let domain = document.getElementsByTagName('main').dataset.domain;
+let domain = document.querySelector('main').dataset.domain;
 let websocketDomain
 if (domain){
   websocketDomain = 'wss://' + domain + '/upload/ws/automatic/';
