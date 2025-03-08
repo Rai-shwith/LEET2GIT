@@ -31,7 +31,6 @@ def create_title_slug_from_url(url: str):
     start_index = url.find("problems/") + len("problems/")
     end_index = url.find("/", start_index) #The title slug ends with a "/"
     end_index = None if end_index == -1 else end_index #If the title slug is the last part of the URL that is if it doesn't have '/' at the end
-    print(start_index,end_index);
     title_slug = url[start_index:end_index]
     logger.info("Title slug extracted from URL")
     return title_slug
