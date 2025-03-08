@@ -1,9 +1,6 @@
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, Query, status,Request
-from ..database import get_db
-from .oauth import get_current_user
-from sqlalchemy.orm import Session
-from .. import models,schemas
+from fastapi import APIRouter, Query, status
+from .. import schemas
 from scripts import problem_fetcher
 from urllib.parse import unquote
 

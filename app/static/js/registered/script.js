@@ -119,20 +119,26 @@ automaticUploadBtn.addEventListener("click", () => {
         StackMessage("success", data.message, false);
         if (data.message == automatic_websocket_messages[3]) {
           loading(true);
+          setTimeout(() => {
+            StackMessage(
+              "success",
+              "Hang tight! This might take a couple of minutes — perfect time for a snack or a victory dance. We'll be back before you know it! 🚀",
+              false
+            );
+          }, 3000);
+        }
+        if (data.message == automatic_websocket_messages[4]) {
+          loading(false);
+          document.addEventListener("click", (event) => {
+            if (!stackMessageContainer.contains(event.target)) {
+              stackMessageContainer.innerHTML = "";
+            }
+          });
           StackMessage(
             "success",
-            "Hang tight! This might take a couple of minutes — perfect time for a snack or a victory dance. We'll be back before you know it! 🚀",
+            `Code uploaded successfully! Check your <a style="text-decoration: underline;" target="_blank href="${data.link}">GitHub repository</a>`,
             false
           );
-        }
-        if (data.message == automatic_websocket_messages[3]) {
-          loading(false);
-          document.addEventListener('click', (event) => {
-            if (!stackMessageContainer.contains(event.target)) {
-                stackMessageContainer.innerHTML = "";
-            }
-        });
-        StackMessage("success", `Code uploaded successfully! Check your <a style="text-decoration: underline;" target="_blank href="${data.link}">GitHub repository</a>`, false);
         }
       }
 
@@ -170,17 +176,17 @@ const clearUploadData = () => {
   const cardContainer = document.getElementById("cardContainer");
   const cards = cardContainer.querySelectorAll(".card");
   const card = cards[0];
-    card.querySelector("textarea").value = "";
-    card.querySelector("select").value = "";
-    card.querySelector(".info").remove();
-    card.querySelector("span#questionId").textContent = "";
-    card.querySelector("span#questionTitle").textContent = "";
-    card.querySelector("span#difficulty").textContent = "";
+  card.querySelector("textarea").value = "";
+  card.querySelector("select").value = "";
+  card.querySelector(".info").remove();
+  card.querySelector("span#questionId").textContent = "";
+  card.querySelector("span#questionTitle").textContent = "";
+  card.querySelector("span#difficulty").textContent = "";
   for (let index = 1; index < cards.length; index++) {
     cards[index].remove();
   }
   input.value = "";
-}
+};
 
 const getUploadData = () => {
   console.log("Getting upload data");
@@ -194,8 +200,9 @@ const getUploadData = () => {
     const info = card.querySelector(".info");
     if (info == null && index == 0) {
       console.log("Please search for a question first!");
-      setTimeout(() => { // Delay the message so that it doesn't close by the click outside event
-        showMessage("error", "Please search for a question first!",false);
+      setTimeout(() => {
+        // Delay the message so that it doesn't close by the click outside event
+        showMessage("error", "Please search for a question first!", false);
       }, 250);
       loading(false);
       return;
@@ -205,7 +212,11 @@ const getUploadData = () => {
     if ((code == "" || code_extension == "") && index == 0) {
       console.log("Please fill the solution and language first!");
       setTimeout(() => {
-        showMessage("error", "Please fill the solution and language first!",false);
+        showMessage(
+          "error",
+          "Please fill the solution and language first!",
+          false
+        );
       }, 500);
       return;
     }
@@ -217,11 +228,11 @@ const getUploadData = () => {
     uploadData.uploads.push(upload);
   }
   return uploadData;
-}
+};
 
 manualUploadBtn.addEventListener("click", () => {
   loading();
-  
+
   const uploadData = getUploadData();
   if (uploadData == undefined || uploadData.uploads.length == 0) {
     loading(false);
@@ -254,7 +265,6 @@ manualUploadBtn.addEventListener("click", () => {
       );
       clearUploadData();
       loading(false);
-
     })
     .catch((error) => {
       // This will catch network or unexpected errors
@@ -291,7 +301,6 @@ automatic.querySelector(".manual").addEventListener("click", () => {
   manual.classList.remove("hidden");
   manual.classList.add("flex");
 });
-
 
 searchBtn.addEventListener("click", () => {
   handleSearch(input.value);

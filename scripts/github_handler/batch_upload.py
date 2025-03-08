@@ -1,4 +1,4 @@
-from github import Github, InputGitTreeElement, Repository
+from github import InputGitTreeElement, Repository
 from scripts.logging_config import logger
 
 async def batch_upload_files(repo: Repository.Repository, file_structure: dict, commit_message: str = "Automated upload: User's LeetCode solutions added in bulk"):

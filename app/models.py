@@ -1,5 +1,4 @@
 from sqlalchemy import TIMESTAMP, Column, Integer, String, text,BigInteger,Text
-from sqlalchemy.orm import relationship
 from .database import Base
 
 class Users(Base):

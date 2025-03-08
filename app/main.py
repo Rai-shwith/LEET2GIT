@@ -1,8 +1,6 @@
 from fastapi import FastAPI, Request,Depends
-from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from .database import engine
 from .routers import users,auth,post,upload,test_db
 from .config import templates
 from .routers.oauth import get_github_user,get_current_user

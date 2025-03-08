@@ -1,11 +1,9 @@
 from fastapi import APIRouter, Depends, status,Request,WebSocket,WebSocketDisconnect
 from scripts.github_handler.get_user_info import get_user_info
-from scripts.output_content_creator import output_content_creator,output_content_creator_for_batch_upload
-from scripts.leetcode_solutions_fetcher import leetcode_solution_fetcher
+from scripts.output_content_creator import output_content_creator_for_batch_upload
 from scripts.github_handler.get_repo import get_repo
 from scripts.github_handler.batch_upload import batch_upload_files
-from scripts.github_handler.upload_file import upload_file,get_repo_readme_for_manual,get_repo_readme_bulk
-from scripts.organize_leetcode_solutions import organize_leetcode_solutions
+from scripts.github_handler.upload_file import get_repo_readme_for_manual,get_repo_readme_bulk
 from ..database import get_db
 from .oauth import get_current_user
 from .. import schemas
@@ -131,15 +129,16 @@ async def automatic_uploads(websocket:WebSocket,access_token:str, db: AsyncSessi
         await previous_websocket.send_json(
             {
                 "message":automatic_websocket_messages[3],
-                "error":False,
-                "link":link
+                "error":False
             }
             )
         await batch_upload_files(repo=repo,file_structure=file_structure)
         await previous_websocket.send_json(
             {
                 "message":automatic_websocket_messages[4],
-                "error":False
+                "error":False,
+                "link":link
+                
             }
             )
     except WebSocketDisconnect:

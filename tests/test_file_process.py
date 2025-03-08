@@ -1,7 +1,7 @@
 import os
 import sys
 import pytest
-from fastapi import Request,Depends
+from fastapi import Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app import schemas

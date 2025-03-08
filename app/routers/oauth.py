@@ -1,12 +1,10 @@
-from fastapi import Depends, HTTPException,status,Request
+from fastapi import  HTTPException,status,Request
 import httpx
 from .logging_config import logger  
 from .. import schemas,models
 from pydantic import ValidationError
-from ..database import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from typing import Union
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
 from ..security import decrypt_token
@@ -51,6 +49,7 @@ async def get_current_user(github_id:int,db:AsyncSession)-> schemas.Users | None
     If the user is not present in the database then it will return None
     """
     logger.info("Getting current user")
+    logger.info(f"Github ID: {github_id}")
     # db:AsyncSession=next(get_db())
     result = await db.execute(select(models.Users).filter(models.Users.github_id == github_id))
     user = result.scalars().first()

@@ -1,5 +1,4 @@
 from scripts.logging_config import logger
-from fastapi import HTTPException
 def query_generator(title_slug):
     title_slug = title_slug.replace(" ","-").replace("/","")#The string should be free of space and "/"
     

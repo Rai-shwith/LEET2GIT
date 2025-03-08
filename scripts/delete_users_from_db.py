@@ -1,7 +1,5 @@
 from sqlalchemy import text
-from sqlalchemy.future import select
-from app.models import Users  # Replace with your actual User model
-from app.database import get_db  # Import the async get_db function
+from app.database import get_db  
 
 async def delete_all_users():
     async for db in get_db():  # Use the async generator to get a session

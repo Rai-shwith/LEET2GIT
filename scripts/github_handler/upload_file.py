@@ -1,6 +1,6 @@
 from app import schemas
 from scripts.logging_config import logger
-from github import Github,Repository
+from github import Repository
 from fastapi.concurrency import run_in_threadpool # to run the function in a thread
 from scripts.README_templates.repo_README import get_repo_readme
 

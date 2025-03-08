@@ -1,15 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status,Request
 from fastapi.responses import RedirectResponse
 from ..database import get_db
-from .oauth import get_current_user,get_github_user,create_user
+from .oauth import get_github_user,create_user
 from sqlalchemy.ext.asyncio import AsyncSession
-from .. import models,schemas
-from ..config import templates
 from .logging_config import logger
 from scripts.github_handler.create_repo import create_repo
 from scripts.github_handler.get_repo import get_repo
 from scripts.github_handler.get_user_info import get_user_info
-from github import AuthenticatedUser
 import asyncio
 router = APIRouter(prefix="", tags=["users"])
 

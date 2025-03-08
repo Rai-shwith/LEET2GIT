@@ -1,5 +1,5 @@
 from scripts.logging_config import logger
-from github import Github,AuthenticatedUser,Repository,GithubException
+from github import AuthenticatedUser,Repository,GithubException
 from .upload_file import upload_file
 from fastapi.concurrency import run_in_threadpool # to run the function in a thread
 
