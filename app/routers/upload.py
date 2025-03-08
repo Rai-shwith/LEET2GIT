@@ -143,7 +143,7 @@ async def automatic_uploads(websocket:WebSocket,access_token:str, db: AsyncSessi
                 "error":False
             }
             )
-        logger.info(f'sending the message to the browser websocket : {automatic_websocket_messages[1]}')
+        logger.info(f'sending the message to the browser websocket : {automatic_websocket_messages[3]}')
         await batch_upload_files(repo=repo,file_structure=file_structure)
         await previous_websocket.send_json(
             {
@@ -153,7 +153,7 @@ async def automatic_uploads(websocket:WebSocket,access_token:str, db: AsyncSessi
                 
             }
             )
-        logger.info(f'sending the message to the browser websocket : {automatic_websocket_messages[1]}')
+        logger.info(f'sending the message to the browser websocket : {automatic_websocket_messages[4]}')
     except WebSocketDisconnect:
         logger.info("Websocket disconnected")
         webSocketConnections.pop(access_token,None)
