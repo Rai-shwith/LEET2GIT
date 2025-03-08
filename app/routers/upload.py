@@ -89,6 +89,7 @@ async def automatic_initialization(websocket:WebSocket):
             logger.info(pong)
     except WebSocketDisconnect:
         logger.info("Websocket disconnected")
+    finally:
         webSocketConnections.pop(access_token,None)
     
 
@@ -158,6 +159,7 @@ async def automatic_uploads(websocket:WebSocket,access_token:str, db: AsyncSessi
         logger.info(f'sending the message to the browser websocket : {automatic_websocket_messages[4]}')
     except WebSocketDisconnect:
         logger.info("Websocket disconnected")
+    finally:
         webSocketConnections.pop(access_token,None)
         
     
