@@ -129,6 +129,13 @@ async def automatic_uploads(websocket:WebSocket,access_token:str, db: AsyncSessi
             }
             )
         logger.info(f'sending the message to the browser websocket : {automatic_websocket_messages[1]}')
+        await previous_websocket.send_json(
+            {
+                "message":automatic_websocket_messages[3],
+                "error":False
+            }
+            )
+        logger.info(f'sending the message to the browser websocket : {automatic_websocket_messages[3]}')
         file_structure = output_content_creator_for_batch_upload(uploads=uploads)
         github_user: AuthenticatedUser = await get_user_info(request=None,token=access_token)
         github_id = github_user.id
@@ -140,13 +147,6 @@ async def automatic_uploads(websocket:WebSocket,access_token:str, db: AsyncSessi
         logger.info(f"Github user: {github_user}")
         repo_readme_content = await  get_repo_readme_bulk(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,uploads=uploads)
         file_structure["README.md"]=repo_readme_content
-        await previous_websocket.send_json(
-            {
-                "message":automatic_websocket_messages[3],
-                "error":False
-            }
-            )
-        logger.info(f'sending the message to the browser websocket : {automatic_websocket_messages[3]}')
         await batch_upload_files(repo=repo,file_structure=file_structure)
         await previous_websocket.send_json(
             {
