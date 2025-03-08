@@ -13,3 +13,9 @@ class Users(Base):
     repo_name = Column(String(255), nullable=False, default='LeetCode')
     created_at = Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()'))
     updated_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'), onupdate=text('now()'))
+    
+    def __repr__(self):
+        return f"<Users id={self.id} user_name='{self.user_name}' github_id={self.github_id}>"
+
+    def __str__(self):
+        return self.__repr__()

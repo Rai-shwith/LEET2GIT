@@ -4,6 +4,9 @@ const automatic = document.getElementById("automatic");
 const manualUploadBtn = document.getElementById("manualUploadBtn");
 const automaticUploadBtn = document.getElementById("automaticUploadBtn");
 const copyBtn = document.getElementById("copyBtn");
+const input = document.getElementById("search-question");
+const searchBtn = document.getElementById("searchBtn");
+
 let dataExist = false;
 const requestedQuestions = new Object(); // To keep track of questions requested so that to stop the unnecessary requests
 
@@ -118,7 +121,7 @@ automaticUploadBtn.addEventListener("click", () => {
           loading(true);
           StackMessage(
             "success",
-            "Hold tight! This process might take a couple of minutes. Maybe grab a snack, do a little dance, or stare at the loading bar like it owes you money. We'll be back before you know it! 🚀",
+            "Hang tight! This might take a couple of minutes — perfect time for a snack or a victory dance. We'll be back before you know it! 🚀",
             false
           );
         }
@@ -163,8 +166,24 @@ automaticUploadBtn.addEventListener("click", () => {
   };
 });
 
-manualUploadBtn.addEventListener("click", () => {
-  loading();
+const clearUploadData = () => {
+  const cardContainer = document.getElementById("cardContainer");
+  const cards = cardContainer.querySelectorAll(".card");
+  const card = cards[0];
+    card.querySelector("textarea").value = "";
+    card.querySelector("select").value = "";
+    card.querySelector(".info").remove();
+    card.querySelector("span#questionId").textContent = "";
+    card.querySelector("span#questionTitle").textContent = "";
+    card.querySelector("span#difficulty").textContent = "";
+  for (let index = 1; index < cards.length; index++) {
+    cards[index].remove();
+  }
+  input.value = "";
+}
+
+const getUploadData = () => {
+  console.log("Getting upload data");
   const cardContainer = document.getElementById("cardContainer");
   const cards = cardContainer.querySelectorAll(".card");
   const uploadData = { uploads: [] };
@@ -174,15 +193,20 @@ manualUploadBtn.addEventListener("click", () => {
 
     const info = card.querySelector(".info");
     if (info == null && index == 0) {
-      showMessage("error", "Please search for a question first!");
+      console.log("Please search for a question first!");
+      setTimeout(() => { // Delay the message so that it doesn't close by the click outside event
+        showMessage("error", "Please search for a question first!",false);
+      }, 250);
       loading(false);
       return;
     }
     const code = card.querySelector("textarea").value;
     const code_extension = card.querySelector("select").value;
     if ((code == "" || code_extension == "") && index == 0) {
-      showMessage("error", "Please fill the solution and language first!");
-      loading(false);
+      console.log("Please fill the solution and language first!");
+      setTimeout(() => {
+        showMessage("error", "Please fill the solution and language first!",false);
+      }, 500);
       return;
     }
     if (code == "" || code_extension == "") {
@@ -192,7 +216,17 @@ manualUploadBtn.addEventListener("click", () => {
     upload = { question, solution: { code_extension, code } };
     uploadData.uploads.push(upload);
   }
+  return uploadData;
+}
 
+manualUploadBtn.addEventListener("click", () => {
+  loading();
+  
+  const uploadData = getUploadData();
+  if (uploadData == undefined || uploadData.uploads.length == 0) {
+    loading(false);
+    return;
+  }
   fetch(`/upload/manual`, {
     method: "POST",
     headers: {
@@ -218,7 +252,9 @@ manualUploadBtn.addEventListener("click", () => {
         "Code uploaded successfully! Check your GitHub repository",
         false
       );
+      clearUploadData();
       loading(false);
+
     })
     .catch((error) => {
       // This will catch network or unexpected errors
@@ -256,8 +292,6 @@ automatic.querySelector(".manual").addEventListener("click", () => {
   manual.classList.add("flex");
 });
 
-const input = document.getElementById("search-question");
-const searchBtn = document.getElementById("searchBtn");
 
 searchBtn.addEventListener("click", () => {
   handleSearch(input.value);

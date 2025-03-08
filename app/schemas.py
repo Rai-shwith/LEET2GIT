@@ -34,6 +34,13 @@ class GithubUser(BaseModel):
 class GitHubAccessTokenResponse(BaseModel):
     access_token: str
     token_type: str
+
+    def __repr__(self):
+        token_suffix = self.access_token[-3:] if self.access_token else "N/A"
+        return f"<GitHubAccessTokenResponse token='***{token_suffix}' token_type='{self.token_type}'>"
+
+    def __str__(self):
+        return self.__repr__()
     
 class ProblemDetails(BaseModel):
     questionTitle: str

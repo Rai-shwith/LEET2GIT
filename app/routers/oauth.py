@@ -9,7 +9,7 @@ from sqlalchemy.future import select
 from typing import Union
 from sqlalchemy.exc import IntegrityError
 from psycopg2.errors import UniqueViolation
-from ..security import encrypt_token,decrypt_token
+from ..security import decrypt_token
 
 GITHUB_API_URL = "https://api.github.com/user"
 
@@ -29,7 +29,7 @@ async def get_github_user(request:Request,token:str = None) -> schemas.GithubUse
     logger.info("Verifying token")
     if not token:
         token = request.cookies.get("access_token")
-        token = decrypt_token(token)
+    token = decrypt_token(token)
     headers = {"Authorization": f"bearer {token}"}
     async with httpx.AsyncClient(timeout=10) as client:
         response = await client.get(GITHUB_API_URL, headers=headers)

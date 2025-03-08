@@ -1,73 +1,81 @@
 const scrollCard = (next = true) => {
-    const container = document.getElementById('cardContainer');
-    const cardWidth = container.querySelector('.flex-none').offsetWidth;
-    if (next) {
-        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
-    } else {
-        container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-    }
-}
+  const container = document.getElementById("cardContainer");
+  const cardWidth = container.querySelector(".flex-none").offsetWidth;
+  if (next) {
+    container.scrollBy({ left: cardWidth, behavior: "smooth" });
+  } else {
+    container.scrollBy({ left: -cardWidth, behavior: "smooth" });
+  }
+};
 
 const loading = (show = true) => {
-    const loadingElement = document.getElementById('loading');
-    if (show) {
-        console.log("Loading ON");
-        loadingElement.classList.remove('hidden');
-        loadingElement.classList.add('flex');
-    } else {
-        console.log("Loading OFF");
-        loadingElement.classList.remove('flex');
-        loadingElement.classList.add('hidden');
-    }
-}
+  const loadingElement = document.getElementById("loading");
+  if (show) {
+    console.log("Loading ON");
+    loadingElement.classList.remove("hidden");
+    loadingElement.classList.add("flex");
+  } else {
+    console.log("Loading OFF");
+    loadingElement.classList.remove("flex");
+    loadingElement.classList.add("hidden");
+  }
+};
 
 const getParent = (element, className) => {
-    while (element.parentElement) {
-        if (element.classList.contains(className)) {
-            return element;
-        }
-        element = element.parentElement;
+  while (element.parentElement) {
+    if (element.classList.contains(className)) {
+      return element;
     }
-    return null;
-}
+    element = element.parentElement;
+  }
+  return null;
+};
 
 const makeValueNull = (element) => {
-    element.value = '';
-}
-const messageContainer = document.getElementById('messageContainer');
+  element.value = "";
+};
+const messageContainer = document.getElementById("messageContainer");
 const showMessage = (type, message, autoHide = true) => {
-    messageContainer.classList.remove('hidden');
-    // Select the appropriate message element
-    const successMessage = document.getElementById('successMessage');
-    const errorMessage = document.getElementById('errorMessage');
+  console.log("Showing message:", type, message);
+  messageContainer.classList.remove("hidden");
+  // Select the appropriate message element
+  const successMessage = document.getElementById("successMessage");
+  const errorMessage = document.getElementById("errorMessage");
 
-    // Reset styles for both messages
-    successMessage.classList.add('hidden', 'opacity-0', 'translate-y-[-100%]');
-    errorMessage.classList.add('hidden', 'opacity-0', 'translate-y-[-100%]');
+  // Reset styles for both messages
+  successMessage.classList.add("hidden", "opacity-0", "translate-y-[-100%]");
+  errorMessage.classList.add("hidden", "opacity-0", "translate-y-[-100%]");
 
-    if (type === 'success') {
-        successMessage.querySelector('span').textContent = message || 'Repo created successfully!';
-        successMessage.classList.remove('hidden', 'opacity-0', 'translate-y-[-100%]');
-        successMessage.classList.add('translate-y-0', 'opacity-100');
-    } else if (type === 'error') {
-        errorMessage.querySelector('span').textContent = message || 'Repo not found.';
-        errorMessage.classList.remove('hidden', 'opacity-0', 'translate-y-[-100%]');
-        errorMessage.classList.add('translate-y-0', 'opacity-100');
-    } else {
-        console.error("Invalid message type, Choose between 'success' and 'error'");
-    }
-    if (autoHide) {
-        setTimeout(() => {
-            messageContainer.classList.add('hidden');
-        }, 3000);
-    }
-}
+  if (type === "success") {
+    successMessage.querySelector("span").textContent =
+      message || "Repo created successfully!";
+    successMessage.classList.remove(
+      "hidden",
+      "opacity-0",
+      "translate-y-[-100%]"
+    );
+    successMessage.classList.add("translate-y-0", "opacity-100");
+  } else if (type === "error") {
+    errorMessage.querySelector("span").textContent =
+      message || "Repo not found.";
+    errorMessage.classList.remove("hidden", "opacity-0", "translate-y-[-100%]");
+    errorMessage.classList.add("translate-y-0", "opacity-100");
+  } else {
+    console.error("Invalid message type, Choose between 'success' and 'error'");
+  }
+  if (autoHide) {
+    setTimeout(() => {
+      messageContainer.classList.add("hidden");
+    }, 3000);
+  }
+};
 
 // Function to remove the success or error message when user clicks on webpage except the message container
-document.addEventListener('click', (event) => {
-    if (!messageContainer.contains(event.target)) {
-        messageContainer.classList.add('hidden');
-    }
+document.addEventListener("click", (event) => {
+  if (!messageContainer.contains(event.target)) {
+    console.log("Hiding message by clicking outside the message container");
+    messageContainer.classList.add("hidden");
+  }
 });
 
 // When ever user clicks on the add button, a new card is added to the card container.
@@ -76,22 +84,34 @@ document.addEventListener('click', (event) => {
 // User can remove any card.
 // The search bar is cleared when user adds a new card or removes the card.
 const addCard = (event) => {
-    const currentCard = getParent(event.target, 'card');
-    // Check if the current card Solution or Language is empty
-    const language = currentCard.querySelector('select').value;
-    const solution = currentCard.querySelector('textarea').value.trim();
-    if (language == "") {
-        showMessage('error', 'Please fill the solution language first!');
-        return
-    } else if (solution == "") {
-        showMessage('error', 'Please fill the solution first!');
-        return
-    }
+  const currentCard = getParent(event.target, "card");
+  // Check if the current card Solution or Language is empty
+  const language = currentCard.querySelector("select").value;
+  const solution = currentCard.querySelector("textarea").value.trim();
+  if (language == "") {
+    setTimeout(() => {
+      showMessage("error", "Please fill the solution language first!");
+    }, 250);
+    return;
+  } else if (solution == "") {
+    setTimeout(() => {
+      showMessage("error", "Please fill the solution first!");
+    }, 250);
+    return;
+  }
 
-    const cardContainer = document.getElementById('cardContainer');
-    const card = document.createElement('div');
-    card.classList.add("card", "snap-center", "flex-none", "w-full", "flex", "justify-center", "items-center");
-    card.innerHTML = `<div class=" bg-white w-5/6 p-5 m-5 rounded-3xl">
+  const cardContainer = document.getElementById("cardContainer");
+  const card = document.createElement("div");
+  card.classList.add(
+    "card",
+    "snap-center",
+    "flex-none",
+    "w-full",
+    "flex",
+    "justify-center",
+    "items-center"
+  );
+  card.innerHTML = `<div class=" bg-white w-5/6 p-5 m-5 rounded-3xl">
                         <!-- Two Main Containers -->
                         <div class="space-y-6 md:space-y-0 md:flex md:space-x-6">
 
@@ -194,53 +214,52 @@ const addCard = (event) => {
                         </div>
 
                     </div>`;
-    cardContainer.appendChild(card);
-    makeValueNull(input);
-    scrollCard();
-    // Hide the add button of the current card
-    const addBtn = currentCard.querySelector('button.add');
-    addBtn.classList.add('hidden');
-
-
-}
+  cardContainer.appendChild(card);
+  makeValueNull(input);
+  scrollCard();
+  // Hide the add button of the current card
+  const addBtn = currentCard.querySelector("button.add");
+  addBtn.classList.add("hidden");
+};
 
 const removeCard = (e) => {
-    const cardContainer = document.getElementById('cardContainer');
-    if (cardContainer.childElementCount == 1) {
-        return
+  const cardContainer = document.getElementById("cardContainer");
+  if (cardContainer.childElementCount == 1) {
+    return;
+  }
+  card = getParent(e.target, "card");
+  makeValueNull(input);
+  scrollCard();
+  card.remove();
+  // Remove the requestedQuestions from the set of requested questions
+  const questionId = card.querySelector("span#questionId").textContent;
+  for (let question in requestedQuestions) {
+    if (requestedQuestions[question] == questionId) {
+      delete requestedQuestions[question];
+      break;
     }
-    card = getParent(e.target, 'card');
-    makeValueNull(input);
-    scrollCard();
-    card.remove();
-    // Remove the requestedQuestions from the set of requested questions
-    const questionId = card.querySelector('span#questionId').textContent;
-    for (let question in requestedQuestions) {
-        if (requestedQuestions[question] == questionId) {
-            delete requestedQuestions[question];
-            break;
-        }
-    }
-    cardContainer.lastElementChild.querySelector('button.add').classList.remove('hidden');
+  }
+  cardContainer.lastElementChild
+    .querySelector("button.add")
+    .classList.remove("hidden");
 };
 
 // Function to alternate between placeholders
 function cyclePlaceholders(elementId) {
-    const inputElement = document.getElementById(elementId);
-    // Define the placeholders and delay (in milliseconds)
-    const placeholders = [
-        "Search for a LeetCode question...",
-        "Paste a LeetCode URL",
-        "https://leetcode.com/problems/example/description/"
-    ];
-    const delay = 4000; // 4 seconds
-    let index = 0;
+  const inputElement = document.getElementById(elementId);
+  // Define the placeholders and delay (in milliseconds)
+  const placeholders = [
+    "Search for a LeetCode question...",
+    "Paste a LeetCode URL",
+    "https://leetcode.com/problems/example/description/",
+  ];
+  const delay = 4000; // 4 seconds
+  let index = 0;
 
-    if (!inputElement) return; // Exit if the element is not found
+  if (!inputElement) return; // Exit if the element is not found
 
-    setInterval(() => {
-        inputElement.placeholder = placeholders[index];
-        index = (index + 1) % placeholders.length; // Cycle through the array
-    }, delay);
+  setInterval(() => {
+    inputElement.placeholder = placeholders[index];
+    index = (index + 1) % placeholders.length; // Cycle through the array
+  }, delay);
 }
-

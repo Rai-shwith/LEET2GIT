@@ -2,6 +2,7 @@ from fastapi import Request
 from github import Github,AuthenticatedUser,Auth
 from scripts.logging_config import logger
 from fastapi.concurrency import run_in_threadpool # to run the function in a thread
+from app.security import decrypt_token
 
 async def get_user_info(request:Request | None,token:str = None)->AuthenticatedUser.AuthenticatedUser:
     """
@@ -9,6 +10,7 @@ async def get_user_info(request:Request | None,token:str = None)->AuthenticatedU
     """
     if not token:
         token = request.cookies.get("access_token")
+    token = decrypt_token(token)
     logger.info("Getting user information")
     logger.info(f"Access token: {token}")
     try:
