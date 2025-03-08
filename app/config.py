@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     github_client_secret : str
     github_token_url :str
     github_redirect_url : str
+    encryption_key : str
+    encryption_salt : str
     # secret_key : str
     # algorithm : str
     # access_token_expire_time : int
