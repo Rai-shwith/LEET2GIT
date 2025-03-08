@@ -18,10 +18,11 @@ async def get_problem_details(title_slug:str)->schemas.ProblemDetails:
     response.raise_for_status()
     if response.status_code == 200:
         data = response.json()
-        if not data:
+        if not data["data"]["question"]:
             logger.critical("Invalid URL")
             raise HTTPException(status_code = 404,detail="Invalid URL")
         logger.info("Data fetched successfully")
+        logger.info(data)
         problem = data['data']['question']
         question_details = {
         "questionId": problem["questionId"],
