@@ -246,7 +246,7 @@ manualUploadBtn.addEventListener("click", () => {
     loading(false);
     return;
   }
-  fetch(`/upload/manual`, {
+  fetch(`/upload/manual/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
