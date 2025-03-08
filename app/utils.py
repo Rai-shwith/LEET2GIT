@@ -4,6 +4,7 @@ from fastapi import HTTPException, status
 import httpx
 from .routers.logging_config import logger
 from pydantic import ValidationError
+from .security import encrypt_token
 
 # Configuration variables (ideally from environment variables or a config file)
 GITHUB_CLIENT_ID = settings.github_client_id
@@ -38,9 +39,12 @@ async def get_github_access_token(code: str) -> GitHubAccessTokenResponse:
             detail="Failed to retrieve access token"
         )
     logger.info("Access token retrieved")
-    logger.info(f"Access token: {response.json()}")
+    data = response.json()
     try:
-        access_token_response = GitHubAccessTokenResponse(**response.json()) 
+        access_token_response = GitHubAccessTokenResponse(
+            access_token=encrypt_token(data["access_token"]),
+            token_type=data["token_type"],
+        ) 
     except ValidationError as e:
         logger.error(f"Validation error: {e}")
         raise HTTPException(
