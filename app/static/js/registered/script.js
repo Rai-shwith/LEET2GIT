@@ -122,13 +122,14 @@ automaticUploadBtn.addEventListener("click", () => {
             false
           );
         }
-        if (data.message == automatic_websocket_messages[4]) {
+        if (data.message == automatic_websocket_messages[3]) {
           loading(false);
           document.addEventListener('click', (event) => {
             if (!stackMessageContainer.contains(event.target)) {
                 stackMessageContainer.innerHTML = "";
             }
         });
+        StackMessage("success", `Code uploaded successfully! Check your <a style="text-decoration: underline;" target="_blank href="${data.link}">GitHub repository</a>`, false);
         }
       }
 

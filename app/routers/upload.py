@@ -125,13 +125,15 @@ async def automatic_uploads(websocket:WebSocket,access_token:str, db: AsyncSessi
         logger.info(f"Creating the upload for the user: {current_user}")
         repo_name = current_user.repo_name
         repo = await get_repo(github_user,repo_name=repo_name)
+        link = f"https://github.com/{github_user.login}/{current_user.repo_name}"
         logger.info(f"Github user: {github_user}")
         repo_readme_content = await  get_repo_readme_bulk(repo=repo,user_name=github_user.login,repo_name = current_user.repo_name,uploads=uploads)
         file_structure["README.md"]=repo_readme_content
         await previous_websocket.send_json(
             {
                 "message":automatic_websocket_messages[3],
-                "error":False
+                "error":False,
+                "link":link
             }
             )
         await batch_upload_files(repo=repo,file_structure=file_structure)
