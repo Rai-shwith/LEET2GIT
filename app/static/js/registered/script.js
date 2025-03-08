@@ -136,7 +136,7 @@ automaticUploadBtn.addEventListener("click", () => {
           });
           StackMessage(
             "success",
-            `Code uploaded successfully! Check your <a style="text-decoration: underline;" target="_blank href="${data.link}">GitHub repository</a>`,
+            `Code uploaded successfully! Check your <a style="text-decoration:underline;" target="_blank" href="${data.link}">GitHub repository</a>`,
             false
           );
         }
