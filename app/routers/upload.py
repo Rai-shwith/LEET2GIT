@@ -81,10 +81,12 @@ async def automatic_initialization(websocket:WebSocket):
                 'error':False
             })
         while True:
+            await asyncio.sleep(30)
             await websocket.send_json({
                 "ping":True
             })
-            await asyncio.sleep(30)
+            pong = await websocket.receive_text()
+            logger.info(pong)
     except WebSocketDisconnect:
         logger.info("Websocket disconnected")
         webSocketConnections.pop(access_token,None)

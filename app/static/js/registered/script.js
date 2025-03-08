@@ -7,12 +7,12 @@ const copyBtn = document.getElementById("copyBtn");
 const input = document.getElementById("search-question");
 const searchBtn = document.getElementById("searchBtn");
 
-let domain = document.querySelector('main').dataset.domain;
-let websocketDomain
-if (domain){
-  websocketDomain = 'wss://' + domain + '/upload/ws/automatic/';
-}else{
-  websocketDomain = 'ws://localhost:8000/upload/ws/automatic/';
+let domain = document.querySelector("main").dataset.domain;
+let websocketDomain;
+if (domain) {
+  websocketDomain = "wss://" + domain + "/upload/ws/automatic/";
+} else {
+  websocketDomain = "ws://localhost:8000/upload/ws/automatic/";
 }
 
 let dataExist = false;
