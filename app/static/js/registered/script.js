@@ -7,6 +7,14 @@ const copyBtn = document.getElementById("copyBtn");
 const input = document.getElementById("search-question");
 const searchBtn = document.getElementById("searchBtn");
 
+let domain = document.getElementsByTagName('main').dataset.domain;
+let websocketDomain
+if (domain){
+  websocketDomain = 'wss://' + domain + '/upload/ws/automatic/';
+}else{
+  websocketDomain = 'ws://localhost:8000/upload/ws/automatic/';
+}
+
 let dataExist = false;
 const requestedQuestions = new Object(); // To keep track of questions requested so that to stop the unnecessary requests
 
@@ -101,7 +109,7 @@ automaticUploadBtn.addEventListener("click", () => {
   console.log("Automatic upload button clicked");
   loading(true); // Start the loading spinner
 
-  const socket = new WebSocket("ws://localhost:8000/upload/ws/automatic/");
+  const socket = new WebSocket(websocketDomain);
 
   socket.onopen = () => {
     console.log("WebSocket connection established");

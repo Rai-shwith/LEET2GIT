@@ -3,6 +3,7 @@ from fastapi.templating import Jinja2Templates
 
 class Settings(BaseSettings):
     sslrootcert: str | None = None
+    domain: str | None = None
     database_protocol : str
     database_username : str
     database_password : str

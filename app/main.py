@@ -38,7 +38,7 @@ async def read_root(request: Request, db: AsyncSession = Depends(get_db)):
     logger.info("User registered")
     user = await get_current_user(github_id=github_user.id,db=db)
     logger.info(f"User: {user}")
-    return templates.TemplateResponse("home/registered/index.html", {"request": request,"user":user})
+    return templates.TemplateResponse("home/registered/index.html", {"request": request,"user":user,"domain":settings.domain})
 
 app.include_router(users.router) # register the users in the database (sign up)
 app.include_router(auth.router)  # authenticate the user (login)
