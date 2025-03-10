@@ -54,3 +54,10 @@ button {
 .autoHeaders{
     margin-top: 8rem;
 }
+
+.pasting-code{
+    color: white;
+    background-color: black;
+    padding: 0 5px;
+    border-radius: 5px;
+}
