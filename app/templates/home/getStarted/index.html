@@ -2,23 +2,92 @@
 {% block title %}Welcome to Leet2Git: Transform Your Skills{% endblock %}
 {% block stylesheets %}
 <link rel="stylesheet" href="static/css/output.css">
+<link rel="stylesheet" href="static/css/getStarted.css">
 {% endblock %}
 {% block content %}
-        <main class="flex-grow flex flex-col">
-                <h2 class="flex flex-col text-2xl md:text-6xl font-semibold m-2 md:m-4">Transform LeetCode Skills into
-                        GitHub Projects, Seamlessly.</h2>
-                <p class="text-lg md:text-4xl m-2 md:m-4">Tired of solving problems on LeetCode with no way to showcase
-                        them? With leet2git, every coding milestone you achieve becomes a project on your
-                        GitHub—automatically! Start building your public portfolio as you code, and let your skills
-                        shine to the world. No more copying and pasting, just pure automation</p>
-                <button
-                        class="bg-accentPrimary text-lg md:text-3xl hover:bg-accentPrimaryHover self-start m-4 p-2 absolute bottom-1/4 md:static rounded-r-full transition-all hover:scale-110 ease-in"><a
-                                href="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo"
-                                class="button">Get Started</a></button>
-        </main>
+<!-- Overlay content for disclaimer -->
+<div id="overlay" class="overlay">
+        <div class="overlay-content">
+                <h2>🛡️ Disclaimer & Terms of Use</h2>
+                <p>By using Leet2Git, you agree to the following terms:</p>
+                <ul>
+                        <li><strong>No Affiliation:</strong> This app is not affiliated with, endorsed by, or associated
+                                with
+                                LeetCode or GitHub.</li>
+                        <li><strong>Use at Your Own Risk:</strong> This app is provided "as is," without warranties or
+                                guarantees.</li>
+                        <li><strong>Data Privacy:</strong> Your GitHub token is <b>not stored</b> in the database. It’s
+                                used
+                                only in encrypted form for data transfer.</li>
+                        <li><strong>Third-Party Platform Changes:</strong> Platform updates might break features, but
+                                we’ll try
+                                to fix them quickly!</li>
+                        <li><strong>Open Source & MIT License:</strong> The project is open source, and contributions
+                                are
+                                welcome! Check it out on <a rel="noopener" class="github-link" href="https://github.com/Rai-shwith/leet2git"
+                                        target="_blank">GitHub</a>.</li>
+                </ul>
+                <div class="buttons">
+                        <button id="agree-btn" class="btn agree">I Agree & Continue</button>
+                        <button id="cancel-btn" class="btn cancel">Cancel</button>
+                </div>
+        </div>
+</div>
+<main class="flex-grow flex flex-col">
+        <h2 class="flex flex-col text-2xl md:text-6xl font-semibold m-2 md:m-4">Transform LeetCode Skills into
+                GitHub Projects, Seamlessly.</h2>
+        <p class="text-lg md:text-4xl m-2 md:m-4">Tired of solving problems on LeetCode with no way to showcase
+                them? With leet2git, every coding milestone you achieve becomes a project on your
+                GitHub—automatically! Start building your public portfolio as you code, and let your skills
+                shine to the world. No more copying and pasting, just pure automation</p>
+        <button id="get-started-btn"
+                data-link="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo"
+                class="bg-accentPrimary text-lg md:text-3xl hover:bg-accentPrimaryHover self-start m-4 p-2 absolute bottom-1/4 md:static rounded-r-full transition-all hover:scale-110 ease-in">Get
+                Started</button>
+</main>
 {% endblock %}
 {% block javascripts %}
 <script>
         document.getElementById("year").textContent = new Date().getFullYear();
+        // Handle overlay logic
+        const getStartedBtn = document.getElementById("get-started-btn");
+        const link = getStartedBtn.dataset.link;
+        const overlay = document.getElementById("overlay");
+        const agreeBtn = document.getElementById("agree-btn");
+        const cancelBtn = document.getElementById("cancel-btn");
+
+        const redirect = () => {
+                if (link) {
+                        window.location.href = link;
+                } else {
+                        alert("Authorization link is missing. Please try again later.");
+                }
+        }
+        document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape" && overlay.style.display === "flex") {
+                        overlay.style.display = "none";
+                }
+        });
+        // Show overlay when "Get Started" is clicked
+        getStartedBtn.addEventListener("click", () => {
+                if (localStorage.getItem('agreed')) {
+                        redirect();
+                        return;
+                }
+                overlay.style.display = "flex";
+        });
+
+        // Close overlay and "agree"
+        agreeBtn.addEventListener("click", () => {
+                overlay.style.display = "none";
+                localStorage.setItem('agreed', 'true')
+                redirect()
+        });
+
+        // Cancel button closes the overlay
+        cancelBtn.addEventListener("click", () => {
+                overlay.style.display = "none";
+        });
+
 </script>
-{% endblock %} 
+{% endblock %}
