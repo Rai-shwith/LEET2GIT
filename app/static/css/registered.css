@@ -61,3 +61,51 @@ button {
     padding: 0 5px;
     border-radius: 5px;
 }
+
+
+.feedback-button-container {
+    position: fixed;
+    right: 15px; /* Slightly closer to the edge */
+    bottom: 40px; /* Slightly higher up */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px; /* Reduced padding */
+    border-radius: 8px; /* Reduced border radius */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
+    text-align: center;
+    width: 70px; /* Reduced overall width */
+}
+.feedback-button {
+    background: white;
+    padding: 8px; /* Reduced padding */
+    border-radius: 50%;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    width: 45px; /* Reduced button size */
+    height: 45px; /* Reduced button size */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    margin-bottom: 3px; /* Reduced margin */
+}
+
+.feedback-button img {
+    width: 25px; /* Reduced icon size */
+    height: 25px; /* Reduced icon size */
+}
+
+.feedback-button:hover {
+    transform: scale(1.05); /* Reduced hover scale */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.feedback-text {
+    font-size: 12px; /* Further reduced font size */
+    color: #333;
+    font-weight: 500;
+    margin: 0;
+}
