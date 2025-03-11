@@ -65,46 +65,46 @@ button {
 
 .feedback-button-container {
     position: fixed;
-    right: 15px; /* Slightly closer to the edge */
-    bottom: 40px; /* Slightly higher up */
+    right: 15px; 
+    bottom: 100px; 
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 8px; /* Reduced padding */
-    border-radius: 8px; /* Reduced border radius */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
+    padding: 8px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
     text-align: center;
-    width: 70px; /* Reduced overall width */
+    width: 70px; 
 }
 .feedback-button {
     background: white;
-    padding: 8px; /* Reduced padding */
+    padding: 8px; 
     border-radius: 50%;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); 
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
-    width: 45px; /* Reduced button size */
-    height: 45px; /* Reduced button size */
+    width: 45px; 
+    height: 45px; 
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #ddd;
-    margin-bottom: 3px; /* Reduced margin */
+    margin-bottom: 3px; 
 }
 
 .feedback-button img {
-    width: 25px; /* Reduced icon size */
-    height: 25px; /* Reduced icon size */
+    width: 25px; 
+    height: 25px; 
 }
 
 .feedback-button:hover {
-    transform: scale(1.05); /* Reduced hover scale */
+    transform: scale(1.05); 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .feedback-text {
-    font-size: 12px; /* Further reduced font size */
+    font-size: 12px; 
     color: #333;
     font-weight: 500;
     margin: 0;
