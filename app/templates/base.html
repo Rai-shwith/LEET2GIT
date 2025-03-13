@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5F93PW07S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-Y5F93PW07S');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
@@ -23,10 +32,12 @@
         </svg>
         <h1 class="text-2xl md:text-4xl font-bold">LEET2GIT</h1>
     </header>
-    <div id="loading" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-        <div class="w-28 h-28 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full relative z-50">
+    <div id="loading"
+        class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
+        <div
+            class="w-28 h-28 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full relative z-50">
         </div>
-      </div>
+    </div>
     {% block content %} {% endblock %}
     <footer class="bg-gray-900 text-white relative bottom-0 px-4 w-full text-center">
         <div class="text-sm text-gray-400">
