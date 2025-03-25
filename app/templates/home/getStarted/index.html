@@ -1,48 +1,100 @@
 {% extends "base.html" %}
 {% block title %}Welcome to Leet2Git: Transform Your Skills{% endblock %}
 {% block stylesheets %}
-<link rel="stylesheet" href="static/css/output.css">
-<link rel="stylesheet" href="static/css/getStarted.css">
+<link rel="stylesheet" href="/app/static/css/getStarted.css">
 {% endblock %}
 {% block content %}
 <!-- Overlay content for disclaimer -->
 <div id="overlay" class="overlay">
         <div class="overlay-content">
-                <h2><strong>🛡️ Disclaimer & Terms of Use</strong></h2>
-                <p>By using Leet2Git, you agree to the following terms:</p>
-                        <ul>
-                            <li><strong>No Affiliation:</strong> This app is not affiliated with, endorsed by, or associated with LeetCode or GitHub.</li>
-                            <li><strong>Use at Your Own Risk:</strong> This app is provided "as is," without warranties or guarantees.</li>
-                            <li><strong>Data Privacy:</strong> Your GitHub token is <b>not stored</b> in the database. It’s used only in encrypted form for data transfer.</li>
-                            <li><strong>Third-Party Platform Changes:</strong> Platform updates might break features, but we’ll try to fix them quickly!</li>
-                            <li><strong>Open Source & MIT License:</strong> The project is open source, and contributions are welcome! Check it out on 
-                                <a rel="noopener" class="link" href="https://github.com/Rai-shwith/leet2git" target="_blank">GitHub</a>.
-                            </li>
-                            <li><strong>Contact & Feedback:</strong> You can reach out to the me, <b>Ashwith Rai</b>, via 
-                                <a class="link" rel="noopener" href="https://ashwithrai.me" target="_blank">my website</a>.  
-                                Got feedback? Share it <a class="link" rel="noopener" href="https://forms.gle/1o8uzRYE7TkebQgj9" target="_blank">here</a>!  
-                            </li>
-                            <li><strong>Best Viewed on Larger Screens:</strong> This version of Leet2Git is optimized for desktops, laptops, and larger screens. 
-                                The UI may not work correctly on mobile devices. For the best experience, please use a computer or tablet.</li>
-                        </ul>
-                <div class="buttons">
-                        <button id="agree-btn" class="btn agree">I Agree & Continue</button>
-                        <button id="cancel-btn" class="btn cancel">Cancel</button>
-                </div>
+            <h2>Disclaimer & Terms of Use</h2>
+            <div class="terms-content">
+                <p class="repo-details">Contribute to Leet2Git: <a href="https://github.com/Rai-shwith/leet2git"
+                        target="_blank">GitHub Repository</a></p>
+                <p class="repo-details">View Synced Solutions: <a href="https://github.com/Rai-shwith/LeetSolutions"
+                        target="_blank">LeetSolutions Repository</a></p>
+
+                <p>By using Leet2Git, you are agreeing to these terms and conditions. This document is meant to provide
+                    a legal basis for the use of this software and should be read carefully before proceeding. If at any
+                    point you disagree with these terms, you should immediately cease using the software. Continued use
+                    of the software indicates your acceptance of the terms outlined below.</p>
+
+                <p>This application is in no way affiliated with, endorsed by, or associated with LeetCode, GitHub, or
+                    any of their parent or subsidiary companies. It is provided independently as an open-source tool for
+                    personal use. Any resemblance to existing platforms is purely coincidental and does not imply any
+                    form of partnership or official association. Users should be aware that any modifications to this
+                    software do not create a legally binding relationship between them and the companies mentioned
+                    above.</p>
+
+                <p>The software is provided "as is" without warranties of any kind, either express or implied, including
+                    but not limited to the implied warranties of merchantability, fitness for a particular purpose, or
+                    non-infringement. The developers and contributors to this project are not responsible for any
+                    issues, damages, or losses that may arise from the use of this software. Users assume all risks
+                    associated with the software, including but not limited to data loss, account restrictions, and
+                    unexpected behavior resulting from software updates or API changes.</p>
+
+                <p>Leet2Git does not permanently store your GitHub authentication tokens. These tokens are used only in
+                    encrypted form for data transfer and are not retained beyond the active session. However, users
+                    should be aware that by interacting with third-party platforms such as GitHub, LeetCode, or similar
+                    services, their activities may be tracked or monitored according to the privacy policies of those
+                    platforms. Users are responsible for reviewing and understanding the privacy policies of all
+                    external services they use in conjunction with Leet2Git.</p>
+
+                <p>GitHub enforces API rate limits, and excessive use of this tool may result in temporary or permanent
+                    restrictions on a user's GitHub account. The developers of Leet2Git have no control over such
+                    restrictions and cannot be held responsible for any account limitations imposed by GitHub. Users are
+                    advised to use the tool responsibly and monitor their API usage to avoid exceeding any imposed
+                    limits.</p>
+
+                <p>Leet2Git is built upon APIs provided by external platforms. These platforms may change, update, or
+                    restrict their APIs at any time, potentially rendering certain features of Leet2Git non-functional.
+                    While the development team will make reasonable efforts to update the software as necessary,
+                    uninterrupted functionality cannot be guaranteed. Users should be aware that such external changes
+                    are beyond the control of the Leet2Git team.</p>
+
+                <p>Security best practices are encouraged for all users. While steps are taken to secure data transfers
+                    and protect user information, complete security cannot be guaranteed. Users are advised to enable
+                    two-factor authentication on their GitHub accounts, use strong passwords, and avoid using public
+                    devices to log in to their GitHub accounts when using Leet2Git.</p>
+
+                <p>These terms and conditions are governed by the laws of India. Any disputes arising from the use of
+                    this software shall be subject to the exclusive jurisdiction of the courts in Bengaluru. By using
+                    this software, users acknowledge that they are bound by these legal provisions and accept any
+                    responsibilities associated with their use of the software.</p>
+
+                <p>Users agree to indemnify and hold harmless the developers, contributors, and maintainers of Leet2Git
+                    from any claims, damages, losses, liabilities, or expenses arising from their use or misuse of the
+                    service. The developers take no responsibility for the actions of users and any potential
+                    consequences resulting from the use of this software.</p>
+
+                <p>This project is licensed under the MIT License. Contributions to the project are welcome, provided
+                    they comply with the contribution guidelines outlined in the GitHub repository. Developers
+                    contributing to this project should review the licensing terms before submitting any modifications
+                    or improvements.</p>
+
+                <p>If you have read this far, congratulations. However, it is more likely that you are just scrolling
+                    down to click "I Agree" without actually reading anything. This is understandable, as most people do
+                    not read terms and conditions. Regardless, by clicking "I Agree," you acknowledge that you are bound
+                    by these terms whether you have read them or not.</p>
+            </div>
+
+            <div class="buttons">
+                <button id="agree-btn" class="btn agree">I Agree & Continue</button>
+                <button id="cancel-btn" class="btn cancel">Cancel</button>
+            </div>
         </div>
-</div>
-<main class="flex-grow flex flex-col">
-        <h2 class="flex flex-col text-2xl md:text-6xl font-semibold m-2 md:m-4">Transform LeetCode Skills into
-                GitHub Projects, Seamlessly.</h2>
-        <p class="text-lg md:text-4xl m-2 md:m-4">Tired of solving problems on LeetCode with no way to showcase
-                them? With leet2git, every coding milestone you achieve becomes a project on your
-                GitHub—automatically! Start building your public portfolio as you code, and let your skills
-                shine to the world. No more copying and pasting, just pure automation</p>
+    </div>
+    <main>
+        <h2>Transform LeetCode Skills into
+            GitHub Projects, Seamlessly.</h2>
+        <p>Tired of solving problems on LeetCode with no way to showcase
+            them? With leet2git, every coding milestone you achieve becomes a project on your
+            GitHub—automatically! Start building your public portfolio as you code, and let your skills
+            shine to the world. No more copying and pasting, just pure automation</p>
         <button id="get-started-btn"
-                data-link="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo"
-                class="bg-accentPrimary text-lg md:text-3xl hover:bg-accentPrimaryHover self-start m-4 p-2 absolute bottom-1/4 md:static rounded-r-full transition-all hover:scale-110 ease-in">Get
-                Started</button>
-</main>
+            data-link="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo">Get
+            Started</button>
+    </main>
 {% endblock %}
 {% block javascripts %}
 <script>

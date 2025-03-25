@@ -17,43 +17,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
-    <link href="static/css/output.css" rel="stylesheet">
+    <!-- <link href="static/css/output.css" rel="stylesheet"> -->
     <link rel="icon" href="static/images/logo.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/static/css/base.css">
     {% block stylesheets %}{% endblock %}
 </head>
 
 <body class="flex flex-col min-h-screen bg-backgroundMain">
-    <header class="flex justify-start gap-3 p-4 w-full">
+    <header class="header">
         <svg width="40" height="40" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="14" cy="14" r="14" fill="black" />
             <path
                 d="M15.7397 4.00045C15.5883 4.00546 15.4394 4.04029 15.3015 4.10293C15.1637 4.16557 15.0396 4.25479 14.9365 4.36544L10.4184 9.18872L7.19732 12.627C6.7282 13.1251 6.3822 13.7254 6.18688 14.3803C6.14502 14.521 6.11015 14.6637 6.08241 14.8078C5.95718 15.46 5.97485 16.1314 6.13422 16.7761C6.20506 17.067 6.3027 17.3507 6.42591 17.6236C6.68141 18.1907 7.04178 18.7046 7.48817 19.1386L11.0627 22.6327L11.0953 22.6644C12.9741 24.4685 15.9862 24.4419 17.8341 22.6027L19.8366 20.6094L22.6628 16.6454C22.7699 16.5384 22.8548 16.4115 22.9127 16.2717C22.9705 16.132 23.0002 15.9823 23 15.8311C23.0002 15.68 22.9705 15.5303 22.9127 15.3906C22.8548 15.2508 22.7699 15.1239 22.6628 15.0169C22.5557 14.9099 22.4284 14.8251 22.2884 14.7672C22.1484 14.7093 21.9982 14.6795 21.8466 14.6795H13.3444C13.1928 14.6795 13.0427 14.7093 12.9026 14.7672C12.7626 14.8251 12.6354 14.9099 12.5282 15.0169C12.4211 15.1239 12.3362 15.2508 12.2783 15.3906C12.2205 15.5303 12.1908 15.68 12.191 15.8311C12.1908 15.9823 12.2205 16.132 12.2783 16.2717C12.3362 16.4115 12.4211 16.5384 12.5282 16.6454C12.6354 16.7523 12.7626 16.8372 12.9026 16.8951C13.0427 16.953 13.1928 16.9828 13.3444 16.9828H19.8366L18.2085 18.9778L16.206 20.9711C15.7392 21.4305 15.1112 21.6908 14.4553 21.6967C13.7993 21.7026 13.1668 21.4537 12.6917 21.0028L12.6749 20.9869L9.1012 17.4928C8.55628 16.9595 8.28883 16.2686 8.30889 15.607C8.31287 15.4602 8.33134 15.3143 8.36405 15.1712C8.44805 14.8081 8.62649 14.4736 8.88139 14.2012L12.1016 10.762C12.9858 9.81705 14.7794 9.70372 15.804 10.5304L18.7301 12.8895C19.2257 13.2895 19.9511 13.212 20.3515 12.717C20.5434 12.4792 20.6329 12.1753 20.6005 11.8718C20.568 11.5683 20.4163 11.29 20.1784 11.0979L17.2533 8.73873C16.5847 8.19957 15.7773 7.8679 14.9348 7.73707L16.6189 5.93876C16.7742 5.77233 16.8766 5.56388 16.9134 5.33958C16.9502 5.11528 16.9198 4.88513 16.8258 4.67805C16.7319 4.47096 16.5787 4.29617 16.3854 4.17561C16.1922 4.05506 15.9676 3.99412 15.7397 4.00045Z"
                 fill="white" />
         </svg>
-        <h1 class="text-2xl md:text-4xl font-bold">LEET2GIT</h1>
+        <h1 class="title">LEET2GIT</h1>
     </header>
-    <div id="loading"
-        class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-        <div
-            class="w-28 h-28 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full relative z-50">
-        </div>
+
+    <div id="loading" class="loading-container">
+        <div class="loading-spinner"></div>
     </div>
     {% block content %} {% endblock %}
-    <footer class="bg-gray-900 text-white relative bottom-0 px-4 w-full text-center">
-        <div class="text-sm text-gray-400">
-            <p class="mb-2">&copy; <span id="year"></span> Leet2Git. Released under the MIT License.</p>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; <span id="year"></span> Leet2Git. Released under the MIT License.</p>
             <p>🚀 Transforming LeetCode grind into GitHub glory! Contributions welcome.</p>
         </div>
-
-        <div class="flex justify-center space-x-4 ">
-            <a href="https://github.com/Rai-shwith" class="text-gray-400 hover:text-white" target="_blank"
-                rel="noopener noreferrer">GitHub</a>
-            <a href="https://ashwithrai.me" class="text-gray-400 hover:text-white" target="_blank"
-                rel="noopener noreferrer">Portfolio</a>
-            <a href="mailto:ashwithrai96.96@gmail.com" class="text-gray-400 hover:text-white">Contact</a>
+        <div class="footer-links">
+            <a href="https://github.com/Rai-shwith" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://ashwithrai.me" target="_blank" rel="noopener noreferrer">Portfolio</a>
+            <a href="mailto:ashwithrai96.96@gmail.com">Contact</a>
         </div>
     </footer>
     {% block javascripts %}{% endblock %}
