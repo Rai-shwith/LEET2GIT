@@ -39,11 +39,7 @@ body {
     font-weight: bold;
   }
   
-  @media (min-width: 768px) {
-    .title {
-        font-size: 2.25rem;
-    }
-  }
+
   
 
 /* Footer Styles */
@@ -52,8 +48,8 @@ body {
     color: white;
     text-align: center;
     padding: 20px;
-    width: 100%;
-    position: absolute;
+    width: 100vw;
+    position: relative;
     bottom: 0;
   }
   
@@ -67,6 +63,7 @@ body {
     justify-content: center;
     gap: 15px;
     margin-top: 10px;
+    margin-bottom: 20px;
   }
   
   .footer-links a {
@@ -86,5 +83,10 @@ body {
     }
     to {
         transform: rotate(360deg);
+    }
+  }
+  @media (min-width: 768px) {
+    .title {
+        font-size: 2.25rem;
     }
   }
