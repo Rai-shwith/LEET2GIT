@@ -1,12 +1,19 @@
 const scrollCard = (next = true) => {
   const container = document.getElementById("cardContainer");
-  const cardWidth = container.querySelector(".flex-none").offsetWidth;
-  if (next) {
-    container.scrollBy({ left: cardWidth, behavior: "smooth" });
-  } else {
-    container.scrollBy({ left: -cardWidth, behavior: "smooth" });
-  }
+  const cards = container.querySelectorAll(".card");
+  const cardWidth = cards[0].offsetWidth + 176; // Includes gap (11rem = 176px)
+  
+  // Get the current scroll position
+  const maxScrollLeft = (cards.length - 1) * cardWidth;
+  let newScrollLeft = container.scrollLeft + (next ? cardWidth : -cardWidth);
+
+  // Prevent overscrolling
+  if (newScrollLeft < 0) newScrollLeft = 0;
+  if (newScrollLeft > maxScrollLeft) newScrollLeft = maxScrollLeft;
+
+  container.scrollTo({ left: newScrollLeft, behavior: "smooth" });
 };
+
 
 const loading = (show = true) => {
   const loadingElement = document.getElementById("loading");
@@ -34,41 +41,42 @@ const getParent = (element, className) => {
 const makeValueNull = (element) => {
   element.value = "";
 };
-const messageContainer = document.getElementById("messageContainer");
+
 const showMessage = (type, message, autoHide = true) => {
   console.log("Showing message:", type, message);
-  messageContainer.classList.remove("hidden");
-  // Select the appropriate message element
+
+  const messageContainer = document.getElementById("messageContainer");
   const successMessage = document.getElementById("successMessage");
   const errorMessage = document.getElementById("errorMessage");
 
-  // Reset styles for both messages
-  successMessage.classList.add("hidden", "opacity-0", "translate-y-[-100%]");
-  errorMessage.classList.add("hidden", "opacity-0", "translate-y-[-100%]");
+  // Make sure container is visible
+  messageContainer.style.display = "block";
+
+  // Hide both messages initially
+  successMessage.classList.remove("show");
+  errorMessage.classList.remove("show");
 
   if (type === "success") {
-    successMessage.querySelector("span").textContent =
-      message || "Repo created successfully!";
-    successMessage.classList.remove(
-      "hidden",
-      "opacity-0",
-      "translate-y-[-100%]"
-    );
-    successMessage.classList.add("translate-y-0", "opacity-100");
+    successMessage.querySelector("span").textContent = message || "Repo created successfully!";
+    successMessage.classList.add("show");
   } else if (type === "error") {
-    errorMessage.querySelector("span").textContent =
-      message || "Repo not found.";
-    errorMessage.classList.remove("hidden", "opacity-0", "translate-y-[-100%]");
-    errorMessage.classList.add("translate-y-0", "opacity-100");
+    errorMessage.querySelector("span").textContent = message || "Repo not found.";
+    errorMessage.classList.add("show");
   } else {
-    console.error("Invalid message type, Choose between 'success' and 'error'");
+    console.error("Invalid message type, choose between 'success' and 'error'");
+    return;
   }
+
+  // Auto-hide after 3 seconds
   if (autoHide) {
     setTimeout(() => {
-      messageContainer.classList.add("hidden");
+      successMessage.classList.remove("show");
+      errorMessage.classList.remove("show");
+      messageContainer.style.display = "none";
     }, 3000);
   }
 };
+
 
 // Function to remove the success or error message when user clicks on webpage except the message container
 document.addEventListener("click", (event) => {
