@@ -9,16 +9,18 @@
 body {
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: white;
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
+     display: flex;
+     flex-direction: column; 
+    /* align-items: center; */ 
     min-height: 100svh;
     /* text-align: center; */
     /* padding: 20px; */
     /* overflow: hidden; */
   }
 
-  
+  .middle-contents{
+    flex: 1;
+  }
 
 /* Header Styles */
 .header {

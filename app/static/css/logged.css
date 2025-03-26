@@ -218,12 +218,3 @@
   scroll-snap-type: x mandatory;
 }
 }
-.footer {
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  text-align: center;
-  padding: 20px;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-}
