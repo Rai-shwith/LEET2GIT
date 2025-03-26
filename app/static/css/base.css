@@ -9,13 +9,13 @@
 body {
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: white;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    padding: 20px;
-    overflow: hidden;
+    align-items: center; */
+    min-height: 100svh;
+    /* text-align: center; */
+    /* padding: 20px; */
+    /* overflow: hidden; */
   }
 
   
@@ -27,9 +27,9 @@ body {
     gap: 12px;
     padding: 16px;
     width: 100%;
-    position: fixed;
+    /* position: fixed;
     top: 0;
-    left: 0;
+    left: 0; */
     z-index: 1000;
   }
   
@@ -40,6 +40,55 @@ body {
   }
   
 
+/* Message Container */
+#messageContainer {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: none; /* Initially hidden */
+}
+
+/* Message Box Styling */
+.message-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* Success Message */
+.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Error Message */
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Icons */
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Show Message */
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
   
 
 /* Footer Styles */
@@ -49,7 +98,7 @@ body {
     text-align: center;
     padding: 20px;
     width: 100vw;
-    position: relative;
+    position: absolute;
     bottom: 0;
   }
   
@@ -62,8 +111,8 @@ body {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    /* margin-top: 10px;
+    margin-bottom: 20px; */
   }
   
   .footer-links a {
