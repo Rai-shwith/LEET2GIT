@@ -1,58 +1,75 @@
-{% extends "base.html" %}
-
-{% block title %}Populate Your Repository with Solutions{% endblock %}
-
-{% block stylesheets %}
-<link rel="stylesheet" href="/static/css/registered.css">
-{% endblock %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link rel="stylesheet" href="/app/static/css/output.css">
+<link rel="stylesheet" href="/app/static/css/test.css">
+<link rel="stylesheet" href="/app/static/css/base.css">
+</head>
+<body>
+    
 
 
 <section>
-    <div id="stackMessageContainer"></div>
+    <div id="stackMessageContainer" class="fixed top-4 right-4 space-y-4 z-50"></div>
 </section>
 
 
 <!-- Feedback section -->
 <div class="feedback-button-container">
     <a href="https://forms.gle/1o8uzRYE7TkebQgj9" target="_blank" class="feedback-button" rel='noopener'>
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3E%3Cpath d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z'/%3E%3C/svg%3E"
-            alt="Feedback">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3E%3Cpath d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z'/%3E%3C/svg%3E" alt="Feedback">
     </a>
     <p class="feedback-text">Feedback</p>
 </div>
 
-<main data-domain="{{domain}}">
+
+
+
+<main data-domain="{{domain}}" class="flex-grow flex flex-col text-textSecondary">
+
+    <!-- Github User Image -->
+    <img src="{{user.avatar_url}}" alt="Github User Image"
+        class="absolute top-3 right-3 w-16 h-16 object-cover rounded-full">
 
     <!-- Section to choose Manual or Automatic -->
     <section id="wayChooser" class="">
         <h2 class="text-6xl font-semibold text-center my-5">Upload Your Solutions</h2>
-        <div class="automatic">
-            Automatic
-        </div>
-        <section class="">
-            <div class="manual">
+        <section class="flex-grow flex items-stretch md:items-center flex-col md:flex-row justify-evenly">
+            <div
+                class="manual bg-backgroundContainer text-center hover:scale-110 text-4xl md:text-8xl m-5 rounded-xl border cursor-pointer transition-all ease-in border-slate-200 p-6">
                 Manual
+            </div>
+            <div
+                class="automatic bg-backgroundContainer text-center hover:scale-110 text-4xl md:text-8xl m-5 rounded-xl border cursor-pointer transition-all ease-in border-slate-200 p-6">
+                Automatic
             </div>
         </section>
     </section>
 
     <!-- Manual Section  -->
-    <section id="manual" class="hidden main-section">
-        <div class="heading-container">
-            <h1 class="main-heading">Manual</h1>
-            <div class="automatic side-shift">
-                Automatic</div>
+    <section id="manual" class=" flex-col items-center">
+        <div class="relative ">
+            <h1 class="text-4xl md:text-6xl font-bold">Manual</h1>
+            <div class="h-fit px-3 absolute right-0 top-0 translate-x-full translate-y-1/2  ">
+                <div
+                    class="automatic bg-backgroundContainer px-2 rounded-md text-black active:bg-slate-200 border border-slate-300 cursor-pointer hover:scale-110 transition-transform ease-in">
+                    Automatic</div>
+            </div>
         </div>
 
-        <section class="search-section">
+        <!-- Search section -->
+        <section class="w-full max-w-sm mx-auto my-5 relative">
             <input type="text"
                 placeholder="Search for a LeetCode question or paste its URL (e.g., https://leetcode.com/problems/example/description/)"
-                id="search-question" />
-            <span id="searchBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                id="search-question"
+                class="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            <span id="searchBtn" class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5 hover:text-black active:scale-125 transition-all ease-out" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
@@ -60,32 +77,33 @@
         </section>
 
         <!-- card Section  -->
-        <section id="cardContainer">
+        <section id="cardContainer" class="scrollbar-hide w-screen flex overflow-x-auto snap-x snap-mandatory">
             <!-- Card -->
-            <div class="card">
-                <div>
+            <div class="card snap-center flex-none w-full flex justify-center items-center">
+                <div class=" bg-white w-5/6 p-5 m-5 rounded-3xl">
                     <!-- Two Main Containers -->
-                    <div>
+                    <div class="space-y-6 md:space-y-0 md:flex md:space-x-6">
 
                         <!-- User Question Info -->
-                        <div>
-                            <h3>Question Information</h3>
-                            <p><span>ID:</span> <span id="questionId">...</span></p>
-                            <p><span>Name:</span> <span id="questionTitle">...</span>
+                        <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow-xl backdrop-blur-xl">
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">Question Information</h3>
+                            <p><span class="font-bold text-gray-600">ID:</span> <span id="questionId">...</span></p>
+                            <p><span class="font-bold text-gray-600">Name:</span> <span id="questionTitle">...</span>
                             </p>
-                            <p><span>Difficulty:</span> <span id="difficulty">...</span>
+                            <p><span class="font-bold text-gray-600">Difficulty:</span> <span id="difficulty">...</span>
                             </p>
                         </div>
 
                         <!-- Solution Area -->
-                        <div>
-                            <div>
-                                <h3>Your Solution</h3>
+                        <div class="flex-1 p-5 bg-blue-50 rounded-lg shadow-xl backdrop-blur-xl">
+                            <div class="flex justify-between">
+                                <h3 class="text-xl font-semibold text-gray-700 mb-3">Your Solution</h3>
                                 <!-- Language Selection Dropdown -->
-                                <div>
-                                    <div>Choose
+                                <div class="text-xs">
+                                    <div class="block text-gray-600 font-medium ">Choose
                                         Language</div>
-                                    <select id="language" disabled>
+                                    <select id="language" disabled
+                                        class=" border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="" disabled selected></option>
                                         <option value="py">Python </option>
                                         <option value="java">Java </option>
@@ -125,21 +143,21 @@
                                     </select>
                                 </div>
                             </div>
-                            <textarea id="solutionArea" placeholder="Search for a question to get started..."
-                                disabled></textarea>
+                            <textarea id="solutionArea" placeholder="Search for a question to get started..." disabled
+                                class="w-full h-40 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
                         </div>
                     </div>
-                    <div>
+                    <div class="flex justify-center items-center p-4 mt-4 border-t border-gray-200">
 
                         <!-- Add and Remove Buttons -->
-                        <div class="button-container">
+                        <div class="flex w-full justify-evenly text-sm space-x-3">
                             <!-- Remove Button -->
-                            <button onclick="removeCard(event)" class="remove">
+                            <button onclick="removeCard(event)"
+                                class="remove flex justify-center space-x-2 items-center px-6 py-3 rounded-lg bg-red-100 hover:bg-red-600 text-black hover:text-white font-semibold transition-all duration-200 ease-in-out">
                                 <!-- SVG Icon for Remove -->
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M20 12H4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4">
                                     </path>
                                 </svg>
                                 <div class="">
@@ -148,9 +166,10 @@
                             </button>
 
                             <!-- Add Button -->
-                            <button onclick="addCard(event)" class="add">
+                            <button onclick="addCard(event)"
+                                class="add flex justify-center space-x-2 items-center px-6 py-3 rounded-lg bg-blue-100 hover:bg-blue-600 text-black hover:text-white font-semibold transition-all duration-200 ease-in-out">
                                 <!-- SVG Icon for Add -->
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 4v16m8-8H4"></path>
@@ -166,12 +185,12 @@
             </div>
         </section>
 
-
         <!-- Upload to Github Button -->
-        <section>
-            <button id="manualUploadBtn">
+        <section class="flex justify-center mt-6">
+            <button id="manualUploadBtn"
+                class="flex items-center justify-center px-8 py-3 mb-3 hover:scale-110 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200 ease-in-out">
                 <!-- GitHub SVG Icon -->
-                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387 0.6 0.11 0.82-0.26 0.82-0.577 0-0.285-0.011-1.04-0.016-2.04-3.338 0.725-4.042-1.616-4.042-1.616-0.546-1.387-1.333-1.756-1.333-1.756-1.089-0.745 0.084-0.73 0.084-0.73 1.205 0.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.494 0.998 0.107-0.774 0.418-1.305 0.762-1.605-2.665-0.304-5.466-1.332-5.466-5.93 0-1.31 0.469-2.381 1.235-3.221-0.123-0.303-0.536-1.521 0.118-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.983-0.399 3.004-0.404 1.021 0.005 2.047 0.138 3.005 0.404 2.291-1.553 3.298-1.23 3.298-1.23 0.655 1.655 0.243 2.873 0.119 3.176 0.77 0.84 1.235 1.911 1.235 3.221 0 4.61-2.804 5.625-5.475 5.922 0.43 0.37 0.823 1.102 0.823 2.222 0 1.606-0.014 2.902-0.014 3.293 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.2-6.085 8.2-11.383 0-6.627-5.373-12-12-12z" />
                 </svg>
@@ -180,9 +199,8 @@
         </section>
     </section>
 
-
     <!-- Automatic Section  -->
-    <section id="automatic" class="hidden main-section">
+    <section id="automatic" class="main-section">
         <div class="autoHeaders">
             <div class="heading-container">
                 <h1 class="main-heading">Automatic</h1>
@@ -191,52 +209,49 @@
             </div>
         </div>
 
-        <section class="main-container">
+        <section class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6 w-screen">
             <!-- Main Container -->
-            <div class="content-box">
+            <div class="bg-white rounded-lg shadow-md md:w-4/5 w-full                              p-8 space-y-6">
 
                 <!-- Instructions Container -->
-                <div class="instructions-box">
-                    <h2 class="instructions-title">Instructions for Automatic Uploads</h2>
-                    <!-- Note Section -->
-                    <div class="note-section">
-                        <p><strong>Note:</strong> This procedure does not work on mobile phones.</p>
-                    </div>
-                    <ol class="instructions-list">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Instructions for Automatic Uploads</h2>
+                    <ol class="list-decimal list-inside text-gray-600 space-y-2">
                         <li>Click the <strong>Start</strong> button.</li>
                         <li>Click the <strong>Copy</strong> button or manually select and copy the code.</li>
                         <li>Log in to your LeetCode account.</li>
                         <li>Right-click and select <strong>Inspect</strong>, or press <strong>F12</strong>.</li>
                         <li>Go to the <strong>Console</strong> tab.</li>
-                        <li>To enable pasting, type <code class="pasting-code">allow pasting</code> in the console
-                            and press Enter.</li>
+                        <li>To enable pasting, type <code class="pasting-code">allow pasting</code> in the console and press Enter.</li>
                         <li>Paste the copied code and press Enter.</li>
                         <li>Return to this site to track the upload progress.</li>
                     </ol>
-                </div>
+                </div>                
                 <!-- Buttons for Copy and start -->
                 <div class="button-container">
                     <button id="automaticUploadBtn" class="start-btn">Start</button>
                     <button id="copyBtn" class="copy-btn dim">Copy</button>
                 </div>
 
+
                 <!-- Token Input Container -->
-                <div class="code-container" hidden id="code-cover">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-inner" hidden id="code-cover">
                     <div id="code-block">
                         // Example script to run on LeetCode
                         console.log('Leet2Git automatic upload script');
                     </div>
                 </div>
+
             </div>
         </section>
-
     </section>
 
+
 </main>
+<script src="/app/static/js/utils/script.js"></script>
+<script src="/app/static/js/registered/script.js"></script>
 
 
-{% endblock %}
-{% block javascripts %}
-<script src="static/js/utils/script.js"></script>
-<script src="static/js/registered/script.js"></script>
-{% endblock %}
+
+</body>
+</html>

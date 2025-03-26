@@ -98,7 +98,7 @@ body {
     text-align: center;
     padding: 20px;
     width: 100vw;
-    position: absolute;
+    position: relative;
     bottom: 0;
   }
   
@@ -111,15 +111,17 @@ body {
     display: flex;
     justify-content: center;
     gap: 15px;
+    margin-top: 1rem;
     /* margin-top: 10px;
     margin-bottom: 20px; */
   }
   
   .footer-links a {
-    color: #a0aec0;
+    color: #5594e6;
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.3s;
+    font-weight: bolder;
   }
   
   .footer-links a:hover {

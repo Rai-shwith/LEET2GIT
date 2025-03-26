@@ -24,6 +24,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 @app.get("/",response_model=None)
 async def read_root(request: Request, db: AsyncSession = Depends(get_db)):
+    return templates.TemplateResponse("home/registered/index.html", {"request": request,"user":{}})
     logger.info("Root path")
     logger.info(f"Request: {request}")
     if not request.cookies.get("access_token"):

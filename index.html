@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>getStarted</title>
-    <link rel="stylesheet" href="/app/static/css/logged.css">
+    <link rel="stylesheet" href="/app/static/css/registered.css">
     <link rel="stylesheet" href="/app/static/css/base.css">
-    <!-- <link rel="stylesheet" href="/app/static/css/output.css"> -->
 </head>
 
 <body>
@@ -24,15 +23,6 @@
     <div id="loading" class="loading-container">
         <div class="loading-spinner"></div>
     </div>
-
-
-
-
-
-
-
-
-
 
     <section>
         <div id="messageContainer">
@@ -58,68 +48,244 @@
             </div>
         </div>
     </section>
-    
-    <main class="main-container">
-        <img src="{{user.avatar_url}}" alt="Github User Image" class="user-avatar">
-        <span>
-            <p class="welcome-text">Welcome, </p>
-            <h2 class="username">Rai-shwith !</h2>
-        </span>
-        <h1 class="setup-header">Let's set up your LeetCode Repository</h1>
-        
-        <section id="cardContainer" class="card-container">
-            <article class="card">
-                <div class="card-content">
-                    <p class="card-text">Is this a new repository, or are you adding to an existing one?</p>
-                    <section class="toggle-section">
-                        <p>New</p>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="newOrOld">
-                            <div class="toggle-switch-background">
-                                <div class="toggle-switch-handle"></div>
-                            </div>
-                        </label>
-                        <p>Existing</p>
-                    </section>
-                    <button onclick="scrollCard()" class="button">Next</button>
+
+
+
+
+    <section>
+        <div id="stackMessageContainer"></div>
+    </section>
+
+
+    <!-- Feedback section -->
+    <div class="feedback-button-container">
+        <a href="https://forms.gle/1o8uzRYE7TkebQgj9" target="_blank" class="feedback-button" rel='noopener'>
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3E%3Cpath d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z'/%3E%3C/svg%3E"
+                alt="Feedback">
+        </a>
+        <p class="feedback-text">Feedback</p>
+    </div>
+
+    <main data-domain="{{domain}}">
+
+        <!-- Section to choose Manual or Automatic -->
+        <section id="wayChooser" class="">
+            <h2 class="text-6xl font-semibold text-center my-5">Upload Your Solutions</h2>
+            <section class="">
+                <div class="manual">
+                    Manual
                 </div>
-            </article>
-    
-            <article class="card">
-                <div class="card-content text-center">
-                    <p class="card-text">Enter the name of the GitHub repository for saving your solutions.</p>
-                    <section class="input-section">
-                        <input type="text" id="repoName" name="repoName" value="LeetCode" placeholder="Enter Repo Name" required />
-                    </section>
-                    <div class="button-group">
-                        <button onclick="scrollCard(false)" class="button">Back</button>
-                        <button onclick="scrollCard()" class="button">Next</button>
-                    </div>
+                <div class="automatic">
+                    Automatic
                 </div>
-            </article>
-    
-            <article class="card">
-                <div class="card-content text-center">
-                    <p class="card-text">Set the visibility of your Repository</p>
-                    <section class="toggle-section">
-                        <p>Public</p>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="visibility">
-                            <div class="toggle-switch-background">
-                                <div class="toggle-switch-handle"></div>
-                            </div>
-                        </label>
-                        <p>Private</p>
-                    </section>
-                    <div class="button-group">
-                        <button onclick="scrollCard(false)" class="button">Back</button>
-                        <button onclick="scrollCard()" id="finish" class="button">Finish!</button>
-                    </div>
-                </div>
-            </article>
+            </section>
         </section>
+
+        <!-- Manual Section  -->
+        <section id="manual" class="hidden main-section">
+            <div class="heading-container">
+                <h1 class="main-heading">Manual</h1>
+                <div class="automatic side-shift">
+                    Automatic</div>
+            </div>
+
+            <section class="search-section">
+                <input type="text"
+                    placeholder="Search for a LeetCode question or paste its URL (e.g., https://leetcode.com/problems/example/description/)"
+                    id="search-question" />
+                <span id="searchBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+            </section>
+
+            <!-- card Section  -->
+            <section id="cardContainer">
+                <!-- Card -->
+                <div class="card">
+                    <div>
+                        <!-- Two Main Containers -->
+                        <div>
+
+                            <!-- User Question Info -->
+                            <div>
+                                <h3>Question Information</h3>
+                                <p><span>ID:</span> <span id="questionId">...</span></p>
+                                <p><span>Name:</span> <span id="questionTitle">...</span>
+                                </p>
+                                <p><span>Difficulty:</span> <span id="difficulty">...</span>
+                                </p>
+                            </div>
+
+                            <!-- Solution Area -->
+                            <div>
+                                <div>
+                                    <h3>Your Solution</h3>
+                                    <!-- Language Selection Dropdown -->
+                                    <div>
+                                        <div>Choose
+                                            Language</div>
+                                        <select id="language" disabled>
+                                            <option value="" disabled selected></option>
+                                            <option value="py">Python </option>
+                                            <option value="java">Java </option>
+                                            <option value="c">C </option>
+                                            <option value="cpp">C++ </option>
+                                            <option value="cs">C# </option>
+                                            <option value="js">JavaScript </option>
+                                            <option value="ts">TypeScript </option>
+                                            <option value="rb">Ruby </option>
+                                            <option value="swift">Swift </option>
+                                            <option value="go">Go </option>
+                                            <option value="kt">Kotlin </option>
+                                            <option value="scala">Scala </option>
+                                            <option value="rs">Rust </option>
+                                            <option value="php">PHP </option>
+                                            <option value="sql">MySQL </option>
+                                            <option value="sh">Bash </option>
+                                            <option value="pl">Perl </option>
+                                            <option value="hs">Haskell </option>
+                                            <option value="dart">Dart </option>
+                                            <option value="rkt">Racket </option>
+                                            <option value="ex">Elixir </option>
+                                            <option value="erl">Erlang </option>
+                                            <option value="m">Objective-C </option>
+                                            <option value="m">MATLAB </option>
+                                            <option value="fs">F# </option>
+                                            <option value="lua">Lua </option>
+                                            <option value="groovy">Groovy </option>
+                                            <option value="vb">VB.NET </option>
+                                            <option value="f90">Fortran </option>
+                                            <option value="pas">Pascal </option>
+                                            <option value="jl">Julia </option>
+                                            <option value="pl">Prolog </option>
+                                            <option value="scm">Scheme </option>
+                                            <option value="cbl">COBOL </option>
+                                            <option value="sol">Solidity </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <textarea id="solutionArea" placeholder="Search for a question to get started..."
+                                    disabled></textarea>
+                            </div>
+                        </div>
+                        <div>
+
+                            <!-- Add and Remove Buttons -->
+                            <div class="button-container">
+                                <!-- Remove Button -->
+                                <button onclick="removeCard(event)" class="remove">
+                                    <!-- SVG Icon for Remove -->
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M20 12H4">
+                                        </path>
+                                    </svg>
+                                    <div class="">
+                                        Remove Question
+                                    </div>
+                                </button>
+
+                                <!-- Add Button -->
+                                <button onclick="addCard(event)" class="add">
+                                    <!-- SVG Icon for Add -->
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                    <div class="">
+                                        Add Question
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Upload to Github Button -->
+            <section>
+                <button id="manualUploadBtn">
+                    <!-- GitHub SVG Icon -->
+                    <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387 0.6 0.11 0.82-0.26 0.82-0.577 0-0.285-0.011-1.04-0.016-2.04-3.338 0.725-4.042-1.616-4.042-1.616-0.546-1.387-1.333-1.756-1.333-1.756-1.089-0.745 0.084-0.73 0.084-0.73 1.205 0.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.494 0.998 0.107-0.774 0.418-1.305 0.762-1.605-2.665-0.304-5.466-1.332-5.466-5.93 0-1.31 0.469-2.381 1.235-3.221-0.123-0.303-0.536-1.521 0.118-3.176 0 0 1.008-0.322 3.301 1.23 0.957-0.266 1.983-0.399 3.004-0.404 1.021 0.005 2.047 0.138 3.005 0.404 2.291-1.553 3.298-1.23 3.298-1.23 0.655 1.655 0.243 2.873 0.119 3.176 0.77 0.84 1.235 1.911 1.235 3.221 0 4.61-2.804 5.625-5.475 5.922 0.43 0.37 0.823 1.102 0.823 2.222 0 1.606-0.014 2.902-0.014 3.293 0 0.32 0.217 0.694 0.825 0.576 4.765-1.589 8.2-6.085 8.2-11.383 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    Sync with GitHub
+                </button>
+            </section>
+        </section>
+
+
+        <!-- Automatic Section  -->
+        <section id="automatic" class="hidden main-section">
+            <div class="autoHeaders">
+                <div class="heading-container">
+                    <h1 class="main-heading">Automatic</h1>
+                    <div class="manual side-shift">
+                        Manual</div>
+                </div>
+            </div>
+
+            <section class="main-container">
+                <!-- Main Container -->
+                <div class="content-box">
+
+                    <!-- Instructions Container -->
+                    <div class="instructions-box">
+                        <h2 class="instructions-title">Instructions for Automatic Uploads</h2>
+                        <!-- Note Section -->
+                        <div class="note-section">
+                            <p><strong>Note:</strong> This procedure does not work on mobile phones.</p>
+                        </div>
+                        <ol class="instructions-list">
+                            <li>Click the <strong>Start</strong> button.</li>
+                            <li>Click the <strong>Copy</strong> button or manually select and copy the code.</li>
+                            <li>Log in to your LeetCode account.</li>
+                            <li>Right-click and select <strong>Inspect</strong>, or press <strong>F12</strong>.</li>
+                            <li>Go to the <strong>Console</strong> tab.</li>
+                            <li>To enable pasting, type <code class="pasting-code">allow pasting</code> in the console
+                                and press Enter.</li>
+                            <li>Paste the copied code and press Enter.</li>
+                            <li>Return to this site to track the upload progress.</li>
+                        </ol>
+                    </div>
+                    <!-- Buttons for Copy and start -->
+                    <div class="button-container">
+                        <button id="automaticUploadBtn" class="start-btn">Start</button>
+                        <button id="copyBtn" class="copy-btn dim">Copy</button>
+                    </div>
+
+                    <!-- Token Input Container -->
+                    <div class="code-container" hidden id="code-cover">
+                        <div id="code-block">
+                            // Example script to run on LeetCode
+                            console.log('Leet2Git automatic upload script');
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
     </main>
-    
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -145,9 +311,9 @@
             <a href="mailto:ashwithrai96.96@gmail.com">Contact</a>
         </div>
     </footer>
-    
+
     <script src="/app/static/js/utils/script.js"></script>
-    <script src="/app/static/js/logged/script.js"></script>
+    <script src="/app/static/js/registered/script.js"></script>
 </body>
 
 </html>
