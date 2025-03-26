@@ -29,40 +29,36 @@ const StackMessage = (type, message, autoHide = true) => {
 
   const messageDiv = document.createElement("div");
   messageDiv.id = messageId;
-  messageDiv.className = `min-w-xs w-full p-4 rounded-lg shadow-lg transform transition-transform translate-x-20 opacity-0 ${
-    type === "success"
-      ? "bg-green-100 border border-green-400 text-green-700"
-      : "bg-red-100 border border-red-400 text-red-700"
-  }`;
+  messageDiv.className = "stack-message";
   messageDiv.style.width = "18rem";
+  messageDiv.style.borderRadius = "2rem"
+  messageDiv.style.padding = "0.5rem"
+  messageDiv.style.backgroundColor = type === "success" ? "#d1e7dd" : "#f8d7da";
+  messageDiv.style.border = `1px solid ${type === "success" ? "#0f5132" : "#842029"}`;
+  messageDiv.style.color = type === "success" ? "#0f5132" : "#842029";
 
   messageDiv.innerHTML = `
-        <div class="flex items-center">
-            <svg class="w-5 h-5 mr-2 ${
-              type === "success" ? "text-green-600" : "text-red-600"
-            }" fill="currentColor" viewBox="0 0 20 20">
+        <div class="message-content">
+            <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm${
                   type === "success"
                     ? "3.707-10.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                     : "-1-11a1 1 0 012 0v4a1 1 0 01-2 0V7zm1 8a1 1 0 110-2 1 1 0 010 2z"
                 }" clip-rule="evenodd" />
             </svg>
-            <span style="max-width: 14rem;">${message}</span>
+            <span class="message-text">${message}</span>
         </div>
     `;
 
   stackMessageContainer.appendChild(messageDiv);
 
   setTimeout(() => {
-    messageDiv.classList.remove("translate-x-20", "opacity-0");
-    messageDiv.classList.add("translate-x-0", "opacity-100");
+    messageDiv.classList.add("show");
   }, 100);
 
   if (autoHide) {
     setTimeout(() => {
-      messageDiv.classList.remove("translate-x-0", "opacity-100");
-      messageDiv.classList.add("translate-x-20", "opacity-0");
-
+      messageDiv.classList.remove("show");
       setTimeout(() => {
         messageDiv.remove();
       }, 300);
