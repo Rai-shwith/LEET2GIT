@@ -445,6 +445,9 @@
     padding: 1.5rem;
     border-radius: 0.5rem;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    color: #505364;
+    height: 10rem;
+    overflow: scroll;
   }
   
   /* For desktop */
