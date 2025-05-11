@@ -12,18 +12,18 @@
         gtag('config', 'G-Y5F93PW07S');
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6603452020198848"
-    crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-6603452020198848" /> 
+        crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-6603452020198848" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
     <!-- <link href="static/css/output.css" rel="stylesheet"> -->
     <link rel="icon" href="static/images/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/basic.css">
     {% block stylesheets %}{% endblock %}
 </head>
 
-<body >
+<body>
     <header class="header">
         <svg width="40" height="40" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="14" cy="14" r="14" fill="black" />
@@ -33,36 +33,36 @@
         </svg>
         <h1 class="title">LEET2GIT</h1>
     </header>
-<div class="middle-contents">
-    <div id="loading" class="loading-container">
-        <div class="loading-spinner"></div>
-    </div>
-    <section>
-        <div id="messageContainer">
-            <div id="successMessage" class="message-box success">
-                <div class="flex-container">
-                    <svg class="icon success-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-10.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span></span>
-                </div>
-            </div>
-            <div id="errorMessage" class="message-box error">
-                <div class="flex-container">
-                    <svg class="icon error-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11a1 1 0 012 0v4a1 1 0 01-2 0V7zm1 8a1 1 0 110-2 1 1 0 010 2z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span id="errorText"></span>
-                </div>
-            </div>
+    <div class="middle-contents">
+        <div id="loading" class="loading-container hidden">
+            <div class="loading-spinner"></div>
         </div>
-    </section>
-    {% block content %} {% endblock %}
-</div>
+        <section>
+            <div id="messageContainer">
+                <div id="successMessage" class="message-box success">
+                    <div class="flex-container">
+                        <svg class="icon success-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-10.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span></span>
+                    </div>
+                </div>
+                <div id="errorMessage" class="message-box error">
+                    <div class="flex-container">
+                        <svg class="icon error-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11a1 1 0 012 0v4a1 1 0 01-2 0V7zm1 8a1 1 0 110-2 1 1 0 010 2z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span id="errorText"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% block content %} {% endblock %}
+    </div>
     <footer class="footer">
         <div class="footer-content">
             <p>&copy; <span id="year"></span> Leet2Git. Released under the MIT License.</p>
