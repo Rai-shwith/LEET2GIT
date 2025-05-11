@@ -6,138 +6,170 @@
 {% block content %}
 <!-- Overlay content for disclaimer -->
 <div id="overlay" class="overlay">
-        <div class="overlay-content">
-            <h2>Disclaimer & Terms of Use</h2>
-            <div class="terms-content">
-                <p class="repo-details">Contribute to Leet2Git: <a href="https://github.com/Rai-shwith/leet2git"
-                        target="_blank">GitHub Repository</a></p>
-                <p class="repo-details">View Synced Solutions: <a href="https://github.com/Rai-shwith/LeetSolutions"
-                        target="_blank">LeetSolutions Repository</a></p>
+    <div class="overlay-content">
+        <h2>Disclaimer & Terms of Use</h2>
+        <div class="terms-content">
+            <p class="repo-details">Contribute to Leet2Git: <a href="https://github.com/Rai-shwith/leet2git"
+                    target="_blank">GitHub Repository</a></p>
+            <p class="repo-details">View Synced Solutions: <a href="https://github.com/Rai-shwith/LeetSolutions"
+                    target="_blank">LeetSolutions Repository</a></p>
 
-                <p>By using Leet2Git, you are agreeing to these terms and conditions. This document is meant to provide
-                    a legal basis for the use of this software and should be read carefully before proceeding. If at any
-                    point you disagree with these terms, you should immediately cease using the software. Continued use
-                    of the software indicates your acceptance of the terms outlined below.</p>
+            <p>By using Leet2Git, you are agreeing to these terms and conditions. This document is meant to provide
+                a legal basis for the use of this software and should be read carefully before proceeding. If at any
+                point you disagree with these terms, you should immediately cease using the software. Continued use
+                of the software indicates your acceptance of the terms outlined below.</p>
 
-                <p>This application is in no way affiliated with, endorsed by, or associated with LeetCode, GitHub, or
-                    any of their parent or subsidiary companies. It is provided independently as an open-source tool for
-                    personal use. Any resemblance to existing platforms is purely coincidental and does not imply any
-                    form of partnership or official association. Users should be aware that any modifications to this
-                    software do not create a legally binding relationship between them and the companies mentioned
-                    above.</p>
+            <p>This application is in no way affiliated with, endorsed by, or associated with LeetCode, GitHub, or
+                any of their parent or subsidiary companies. It is provided independently as an open-source tool for
+                personal use. Any resemblance to existing platforms is purely coincidental and does not imply any
+                form of partnership or official association. Users should be aware that any modifications to this
+                software do not create a legally binding relationship between them and the companies mentioned
+                above.</p>
 
-                <p>The software is provided "as is" without warranties of any kind, either express or implied, including
-                    but not limited to the implied warranties of merchantability, fitness for a particular purpose, or
-                    non-infringement. The developers and contributors to this project are not responsible for any
-                    issues, damages, or losses that may arise from the use of this software. Users assume all risks
-                    associated with the software, including but not limited to data loss, account restrictions, and
-                    unexpected behavior resulting from software updates or API changes.</p>
+            <p>The software is provided "as is" without warranties of any kind, either express or implied, including
+                but not limited to the implied warranties of merchantability, fitness for a particular purpose, or
+                non-infringement. The developers and contributors to this project are not responsible for any
+                issues, damages, or losses that may arise from the use of this software. Users assume all risks
+                associated with the software, including but not limited to data loss, account restrictions, and
+                unexpected behavior resulting from software updates or API changes.</p>
 
-                <p>Leet2Git does not permanently store your GitHub authentication tokens. These tokens are used only in
-                    encrypted form for data transfer and are not retained beyond the active session. However, users
-                    should be aware that by interacting with third-party platforms such as GitHub, LeetCode, or similar
-                    services, their activities may be tracked or monitored according to the privacy policies of those
-                    platforms. Users are responsible for reviewing and understanding the privacy policies of all
-                    external services they use in conjunction with Leet2Git.</p>
+            <p>Leet2Git does not permanently store your GitHub authentication tokens. These tokens are used only in
+                encrypted form for data transfer and are not retained beyond the active session. However, users
+                should be aware that by interacting with third-party platforms such as GitHub, LeetCode, or similar
+                services, their activities may be tracked or monitored according to the privacy policies of those
+                platforms. Users are responsible for reviewing and understanding the privacy policies of all
+                external services they use in conjunction with Leet2Git.</p>
 
-                <p>GitHub enforces API rate limits, and excessive use of this tool may result in temporary or permanent
-                    restrictions on a user's GitHub account. The developers of Leet2Git have no control over such
-                    restrictions and cannot be held responsible for any account limitations imposed by GitHub. Users are
-                    advised to use the tool responsibly and monitor their API usage to avoid exceeding any imposed
-                    limits.</p>
+            <p>To use Leet2Git, users must first authenticate using their GitHub account. GitHub is currently the
+                sole supported authentication method. Upon signing in, users are required to create or choose a
+                GitHub repository where their LeetCode submissions will be uploaded. This repository will serve as
+                the centralized location for their structured submission history, formatted using Markdown for
+                readability and organization.</p>
 
-                <p>Leet2Git is built upon APIs provided by external platforms. These platforms may change, update, or
-                    restrict their APIs at any time, potentially rendering certain features of Leet2Git non-functional.
-                    While the development team will make reasonable efforts to update the software as necessary,
-                    uninterrupted functionality cannot be guaranteed. Users should be aware that such external changes
-                    are beyond the control of the Leet2Git team.</p>
+            <p>Leet2Git supports two submission modes: manual and automatic. In manual mode, the user retains full
+                control of the submission process. After selecting a valid LeetCode problem, users choose their
+                programming language and paste their solution code into the application. The software does not
+                perform any validation or correctness checks on the submitted code — it is the user's responsibility
+                to ensure accuracy. Multiple solutions for the same problem may be added, and once the user is ready,
+                they can submit all queued solutions in one batch. The system will then upload the batched content to
+                the configured GitHub repository, maintaining a clean and elegant folder structure.</p>
 
-                <p>Security best practices are encouraged for all users. While steps are taken to secure data transfers
-                    and protect user information, complete security cannot be guaranteed. Users are advised to enable
-                    two-factor authentication on their GitHub accounts, use strong passwords, and avoid using public
-                    devices to log in to their GitHub accounts when using Leet2Git.</p>
+            <p>In automatic mode, Leet2Git facilitates the extraction of recent submissions directly from LeetCode
+                with minimal user input. To initiate this, the user must click the "Start" button, which will provide
+                them with a custom-generated JavaScript snippet. This snippet must be copied and pasted into the
+                browser's developer console while signed into LeetCode. This step is critical — users must be logged
+                in to LeetCode to authorize the fetch request from their own browser environment. Due to restrictions
+                imposed by LeetCode's infrastructure, Leet2Git's backend cannot make these requests directly.
+                Instead, the snippet enables the user's browser to retrieve the submission data and securely relay it
+                back to Leet2Git’s backend, which then processes and uploads the submissions in a structured batch to
+                GitHub. This browser-mediated mechanism ensures compliance with access limitations while preserving
+                user privacy and control.</p>
 
-                <p>These terms and conditions are governed by the laws of India. Any disputes arising from the use of
-                    this software shall be subject to the exclusive jurisdiction of the courts in Bengaluru. By using
-                    this software, users acknowledge that they are bound by these legal provisions and accept any
-                    responsibilities associated with their use of the software.</p>
+            <p>Users are informed that both manual and automatic modes aim to offer transparency and flexibility in
+                managing their problem-solving journey. However, they must ensure that they do not violate any
+                third-party platform's terms of use in the process. The developers are not responsible for any
+                actions taken by LeetCode, GitHub, or other services as a result of how users interact with those
+                platforms via Leet2Git.</p>
 
-                <p>Users agree to indemnify and hold harmless the developers, contributors, and maintainers of Leet2Git
-                    from any claims, damages, losses, liabilities, or expenses arising from their use or misuse of the
-                    service. The developers take no responsibility for the actions of users and any potential
-                    consequences resulting from the use of this software.</p>
+            <p>GitHub enforces API rate limits, and excessive use of this tool may result in temporary or permanent
+                restrictions on a user's GitHub account. The developers of Leet2Git have no control over such
+                restrictions and cannot be held responsible for any account limitations imposed by GitHub. Users are
+                advised to use the tool responsibly and monitor their API usage to avoid exceeding any imposed
+                limits.</p>
 
-                <p>This project is licensed under the MIT License. Contributions to the project are welcome, provided
-                    they comply with the contribution guidelines outlined in the GitHub repository. Developers
-                    contributing to this project should review the licensing terms before submitting any modifications
-                    or improvements.</p>
+            <p>Leet2Git is built upon APIs provided by external platforms. These platforms may change, update, or
+                restrict their APIs at any time, potentially rendering certain features of Leet2Git non-functional.
+                While the development team will make reasonable efforts to update the software as necessary,
+                uninterrupted functionality cannot be guaranteed. Users should be aware that such external changes
+                are beyond the control of the Leet2Git team.</p>
 
-                <p>If you have read this far, congratulations. However, it is more likely that you are just scrolling
-                    down to click "I Agree" without actually reading anything. This is understandable, as most people do
-                    not read terms and conditions. Regardless, by clicking "I Agree," you acknowledge that you are bound
-                    by these terms whether you have read them or not.</p>
-            </div>
+            <p>Security best practices are encouraged for all users. While steps are taken to secure data transfers
+                and protect user information, complete security cannot be guaranteed. Users are advised to enable
+                two-factor authentication on their GitHub accounts, use strong passwords, and avoid using public
+                devices to log in to their GitHub accounts when using Leet2Git.</p>
 
-            <div class="buttons">
-                <button id="agree-btn" class="btn agree">I Agree & Continue</button>
-                <button id="cancel-btn" class="btn cancel">Cancel</button>
-            </div>
+            <p>These terms and conditions are governed by the laws of India. Any disputes arising from the use of
+                this software shall be subject to the exclusive jurisdiction of the courts in Bengaluru. By using
+                this software, users acknowledge that they are bound by these legal provisions and accept any
+                responsibilities associated with their use of the software.</p>
+
+            <p>Users agree to indemnify and hold harmless the developers, contributors, and maintainers of Leet2Git
+                from any claims, damages, losses, liabilities, or expenses arising from their use or misuse of the
+                service. The developers take no responsibility for the actions of users and any potential
+                consequences resulting from the use of this software.</p>
+
+            <p>This project is licensed under the MIT License. Contributions to the project are welcome, provided
+                they comply with the contribution guidelines outlined in the GitHub repository. Developers
+                contributing to this project should review the licensing terms before submitting any modifications
+                or improvements.</p>
+
+            <p>If you have read this far, congratulations. However, it is more likely that you are just scrolling
+                down to click "I Agree" without actually reading anything. This is understandable, as most people do
+                not read terms and conditions. Regardless, by clicking "I Agree," you acknowledge that you are bound
+                by these terms whether you have read them or not.</p>
+
+        </div>
+
+        <div class="buttons">
+            <button id="agree-btn" class="btn agree">I Agree & Continue</button>
+            <button id="cancel-btn" class="btn cancel">Cancel</button>
         </div>
     </div>
-    <main>
-        <h2>Transform LeetCode Skills into
-            GitHub Projects, Seamlessly.</h2>
-        <p>Tired of solving problems on LeetCode with no way to showcase
-            them? With leet2git, every coding milestone you achieve becomes a project on your
-            GitHub—automatically! Start building your public portfolio as you code, and let your skills
-            shine to the world. No more copying and pasting, just pure automation!</p>
-        <button id="get-started-btn"
-            data-link="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo">Get
-            Started</button>
-    </main>
+</div>
+<main>
+    <h2>Transform LeetCode Skills into
+        GitHub Projects, Seamlessly.</h2>
+    <p>Tired of solving problems on LeetCode with no way to showcase
+        them? With leet2git, every coding milestone you achieve becomes a project on your
+        GitHub—automatically! Start building your public portfolio as you code, and let your skills
+        shine to the world. No more copying and pasting, just pure automation!</p>
+    <button id="get-started-btn"
+        data-link="https://github.com/login/oauth/authorize?client_id={{github_client_id}}&redirect_uri={{github_redirect_url}}&scope=repo">Get
+        Started</button>
+</main>
 {% endblock %}
 {% block javascripts %}
 <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-        // Handle overlay logic
-        const getStartedBtn = document.getElementById("get-started-btn");
-        const link = getStartedBtn.dataset.link;
-        const overlay = document.getElementById("overlay");
-        const agreeBtn = document.getElementById("agree-btn");
-        const cancelBtn = document.getElementById("cancel-btn");
+    document.getElementById("year").textContent = new Date().getFullYear();
+    // Handle overlay logic
+    const getStartedBtn = document.getElementById("get-started-btn");
+    const link = getStartedBtn.dataset.link;
+    const overlay = document.getElementById("overlay");
+    const agreeBtn = document.getElementById("agree-btn");
+    const cancelBtn = document.getElementById("cancel-btn");
 
-        const redirect = () => {
-                if (link) {
-                        window.location.href = link;
-                } else {
-                        alert("Authorization link is missing. Please try again later.");
-                }
+    const redirect = () => {
+        if (link) {
+            window.location.href = link;
+        } else {
+            alert("Authorization link is missing. Please try again later.");
         }
-        document.addEventListener("keydown", (event) => {
-                if (event.key === "Escape" && overlay.style.display === "flex") {
-                        overlay.style.display = "none";
-                }
-        });
-        // Show overlay when "Get Started" is clicked
-        getStartedBtn.addEventListener("click", () => {
-                if (localStorage.getItem('agreed')) {
-                        redirect();
-                        return;
-                }
-                overlay.style.display = "flex";
-        });
+    }
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && overlay.style.display === "flex") {
+            overlay.style.display = "none";
+        }
+    });
+    // Show overlay when "Get Started" is clicked
+    getStartedBtn.addEventListener("click", () => {
+        if (localStorage.getItem('agreed')) {
+            redirect();
+            return;
+        }
+        overlay.style.display = "flex";
+    });
 
-        // Close overlay and "agree"
-        agreeBtn.addEventListener("click", () => {
-                overlay.style.display = "none";
-                localStorage.setItem('agreed', 'true')
-                redirect()
-        });
+    // Close overlay and "agree"
+    agreeBtn.addEventListener("click", () => {
+        overlay.style.display = "none";
+        localStorage.setItem('agreed', 'true')
+        redirect()
+    });
 
-        // Cancel button closes the overlay
-        cancelBtn.addEventListener("click", () => {
-                overlay.style.display = "none";
-        });
+    // Cancel button closes the overlay
+    cancelBtn.addEventListener("click", () => {
+        overlay.style.display = "none";
+    });
 
 </script>
 {% endblock %}
