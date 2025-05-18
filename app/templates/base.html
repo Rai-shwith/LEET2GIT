@@ -1,28 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5F93PW07S"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-Y5F93PW07S');
-    </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6603452020198848"
-        crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-6603452020198848" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} {% endblock %}</title>
-    <!-- <link href="static/css/output.css" rel="stylesheet"> -->
-    <link rel="icon" href="static/images/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/static/css/basic.css">
-    {% block stylesheets %}{% endblock %}
-</head>
-
+    <head>
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5F93PW07S"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-Y5F93PW07S');
+        </script>
+    
+        <!-- Google AdSense -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6603452020198848"
+            crossorigin="anonymous"></script>
+        <meta name="google-adsense-account" content="ca-pub-6603452020198848" />
+    
+        <!-- Essential Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Leet2Git - Automatically Sync LeetCode with GitHub{% endblock %}</title>
+        <meta name="description" content="Leet2Git lets you automatically push your LeetCode solutions to GitHub. Boost your coding portfolio with a single click!">
+        <meta name="keywords" content="LeetCode to GitHub, leet2git, auto sync LeetCode, LeetCode backup, GitHub coding journal">
+        <meta name="author" content="Ashwith Rai">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://leet2git.ashwithrai.me/" />
+    
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="Leet2Git - Automatically Sync LeetCode to GitHub">
+        <meta property="og:description" content="Tired of manually copying LeetCode solutions? Leet2Git lets you auto-sync with GitHub. Easy, fast, free.">
+        <meta property="og:image" content="https://leet2git.ashwithrai.me/static/images/preview.png">
+        <meta property="og:url" content="https://leet2git.ashwithrai.me">
+        <meta property="og:type" content="website">
+    
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Leet2Git - Sync LeetCode to GitHub Automatically">
+        <meta name="twitter:description" content="Auto-push your LeetCode solutions to GitHub with Leet2Git. Open-source, no hassle.">
+        <meta name="twitter:image" content="https://leet2git.ashwithrai.me/static/images/preview.png">
+    
+        <!-- JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Leet2Git",
+          "url": "https://leet2git.ashwithrai.me",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://leet2git.ashwithrai.me/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+        </script>
+    
+        <!-- Favicons + Styles -->
+        <link rel="icon" href="/static/images/logo.svg" type="image/svg+xml">
+        <link rel="stylesheet" href="/static/css/basic.css">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    
 <body>
     <header class="header">
         <svg width="40" height="40" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
